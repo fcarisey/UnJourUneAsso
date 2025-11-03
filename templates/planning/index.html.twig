@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/planning.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ asset('js/planning.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Toolbar -->
+    <div class="saas-toolbar">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <button class="saas-btn saas-btn-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <h2 class="saas-month">Novembre 2025</h2>
+                <button class="saas-btn saas-btn-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="saas-btn saas-btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Nouvel événement
+            </button>
+        </div>
+    </div>
+
+    <!-- Calendrier Card -->
+    <div class="saas-card">
+        <div class="table-responsive">
+            <table class="saas-calendar">
+                <thead>
+                    <tr>
+                        <th><span>Lun</span></th>
+                        <th><span>Mar</span></th>
+                        <th><span>Mer</span></th>
+                        <th><span>Jeu</span></th>
+                        <th><span>Ven</span></th>
+                        <th><span>Sam</span></th>
+                        <th><span>Dim</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="saas-day other-month">27</td>
+                        <td class="saas-day other-month">28</td>
+                        <td class="saas-day other-month">29</td>
+                        <td class="saas-day other-month">30</td>
+                        <td class="saas-day other-month">31</td>
+                        <td class="saas-day">1</td>
+                        <td class="saas-day">2</td>
+                    </tr>
+                    <tr>
+                        <td class="saas-day today">3</td>
+                        <td class="saas-day">4</td>
+                        <td class="saas-day">5</td>
+                        <td class="saas-day">6</td>
+                        <td class="saas-day">7</td>
+                        <td class="saas-day">8</td>
+                        <td class="saas-day">9</td>
+                    </tr>
+                    <tr>
+                        <td class="saas-day">10</td>
+                        <td class="saas-day">11</td>
+                        <td class="saas-day">12</td>
+                        <td class="saas-day">13</td>
+                        <td class="saas-day">14</td>
+                        <td class="saas-day">15</td>
+                        <td class="saas-day">16</td>
+                    </tr>
+                    <tr>
+                        <td class="saas-day">17</td>
+                        <td class="saas-day">18</td>
+                        <td class="saas-day">19</td>
+                        <td class="saas-day">20</td>
+                        <td class="saas-day">21</td>
+                        <td class="saas-day">22</td>
+                        <td class="saas-day">23</td>
+                    </tr>
+                    <tr>
+                        <td class="saas-day">24</td>
+                        <td class="saas-day">25</td>
+                        <td class="saas-day">26</td>
+                        <td class="saas-day">27</td>
+                        <td class="saas-day">28</td>
+                        <td class="saas-day">29</td>
+                        <td class="saas-day">30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Légende -->
+        <div class="saas-legend">
+            <div class="legend-item">
+                <span class="legend-dot today-dot"></span>
+                <span class="legend-text">Aujourd'hui</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot event-dot"></span>
+                <span class="legend-text">Événement</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modale d'ajout d'événement -->
+<div class="modal fade saas-modal" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="d-inline-block me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    Nouvel événement
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="eventForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="eventTitle" class="form-label">Titre de l'événement</label>
+                        <input type="text" class="form-control" id="eventTitle" placeholder="Ex: Réunion mensuelle" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="eventStartDateTime" class="form-label">Date/Heure de début</label>
+                        <input type="datetime-local" class="form-control" id="eventStartDateTime" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="eventEndDateTime" class="form-label">Date/Heure de fin</label>
+                        <input type="datetime-local" class="form-control" id="eventEndDateTime" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="eventDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="eventDescription" rows="3" placeholder="Ajouter une description..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="saas-btn saas-btn-primary">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Créer l'événement
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

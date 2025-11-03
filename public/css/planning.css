@@ -1,0 +1,323 @@
+/* Thème SaaS Violet Moderne */
+:root {
+    --saas-primary: #8b5cf6;
+    --saas-primary-dark: #7c3aed;
+    --saas-primary-light: #a78bfa;
+    --saas-bg: #fafafa;
+    --saas-card: #ffffff;
+    --saas-border: #e5e7eb;
+    --saas-text-primary: #111827;
+    --saas-text-secondary: #6b7280;
+    --saas-text-muted: #9ca3af;
+    --saas-hover: #f9fafb;
+}
+
+/* Toolbar */
+.saas-month {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--saas-text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.saas-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    border: 1px solid var(--saas-border);
+    background: var(--saas-card);
+    color: var(--saas-text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.saas-btn:hover {
+    background: var(--saas-hover);
+    border-color: var(--saas-text-muted);
+}
+
+.saas-btn-icon {
+    padding: 0.5rem;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+}
+
+.saas-btn-primary {
+    background: var(--saas-primary);
+    border-color: var(--saas-primary);
+    color: white;
+}
+
+.saas-btn-primary:hover {
+    background: var(--saas-primary-dark);
+    border-color: var(--saas-primary-dark);
+}
+
+/* Card */
+.saas-card {
+    background: var(--saas-card);
+    border: 1px solid var(--saas-border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Calendar */
+.saas-calendar {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.saas-calendar thead th {
+    padding: 1rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--saas-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    background: var(--saas-bg);
+    border-bottom: 1px solid var(--saas-border);
+}
+
+.saas-day {
+    padding: 1.25rem 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--saas-text-primary);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--saas-border);
+    border-right: 1px solid var(--saas-border);
+    position: relative;
+}
+
+.saas-day:last-child {
+    border-right: none;
+}
+
+tr:last-child .saas-day {
+    border-bottom: none;
+}
+
+.saas-day.other-month {
+    color: var(--saas-text-muted);
+    opacity: 0.5;
+}
+
+.saas-day:hover:not(.other-month) {
+    background: #f5f3ff;
+    color: var(--saas-primary);
+}
+
+.saas-day.today {
+    background: #f5f3ff;
+    color: var(--saas-primary);
+    font-weight: 600;
+}
+
+.saas-day.today::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--saas-primary);
+    border-radius: 50%;
+}
+
+/* Affichage des événements dans les jours */
+.saas-day.has-event {
+    position: relative;
+}
+
+.day-events {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.event-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.event-badge:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    padding-right: 24px;
+}
+
+.event-badge-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-badge-delete {
+    display: none;
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.event-badge:hover .event-badge-delete {
+    display: flex;
+}
+
+.event-badge-delete:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.event-badge-delete svg {
+    width: 10px;
+    height: 10px;
+    stroke: white;
+    stroke-width: 2;
+}
+
+.saas-day.has-event::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 6px;
+    height: 6px;
+    background: var(--saas-primary);
+    border-radius: 50%;
+}
+
+/* Légende */
+.saas-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: var(--saas-bg);
+    border-top: 1px solid var(--saas-border);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-dot.today-dot {
+    background: var(--saas-primary);
+}
+
+.legend-dot.event-dot {
+    background: #10b981;
+}
+
+.legend-text {
+    font-size: 0.8125rem;
+    color: var(--saas-text-secondary);
+    font-weight: 500;
+}
+
+/* Modal personnalisé SaaS */
+.saas-modal .modal-content {
+    border: 1px solid var(--saas-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.saas-modal .modal-header {
+    border-bottom: 1px solid var(--saas-border);
+    padding: 1.5rem;
+}
+
+.saas-modal .modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--saas-text-primary);
+    letter-spacing: -0.01em;
+}
+
+.saas-modal .modal-body {
+    padding: 1.5rem;
+}
+
+.saas-modal .modal-footer {
+    border-top: 1px solid var(--saas-border);
+    padding: 1.5rem;
+    background: var(--saas-bg);
+}
+
+.saas-modal .form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--saas-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.saas-modal .form-control,
+.saas-modal .form-select {
+    border: 1px solid var(--saas-border);
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.saas-modal .form-control:focus,
+.saas-modal .form-select:focus {
+    border-color: var(--saas-primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.saas-modal .btn-secondary {
+    background: var(--saas-card);
+    border: 1px solid var(--saas-border);
+    color: var(--saas-text-primary);
+}
+
+.saas-modal .btn-secondary:hover {
+    background: var(--saas-hover);
+    border-color: var(--saas-text-muted);
+}
