@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ asset('css/associations.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="associations-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="associations-header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="associations-title">Mes Associations</h1>
+                    <p class="associations-subtitle">Gérez et découvrez toutes vos associations</p>
+                </div>
+                <button class="btn-add-association" data-bs-toggle="modal" data-bs-target="#addAssociationModal">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Nouvelle Association
+                </button>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="search-filters">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <input type="text" class="search-input" id="searchAssociations" placeholder="🔍 Rechercher une association...">
+                </div>
+                <div class="col-md-4 text-end mt-3 mt-md-0">
+                    <div class="stat-card">
+                        <div class="stat-value">{{ associations|length }}</div>
+                        <div class="stat-label">Associations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Associations Grid -->
+        {% if associations|length > 0 %}
+            <div class="associations-grid" id="associationsGrid">
+                {% for association in associations %}
+                    <div class="association-card" data-association-name="{{ association.name|lower }}">
+                        <div class="association-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="association-name">{{ association.name }}</h3>
+                        <div class="association-meta">
+                            <div class="meta-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                                <span>{{ association.invitations|length }} membres</span>
+                            </div>
+                            <div class="meta-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span>Événements</span>
+                            </div>
+                        </div>
+                        <p class="association-description">
+                            Une association dynamique dédiée à ses membres et à leurs activités.
+                        </p>
+                        <div class="association-actions">
+                            <button class="btn-view" onclick="window.location.href='/association/{{ association.id }}'">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                Voir
+                            </button>
+                            <button class="btn-edit">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <h2 class="empty-title">Aucune association</h2>
+                <p class="empty-description">Commencez par créer votre première association</p>
+                <button class="btn-add-association" data-bs-toggle="modal" data-bs-target="#addAssociationModal">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Créer une association
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal Ajouter une association -->
+<div class="modal fade" id="addAssociationModal" tabindex="-1" aria-labelledby="addAssociationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: 1.25rem; color: var(--saas-text);">
+            <div class="modal-header" style="border-bottom: 1px solid var(--saas-border);">
+                <h5 class="modal-title" id="addAssociationModalLabel" style="font-weight: 700; background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" class="d-inline-block me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Nouvelle Association
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+            <form id="addAssociationForm">
+                <div class="modal-body" style="padding: 2rem;">
+                    <div class="mb-3">
+                        <label for="associationName" class="form-label" style="color: var(--saas-text); font-weight: 600;">Nom de l'association</label>
+                        <input type="text" class="form-control" id="associationName" placeholder="Ex: Les Amis du Sport" required style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="associationDescription" class="form-label" style="color: var(--saas-text); font-weight: 600;">Description</label>
+                        <textarea class="form-control" id="associationDescription" rows="3" placeholder="Décrivez votre association..." style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid var(--saas-border);">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: var(--saas-bg); border: 2px solid var(--saas-border); color: var(--saas-text); padding: 0.625rem 1.25rem; border-radius: 0.75rem; font-weight: 600;">Annuler</button>
+                    <button type="submit" class="btn-add-association">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Créer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,347 @@
+/* ==============================================
+   THEME SAAS VIOLET - ASSOCIATIONS
+   ============================================== */
+
+
+/* ==============================================
+   CONTAINER
+   ============================================== */
+.associations-container {
+    padding: 3rem 0;
+    min-height: calc(100vh - 200px);
+}
+
+/* ==============================================
+   HEADER SECTION
+   ============================================== */
+.associations-header {
+    margin-bottom: 3rem;
+}
+
+.associations-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.associations-subtitle {
+    color: var(--saas-text-muted);
+    font-size: 1.125rem;
+}
+
+/* ==============================================
+   SEARCH & FILTERS
+   ============================================== */
+.search-filters {
+    background: var(--saas-surface);
+    border: 1px solid var(--saas-border);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    background: var(--saas-bg);
+    border: 2px solid var(--saas-border);
+    border-radius: 0.75rem;
+    color: var(--saas-text);
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.search-input:focus {
+    background: var(--saas-bg);
+    border-color: var(--saas-primary);
+    color: var(--saas-text);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--saas-text-muted);
+}
+
+/* ==============================================
+   ASSOCIATION CARDS
+   ============================================== */
+.associations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.association-card {
+    background: var(--saas-surface);
+    border: 2px solid var(--saas-border);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.association-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.association-card:hover {
+    border-color: var(--saas-primary);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+}
+
+.association-card:hover::before {
+    transform: scaleX(1);
+}
+
+.association-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 8px 16px rgba(124, 58, 237, 0.3);
+}
+
+.association-icon svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+.association-name {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--saas-text);
+    margin-bottom: 0.75rem;
+}
+
+.association-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--saas-text-muted);
+    font-size: 0.875rem;
+}
+
+.meta-item svg {
+    width: 16px;
+    height: 16px;
+    color: var(--saas-primary-light);
+}
+
+.association-description {
+    color: var(--saas-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.association-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn-view {
+    flex: 1;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+}
+
+.btn-edit {
+    padding: 0.75rem 1rem;
+    background: var(--saas-bg);
+    color: var(--saas-text);
+    border: 2px solid var(--saas-border);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-edit:hover {
+    background: var(--saas-surface-hover);
+    border-color: var(--saas-primary);
+    color: var(--saas-primary);
+}
+
+/* ==============================================
+   EMPTY STATE
+   ============================================== */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--saas-surface);
+    border: 2px dashed var(--saas-border);
+    border-radius: 1.25rem;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--saas-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.empty-icon svg {
+    width: 40px;
+    height: 40px;
+    color: var(--saas-text-muted);
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--saas-text);
+    margin-bottom: 0.5rem;
+}
+
+.empty-description {
+    color: var(--saas-text-muted);
+    margin-bottom: 2rem;
+}
+
+/* ==============================================
+   ADD BUTTON
+   ============================================== */
+.btn-add-association {
+    padding: 0.875rem 1.75rem;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.btn-add-association:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+}
+
+/* ==============================================
+   STATS BADGES
+   ============================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--saas-surface);
+    border: 1px solid var(--saas-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--saas-text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ==============================================
+   RESPONSIVE
+   ============================================== */
+@media (max-width: 768px) {
+    .associations-title {
+        font-size: 2rem;
+    }
+
+    .associations-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .association-actions {
+        flex-direction: column;
+    }
+
+    .btn-edit {
+        width: 100%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==============================================
+   MODAL INPUTS
+   ============================================== */
+.modal .form-control:focus {
+    border-color: var(--saas-primary) !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2) !important;
+}
+
+.modal .form-control::placeholder {
+    color: var(--saas-text-muted);
+}
+

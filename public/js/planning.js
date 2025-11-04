@@ -20,7 +20,10 @@ class Calendar {
         // Mettre à jour le titre du mois
         const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
                            'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-        document.querySelector('.saas-month').textContent = `${monthNames[month]} ${year}`;
+        const monthElement = document.querySelector('.saas-month');
+        if (monthElement) {
+            monthElement.textContent = `${monthNames[month]} ${year}`;
+        }
 
         // Calculer les jours du mois
         const firstDay = new Date(year, month, 1);
@@ -88,7 +91,10 @@ class Calendar {
         }
 
         // Mettre à jour le tbody
-        document.querySelector('.saas-calendar tbody').innerHTML = calendarHTML;
+        const calendarTbody = document.querySelector('.saas-calendar tbody');
+        if (calendarTbody) {
+            calendarTbody.innerHTML = calendarHTML;
+        }
 
         // Réattacher les événements sur les jours
         this.attachDayListeners();

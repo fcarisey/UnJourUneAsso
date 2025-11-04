@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use App\Repository\InvitationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: InvitationRepository::class)]
-class Invitation
+class Invitation implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -63,5 +64,14 @@ class Invitation
         $this->event = $event;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array{
+        return [
+            'id' => $this->id,
+            'etat' => $this->etat,
+            'association' => $this->association,
+            'event' => $this->event
+        ];
     }
 }

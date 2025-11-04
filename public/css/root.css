@@ -1,22 +1,26 @@
-/* Thème SaaS Violet Moderne */
+/* ==============================================
+   VARIABLES DU THÈME VIOLET MODERNE
+   ============================================== */
+
 :root {
-    --saas-primary: #8b5cf6;
-    --saas-primary-dark: #7c3aed;
+    --saas-primary: #7c3aed;
+    --saas-primary-dark: #6d28d9;
     --saas-primary-light: #a78bfa;
-    --saas-bg: #fafafa;
-    --saas-card: #ffffff;
-    --saas-border: #e5e7eb;
-    --saas-text-primary: #111827;
-    --saas-text-secondary: #6b7280;
+    --saas-secondary: #ec4899;
+    --saas-bg: #0f0a1f;
+    --saas-surface: #1a1333;
+    --saas-surface-hover: #251d47;
+    --saas-border: #2d2355;
+    --saas-text: #f3f4f6;
     --saas-text-muted: #9ca3af;
-    --saas-hover: #f9fafb;
+    --saas-success: #10b981;
+    --saas-danger: #ef4444;
+    --saas-warning: #f59e0b;
 }
 
 body {
     background: var(--saas-bg);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    color: var(--saas-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.saas-container {
-    min-height: 100vh;
-}
