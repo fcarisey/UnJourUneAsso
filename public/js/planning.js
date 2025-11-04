@@ -160,6 +160,41 @@ class Calendar {
         this.renderCalendar();
     }
 
+    // Ouvrir la modale d'édition d'un événement
+    openEditModal(eventId) {
+        const event = this.events.find(e => e.id === eventId);
+        if (!event) {
+            console.error('Événement non trouvé:', eventId);
+            return;
+        }
+
+        // Pré-remplir le formulaire d'édition
+        document.getElementById('editEventId').value = event.id;
+        document.getElementById('editEventTitle').value = event.title;
+        document.getElementById('editEventStartDateTime').value = this.formatDateTimeLocal(new Date(event.startDateTime));
+        document.getElementById('editEventEndDateTime').value = this.formatDateTimeLocal(new Date(event.endDateTime));
+        document.getElementById('editEventDescription').value = event.description || '';
+
+        // Ouvrir la modale
+        const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+        editModal.show();
+    }
+
+    // Mettre à jour un événement
+    updateEvent(eventId, eventData) {
+        const index = this.events.findIndex(e => e.id === eventId);
+        if (index !== -1) {
+            this.events[index] = {
+                ...this.events[index],
+                title: eventData.title,
+                startDateTime: eventData.startDateTime,
+                endDateTime: eventData.endDateTime,
+                description: eventData.description
+            };
+            this.renderCalendar();
+        }
+    }
+
     // Charger les événements depuis le backend
     async loadEvents() {
         try {
@@ -242,6 +277,55 @@ class Calendar {
                 }
             });
         }
+
+        // Formulaire de modification d'événement
+        const editEventForm = document.getElementById('editEventForm');
+        if (editEventForm) {
+            editEventForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const eventId = parseInt(document.getElementById('editEventId').value);
+                const eventData = {
+                    title: document.getElementById('editEventTitle').value,
+                    startDateTime: document.getElementById('editEventStartDateTime').value,
+                    endDateTime: document.getElementById('editEventEndDateTime').value,
+                    description: document.getElementById('editEventDescription').value
+                };
+
+                // Envoyer au backend
+                try {
+                    const response = await fetch(`/event/update/${eventId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(eventData)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('Événement modifié avec succès:', result);
+
+                        // Mettre à jour localement
+                        this.updateEvent(eventId, eventData);
+
+                        // Fermer la modale
+                        const editModal = bootstrap.Modal.getInstance(document.getElementById('editEventModal'));
+                        editModal.hide();
+
+                        alert('Événement modifié avec succès !');
+                    } else {
+                        console.error('Erreur lors de la modification de l\'événement');
+                        alert('Erreur lors de la modification de l\'événement');
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    // En cas d'erreur backend, mettre à jour quand même localement
+                    this.updateEvent(eventId, eventData);
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editEventModal'));
+                    editModal.hide();
+                    alert('Événement modifié localement (backend non disponible)');
+                }
+            });
+        }
     }
 
     // Attacher les événements de clic sur les jours
@@ -273,6 +357,25 @@ class Calendar {
 
                 // Ouvrir la modale
                 eventModal.show();
+            });
+        });
+
+        // Attacher les événements de clic sur les badges d'événements
+        const eventBadges = document.querySelectorAll('.event-badge');
+        const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+
+        eventBadges.forEach(badge => {
+            badge.addEventListener('click', (e) => {
+                // Si on clique sur le bouton supprimer, ne pas ouvrir la modale d'édition
+                if (e.target.closest('.event-badge-delete')) {
+                    return;
+                }
+
+                e.stopPropagation(); // Empêcher la propagation vers le jour
+                const eventId = parseInt(badge.getAttribute('data-event-id'));
+
+                // Ouvrir la modale d'édition
+                this.openEditModal(eventId);
             });
         });
 

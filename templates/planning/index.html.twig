@@ -162,4 +162,54 @@
         </div>
     </div>
 </div>
+
+<!-- Modale de modification d'événement -->
+<div class="modal fade saas-modal" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEventModalLabel">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="d-inline-block me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Modifier l'événement
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editEventForm">
+                <input type="hidden" id="editEventId">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editEventTitle" class="form-label">Titre de l'événement</label>
+                        <input type="text" class="form-control" id="editEventTitle" placeholder="Ex: Réunion mensuelle" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editEventStartDateTime" class="form-label">Date/Heure de début</label>
+                        <input type="datetime-local" class="form-control" id="editEventStartDateTime" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editEventEndDateTime" class="form-label">Date/Heure de fin</label>
+                        <input type="datetime-local" class="form-control" id="editEventEndDateTime" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editEventDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editEventDescription" rows="3" placeholder="Ajouter une description..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="saas-btn saas-btn-primary">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

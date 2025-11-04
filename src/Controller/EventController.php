@@ -54,4 +54,22 @@ final class EventController extends BaseController
             'message' => 'Event deleted successfully'
         ]));
     }
+
+    #[Route('/event/update/{id}', name: 'event_update', methods: ['PUT'])]
+    public function update(Request $request, EntityManagerInterface $em, Event $event): Response{
+        $data = $request->getContent();
+        $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
+
+        $event->setName($data['title']);
+        $event->setDescription($data['description']);
+        $event->setStartAt(new \DateTimeImmutable($data['startDateTime']));
+        $event->setEndAt(new \DateTimeImmutable($data['endDateTime']));
+
+        $em->flush();
+
+        return new Response(json_encode([
+            'success' => true,
+            'message' => 'Event updated successfully'
+        ]));
+    }
 }
