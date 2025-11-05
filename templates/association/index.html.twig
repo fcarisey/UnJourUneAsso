@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/associations.css') }}">
 {% endblock %}
 
+{% block js %}
+    <script src="{{ asset('js/associations.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 <div class="associations-container">
     <div class="container">
@@ -42,7 +46,7 @@
         {% if associations|length > 0 %}
             <div class="associations-grid" id="associationsGrid">
                 {% for association in associations %}
-                    <div class="association-card" data-association-name="{{ association.name|lower }}">
+                    <div class="association-card" data-name="{{ association.name|lower }}" data-id="{{ association.id }}">
                         <div class="association-icon">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -67,7 +71,7 @@
                             Une association dynamique dédiée à ses membres et à leurs activités.
                         </p>
                         <div class="association-actions">
-                            <button class="btn-view" onclick="window.location.href='/association/{{ association.id }}'">
+                            <button class="btn-view">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -136,6 +140,119 @@
                         </svg>
                         Créer
                     </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Voir une association -->
+<div class="modal fade" id="viewAssociationModal" tabindex="-1" aria-labelledby="viewAssociationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: 1.25rem; color: var(--saas-text);">
+            <div class="modal-header" style="border-bottom: 1px solid var(--saas-border);">
+                <h5 class="modal-title" id="viewAssociationModalLabel" style="font-weight: 700; background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" class="d-inline-block me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    Détails de l'association
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="association-icon" style="width: 80px; height: 80px; margin-right: 1.5rem;">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 id="viewAssociationName" style="margin: 0; font-size: 1.75rem; font-weight: 700; color: var(--saas-text);"></h3>
+                                <div class="d-flex gap-3 mt-2">
+                                    <span class="badge" style="background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14" class="d-inline-block">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                        </svg>
+                                        <span id="viewAssociationMembers"></span> membres
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label style="color: var(--saas-text-muted); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Description</label>
+                        <p id="viewAssociationDescription" style="color: var(--saas-text); margin-top: 0.5rem; line-height: 1.6;"></p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label style="color: var(--saas-text-muted); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Date de création</label>
+                        <p id="viewAssociationCreatedAt" style="color: var(--saas-text); margin-top: 0.5rem;"></p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label style="color: var(--saas-text-muted); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Identifiant</label>
+                        <p id="viewAssociationId" style="color: var(--saas-text); margin-top: 0.5rem; font-family: monospace;"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid var(--saas-border);">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: var(--saas-bg); border: 2px solid var(--saas-border); color: var(--saas-text); padding: 0.625rem 1.25rem; border-radius: 0.75rem; font-weight: 600;">Fermer</button>
+                <button type="button" class="btn-add-association" id="btnOpenEditFromView">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Modifier
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Modifier une association -->
+<div class="modal fade" id="editAssociationModal" tabindex="-1" aria-labelledby="editAssociationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: 1.25rem; color: var(--saas-text);">
+            <div class="modal-header" style="border-bottom: 1px solid var(--saas-border);">
+                <h5 class="modal-title" id="editAssociationModalLabel" style="font-weight: 700; background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" class="d-inline-block me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Modifier l'association
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+            <form id="editAssociationForm">
+                <input type="hidden" id="editAssociationId">
+                <div class="modal-body" style="padding: 2rem;">
+                    <div class="mb-3">
+                        <label for="editAssociationName" class="form-label" style="color: var(--saas-text); font-weight: 600;">Nom de l'association</label>
+                        <input type="text" class="form-control" id="editAssociationName" placeholder="Ex: Les Amis du Sport" required style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAssociationDescription" class="form-label" style="color: var(--saas-text); font-weight: 600;">Description</label>
+                        <textarea class="form-control" id="editAssociationDescription" rows="3" placeholder="Décrivez votre association..." style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid var(--saas-border); justify-content: space-between;">
+                    <button type="button" class="btn btn-danger" id="btnDeleteAssociation" style="background: linear-gradient(135deg, #ef4444, #dc2626); border: none; color: white; padding: 0.625rem 1.25rem; border-radius: 0.75rem; font-weight: 600;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16" class="d-inline-block">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        Supprimer
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: var(--saas-bg); border: 2px solid var(--saas-border); color: var(--saas-text); padding: 0.625rem 1.25rem; border-radius: 0.75rem; font-weight: 600; margin-right: 0.5rem;">Annuler</button>
+                        <button type="submit" class="btn-add-association">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Enregistrer
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
