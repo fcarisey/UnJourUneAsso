@@ -35,6 +35,9 @@ class Event implements JsonSerializable
     #[ORM\OneToMany(targetEntity: Invitation::class, mappedBy: 'event')]
     private Collection $invitations;
 
+    #[ORM\Column(length: 6, nullable: true)]
+    private ?string $color = null;
+
     public function __construct()
     {
         $this->invitations = new ArrayCollection();
@@ -131,6 +134,19 @@ class Event implements JsonSerializable
             'start_at' => $this->start_at,
             'end_at' => $this->end_at,
             'invitations' => $this->invitations,
+            'color' => !empty($this->color) ? "#{$this->color}" : null,
         ];
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
     }
 }

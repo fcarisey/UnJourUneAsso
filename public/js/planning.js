@@ -201,20 +201,6 @@ class Calendar {
         }
     }
 
-    // Charger les événements depuis le backend
-    async loadEvents() {
-        try {
-            const response = await fetch('/event/list');
-            if (response.ok) {
-                const events = await response.json();
-                this.events = events;
-                this.renderCalendar();
-            }
-        } catch (error) {
-            console.error('Erreur lors du chargement des événements:', error);
-        }
-    }
-
     // Attacher les écouteurs d'événements
     attachEventListeners() {
         // Boutons de navigation
@@ -441,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //     color: '#8b5cf6'
     // });
 
-    fetch('/event/list', {
+    fetch('/events', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -458,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         startDateTime: event['start_at']['date'],
                         endDateTime: event['end_at']['date'],
                         description: event['description'],
-                        color: '#10b981'
+                        color: event['color'] ?? '#10b981'
                     });
                 })
             })

@@ -1,20 +1,52 @@
-<header class="saas-header">
+<header style="background: var(--saas-surface); border-bottom: 1px solid var(--saas-border); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px);">
     <div class="container-fluid px-4">
-        <div class="d-flex justify-content-between align-items-center py-3">
+        <div class="d-flex justify-content-between align-items-center" style="height: 72px;">
             <div class="d-flex align-items-center gap-3">
-                <div class="saas-logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="8" fill="#8b5cf6"/>
-                        <path d="M8 12h16M8 16h16M8 20h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M8 2v3M16 2v3M3.5 9.09h17M21 8.5V17c0 3-1.5 5-5 5H8c-3.5 0-5-2-5-5V8.5c0-3 1.5-5 5-5h8c3.5 0 5 2 5 5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.695 13.7h.009M15.695 16.7h.009M11.995 13.7h.01M11.995 16.7h.01M8.294 13.7h.01M8.294 16.7h.01" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h1 class="saas-title mb-0">Planning</h1>
+                <div>
+                    <h1 style="font-size: 1.375rem; font-weight: 700; background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0; line-height: 1;">UnJourUneAsso</h1>
+                    <p style="font-size: 0.75rem; color: var(--saas-text-muted); margin: 0.25rem 0 0 0;">Gérez vos événements simplement</p>
+                </div>
             </div>
-            <nav class="saas-nav">
-                <a href="/" class="saas-nav-link">Planning</a>
-                <a href="/associations" class="saas-nav-link">Associations</a>
-                <a href="/settings" class="saas-nav-link">Paramètres</a>
+            <nav class="d-flex align-items-center gap-2">
+                <a href="/" style="padding: 0.625rem 1.25rem; border-radius: 0.625rem; font-size: 0.9375rem; font-weight: 500; color: var(--saas-text); text-decoration: none; transition: all 0.2s ease; background: transparent; border: 1px solid transparent;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+                        <path d="M8 2v3M16 2v3M3.5 9.09h17M21 8.5V17c0 3-1.5 5-5 5H8c-3.5 0-5-2-5-5V8.5c0-3 1.5-5 5-5h8c3.5 0 5 2 5 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Planning
+                </a>
+                <a href="/associations" style="padding: 0.625rem 1.25rem; border-radius: 0.625rem; font-size: 0.9375rem; font-weight: 500; color: var(--saas-text); text-decoration: none; transition: all 0.2s ease; background: transparent; border: 1px solid transparent;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+                        <path d="M18 7.16C17.94 7.15 17.87 7.15 17.81 7.16C16.43 7.11 15.33 5.98 15.33 4.58C15.33 3.15 16.48 2 17.91 2C19.34 2 20.49 3.16 20.49 4.58C20.48 5.98 19.38 7.11 18 7.16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.97 14.44C18.34 14.67 19.85 14.43 20.91 13.72C22.32 12.78 22.32 11.24 20.91 10.3C19.84 9.59 18.31 9.35 16.94 9.59" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5.97 7.16C6.03 7.15 6.1 7.15 6.16 7.16C7.54 7.11 8.64 5.98 8.64 4.58C8.64 3.15 7.49 2 6.06 2C4.63 2 3.48 3.16 3.48 4.58C3.49 5.98 4.59 7.11 5.97 7.16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 14.44C5.63 14.67 4.12 14.43 3.06 13.72C1.65 12.78 1.65 11.24 3.06 10.3C4.13 9.59 5.66 9.35 7.03 9.59" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 14.63C11.94 14.62 11.87 14.62 11.81 14.63C10.43 14.58 9.33 13.45 9.33 12.05C9.33 10.62 10.48 9.47 11.91 9.47C13.34 9.47 14.49 10.63 14.49 12.05C14.48 13.45 13.38 14.59 12 14.63Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.09 17.78C7.68 18.72 7.68 20.26 9.09 21.2C10.69 22.27 13.31 22.27 14.91 21.2C16.32 20.26 16.32 18.72 14.91 17.78C13.32 16.72 10.69 16.72 9.09 17.78Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Associations
+                </a>
+                <a href="/settings" style="padding: 0.625rem 1.25rem; border-radius: 0.625rem; font-size: 0.9375rem; font-weight: 500; color: var(--saas-text); text-decoration: none; transition: all 0.2s ease; background: transparent; border: 1px solid transparent;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12.88v-1.76c0-1.04.85-1.9 1.9-1.9 1.81 0 2.55-1.28 1.64-2.85-.52-.9-.21-2.07.7-2.59l1.73-.99c.79-.47 1.81-.19 2.28.6l.11.19c.9 1.57 2.38 1.57 3.29 0l.11-.19c.47-.79 1.49-1.07 2.28-.6l1.73.99c.91.52 1.22 1.69.7 2.59-.91 1.57-.17 2.85 1.64 2.85 1.04 0 1.9.85 1.9 1.9v1.76c0 1.04-.85 1.9-1.9 1.9-1.81 0-2.55 1.28-1.64 2.85.52.91.21 2.07-.7 2.59l-1.73.99c-.79.47-1.81.19-2.28-.6l-.11-.19c-.9-1.57-2.38-1.57-3.29 0l-.11.19c-.47.79-1.49 1.07-2.28.6l-1.73-.99a1.899 1.899 0 0 1-.7-2.59c.91-1.57.17-2.85-1.64-2.85-1.05 0-1.9-.86-1.9-1.9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Paramètres
+                </a>
             </nav>
         </div>
     </div>
 </header>
+
+<style>
+header a:hover {
+    background: var(--saas-surface-hover) !important;
+    border-color: var(--saas-border) !important;
+}
+</style>
+

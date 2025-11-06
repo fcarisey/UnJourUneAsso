@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class AssociationController extends BaseController
+final class AssociationController extends BaseController
 {
     protected string $title = "Association";
 
@@ -56,6 +56,7 @@ class AssociationController extends BaseController
         $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
 
         $association->setName($data['name']);
+        $association->setDescription($data['description']);
 
         $em->persist($association);
         $em->flush();
