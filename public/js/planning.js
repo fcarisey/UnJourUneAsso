@@ -63,7 +63,7 @@ class Calendar {
                         calendarHTML += '<div class="day-events">';
                         dayEvents.forEach(event => {
                             calendarHTML += `
-                                <span class="event-badge" data-event-id="${event.id}" style="background: ${event.color || '#8b5cf6'}">
+                                <span class="event-badge" data-event-id="${event.id}" style="background: ${event.color ?? '#8b5cf6'}">
                                     <span class="event-badge-title">${event.title}</span>
                                     <button class="event-badge-delete" data-event-id="${event.id}" title="Supprimer">
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,7 +148,7 @@ class Calendar {
             startDateTime: eventData.startDateTime,
             endDateTime: eventData.endDateTime,
             description: eventData.description,
-            color: eventData.color || '#8b5cf6'
+            color: eventData.color ?? '#8b5cf6'
         };
 
         this.events.push(event);
@@ -212,7 +212,7 @@ class Calendar {
 
         // Bouton nouvel événement
         const newEventBtn = document.querySelector('.saas-btn-primary');
-        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+        const eventModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('eventModal'));
 
         if (newEventBtn) {
             newEventBtn.addEventListener('click', () => {
@@ -245,13 +245,15 @@ class Calendar {
 
                     if (response.ok) {
                         const savedEvent = await response.json();
+                        eventData.color = savedEvent.color;
+                        eventData.id = savedEvent.event_id;
                         console.log('Événement créé avec succès:', savedEvent);
 
                         // Ajouter localement
                         this.addEvent(eventData);
 
                         // Fermer la modale et réinitialiser
-                        eventModal.hide();
+                        eventModal.hide()
                         eventForm.reset();
 
                         alert('Événement créé avec succès !');
@@ -323,7 +325,7 @@ class Calendar {
     // Attacher les événements de clic sur les jours
     attachDayListeners() {
         const days = document.querySelectorAll('.saas-day:not(.other-month)');
-        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+        const eventModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('eventModal'));
 
         days.forEach(day => {
             day.addEventListener('click', (e) => {
