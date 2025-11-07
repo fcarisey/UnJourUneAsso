@@ -133,7 +133,6 @@ class Event implements JsonSerializable
             'description' => $this->description,
             'start_at' => $this->start_at,
             'end_at' => $this->end_at,
-            'invitations' => $this->invitations,
             'color' => !empty($this->color) ? "#{$this->color}" : null,
         ];
     }

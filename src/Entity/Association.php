@@ -28,6 +28,9 @@ class Association implements \JsonSerializable
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
+
     public function __construct()
     {
         $this->invitations = new ArrayCollection();
@@ -84,8 +87,8 @@ class Association implements \JsonSerializable
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'invitations' => $this->invitations
+            'email' => $this->email,
+            'description' => $this->description
         ];
     }
 
@@ -97,6 +100,18 @@ class Association implements \JsonSerializable
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }

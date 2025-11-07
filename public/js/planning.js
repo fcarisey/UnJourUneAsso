@@ -4,12 +4,16 @@ class Calendar {
         this.currentDate = new Date();
         this.events = []; // Stockage des événements
         this.selectedDate = null;
+        this.currentEventId = null; // ID de l'événement en cours d'édition
+        this.associations = []; // Liste des associations disponibles
         this.init();
     }
 
     init() {
         this.renderCalendar();
         this.attachEventListeners();
+        this.attachInvitationListeners();
+        this.loadAssociations(); // Charger les associations au démarrage
     }
 
     // Générer le calendrier pour le mois en cours
@@ -174,12 +178,18 @@ class Calendar {
             return;
         }
 
+        // Stocker l'ID de l'événement en cours
+        this.currentEventId = eventId;
+
         // Pré-remplir le formulaire d'édition
         document.getElementById('editEventId').value = event.id;
         document.getElementById('editEventTitle').value = event.title;
         document.getElementById('editEventStartDateTime').value = this.formatDateTimeLocal(new Date(event.startDateTime));
         document.getElementById('editEventEndDateTime').value = this.formatDateTimeLocal(new Date(event.endDateTime));
         document.getElementById('editEventDescription').value = event.description || '';
+
+        // Charger les invitations
+        this.loadInvitations(eventId);
 
         // Ouvrir la modale
         const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
@@ -213,14 +223,29 @@ class Calendar {
         // Bouton nouvel événement
         const newEventBtn = document.querySelector('.saas-btn-primary');
         const eventModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('eventModal'));
+        const editEventModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('editEventModal'));
 
         if (newEventBtn) {
             newEventBtn.addEventListener('click', () => {
                 this.selectedDate = null;
+                this.currentEventId = null;
                 document.getElementById('eventForm').reset();
+                // Vider la liste des invitations
+                document.getElementById('createInvitationsList').innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Créez l\'événement pour ajouter des invitations</small></div>';
                 eventModal.show();
             });
         }
+
+        // Gérer la fermeture des modales
+        document.getElementById('eventModal').addEventListener('hidden.bs.modal', () => {
+            this.currentEventId = null;
+            this.renderCalendar(); // Rafraîchir l'affichage
+        });
+
+        document.getElementById('editEventModal').addEventListener('hidden.bs.modal', () => {
+            this.currentEventId = null;
+            this.renderCalendar(); // Rafraîchir l'affichage
+        });
 
         // Formulaire d'événement
         const eventForm = document.getElementById('eventForm');
@@ -249,14 +274,16 @@ class Calendar {
                         eventData.id = savedEvent.event_id;
                         console.log('Événement créé avec succès:', savedEvent);
 
+                        // Stocker l'ID de l'événement pour les invitations
+                        this.currentEventId = savedEvent.event_id;
+
+                        // Charger les invitations (vide pour un nouvel événement) - contexte 'create'
+                        await this.loadInvitations(this.currentEventId, 'create');
+
                         // Ajouter localement
                         this.addEvent(eventData);
 
-                        // Fermer la modale et réinitialiser
-                        eventModal.hide()
-                        eventForm.reset();
-
-                        alert('Événement créé avec succès !');
+                        alert('Événement créé avec succès ! Vous pouvez maintenant ajouter des invitations.');
                     } else {
                         console.error('Erreur lors de la création de l\'événement');
                         alert('Erreur lors de la création de l\'événement');
@@ -268,6 +295,44 @@ class Calendar {
                     eventModal.hide();
                     eventForm.reset();
                     alert('Événement créé localement (backend non disponible)');
+                }
+            });
+        }
+
+        // Bouton de suppression dans la modale d'édition
+        const btnDeleteEvent = document.getElementById('btnDeleteEvent');
+        if (btnDeleteEvent) {
+            btnDeleteEvent.addEventListener('click', async () => {
+                const eventId = parseInt(document.getElementById('editEventId').value);
+
+                if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
+                    try {
+                        const response = await fetch(`/event/delete/${eventId}`, {
+                            method: 'DELETE'
+                        });
+
+                        if (response.ok) {
+                            console.log('Événement supprimé avec succès');
+
+                            // Supprimer localement
+                            this.deleteEvent(eventId);
+
+                            // Fermer la modale
+                            const editModal = bootstrap.Modal.getInstance(document.getElementById('editEventModal'));
+                            editModal.hide();
+
+                            alert('Événement supprimé avec succès !');
+                        } else {
+                            alert('Erreur lors de la suppression de l\'événement');
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        // En cas d'erreur backend, supprimer quand même localement
+                        this.deleteEvent(eventId);
+                        const editModal = bootstrap.Modal.getInstance(document.getElementById('editEventModal'));
+                        editModal.hide();
+                        alert('Événement supprimé localement');
+                    }
                 }
             });
         }
@@ -408,6 +473,328 @@ class Calendar {
         const minutes = String(date.getMinutes()).padStart(2, '0');
 
         return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+    // Gestion des invitations
+    attachInvitationListeners() {
+        // Modale de création - Sélecteur d'association
+        const createAssociationSelect = document.getElementById('createAssociationSelect');
+        if (createAssociationSelect) {
+            createAssociationSelect.addEventListener('change', async (e) => {
+                const associationId = e.target.value;
+
+                if (!associationId) return;
+
+                if (!this.currentEventId) {
+                    alert('Veuillez d\'abord créer l\'événement');
+                    createAssociationSelect.value = '';
+                    return;
+                }
+
+                await this.addInvitationByAssociationId(this.currentEventId, associationId, 'create');
+
+                // Réinitialiser le sélecteur
+                createAssociationSelect.value = '';
+            });
+        }
+
+        // Modale de création - Email
+        const btnCreateAddInvitation = document.getElementById('btnCreateAddInvitation');
+        const createInvitationEmail = document.getElementById('createInvitationEmail');
+
+        if (btnCreateAddInvitation) {
+            btnCreateAddInvitation.addEventListener('click', async () => {
+                const email = createInvitationEmail.value.trim();
+
+                if (!email) {
+                    alert('Veuillez saisir une adresse email');
+                    return;
+                }
+
+                if (!this.validateEmail(email)) {
+                    alert('Adresse email invalide');
+                    return;
+                }
+
+                if (!this.currentEventId) {
+                    alert('Veuillez d\'abord créer l\'événement');
+                    return;
+                }
+
+                await this.addInvitationByEmail(this.currentEventId, email, 'create');
+                createInvitationEmail.value = '';
+            });
+
+            // Ajouter avec la touche Entrée
+            createInvitationEmail.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    btnCreateAddInvitation.click();
+                }
+            });
+        }
+
+        // Modale d'édition - Sélecteur d'association
+        const editAssociationSelect = document.getElementById('editAssociationSelect');
+        if (editAssociationSelect) {
+            editAssociationSelect.addEventListener('change', async (e) => {
+                const associationId = e.target.value;
+
+                if (!associationId) return;
+
+                if (!this.currentEventId) {
+                    alert('Veuillez d\'abord créer l\'événement');
+                    editAssociationSelect.value = '';
+                    return;
+                }
+
+                await this.addInvitationByAssociationId(this.currentEventId, associationId, 'edit');
+
+                // Réinitialiser le sélecteur
+                editAssociationSelect.value = '';
+            });
+        }
+
+        // Modale d'édition - Email
+        const btnEditAddInvitation = document.getElementById('btnEditAddInvitation');
+        const editInvitationEmail = document.getElementById('editInvitationEmail');
+
+        if (btnEditAddInvitation) {
+            btnEditAddInvitation.addEventListener('click', async () => {
+                const email = editInvitationEmail.value.trim();
+
+                if (!email) {
+                    alert('Veuillez saisir une adresse email');
+                    return;
+                }
+
+                if (!this.validateEmail(email)) {
+                    alert('Adresse email invalide');
+                    return;
+                }
+
+                if (!this.currentEventId) {
+                    alert('Veuillez d\'abord créer l\'événement');
+                    return;
+                }
+
+                await this.addInvitationByEmail(this.currentEventId, email, 'edit');
+                editInvitationEmail.value = '';
+            });
+
+            // Ajouter avec la touche Entrée
+            editInvitationEmail.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    btnEditAddInvitation.click();
+                }
+            });
+        }
+    }
+
+    validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // Charger toutes les associations disponibles
+    async loadAssociations() {
+        try {
+            const response = await fetch('/associations/available');
+            const data = await response.json();
+
+            if (data.success) {
+                this.associations = data.associations;
+                this.populateAssociationSelects();
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des associations:', error);
+        }
+    }
+
+    // Peupler les sélecteurs d'associations
+    populateAssociationSelects() {
+        const createSelect = document.getElementById('createAssociationSelect');
+        const editSelect = document.getElementById('editAssociationSelect');
+
+        const populateSelect = (select) => {
+            if (!select) return;
+
+            // Garder l'option par défaut
+            select.innerHTML = '<option value="">-- Choisir une association --</option>';
+
+            // Ajouter les associations
+            this.associations.forEach(assoc => {
+                const option = document.createElement('option');
+                option.value = assoc.id;
+                option.textContent = assoc.name;
+                select.appendChild(option);
+            });
+        };
+
+        populateSelect(createSelect);
+        populateSelect(editSelect);
+    }
+
+    // Filtrer les associations déjà invitées du sélecteur
+    updateAssociationSelects(invitedAssociationIds, context = 'edit') {
+        const select = document.getElementById(context === 'create' ? 'createAssociationSelect' : 'editAssociationSelect');
+
+        if (!select) return;
+
+        // Réinitialiser
+        select.innerHTML = '<option value="">-- Choisir une association --</option>';
+
+        // Ajouter seulement les associations non invitées
+        this.associations
+            .filter(assoc => !invitedAssociationIds.includes(assoc.id))
+            .forEach(assoc => {
+                const option = document.createElement('option');
+                option.value = assoc.id;
+                option.textContent = assoc.name;
+                select.appendChild(option);
+            });
+    }
+
+    async loadInvitations(eventId, context = 'edit') {
+        const invitationsList = document.getElementById(context === 'create' ? 'createInvitationsList' : 'editInvitationsList');
+
+        if (!invitationsList) return;
+
+        invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Chargement...</small></div>';
+
+        try {
+            const response = await fetch(`/event/${eventId}/invitations`);
+            const data = await response.json();
+
+            if (data.success) {
+                this.renderInvitations(data.invitations, context);
+            } else {
+                invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Erreur de chargement</small></div>';
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des invitations:', error);
+            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune invitation</small></div>';
+        }
+    }
+
+    renderInvitations(invitations, context = 'edit') {
+        const invitationsList = document.getElementById(context === 'create' ? 'createInvitationsList' : 'editInvitationsList');
+
+        if (!invitationsList) return;
+
+        if (!invitations || invitations.length === 0) {
+            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune invitation</small></div>';
+            // Réinitialiser le sélecteur avec toutes les associations
+            this.updateAssociationSelects([], context);
+            return;
+        }
+
+        // Récupérer les IDs des associations déjà invitées
+        const invitedAssociationIds = invitations.map(inv => inv.association.id);
+
+        invitationsList.innerHTML = invitations.map(inv => {
+            const statusBadge = inv.etat === null
+                ? '<span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--saas-warning); color: var(--saas-bg); border-radius: 0.5rem; font-weight: 600;">En attente</span>'
+                : inv.etat
+                ? '<span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--saas-success); color: var(--saas-bg); border-radius: 0.5rem; font-weight: 600;">Acceptée</span>'
+                : '<span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--saas-danger); color: var(--saas-bg); border-radius: 0.5rem; font-weight: 600;">Refusée</span>';
+
+            return `
+                <div class="invitation-item d-flex justify-content-between align-items-center mb-2 p-2" style="background: var(--saas-surface); border-radius: 0.5rem; border: 1px solid var(--saas-border);">
+                    <div class="flex-grow-1">
+                        <div style="font-weight: 600; color: var(--saas-text);">${inv.association.name}</div>
+                        ${statusBadge}
+                    </div>
+                    <button type="button" class="btn btn-sm btn-danger-invitation" data-invitation-id="${inv.id}" style="background: transparent; border: none; color: var(--saas-danger); padding: 0.25rem 0.5rem;">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        // Mettre à jour le sélecteur pour exclure les associations déjà invitées
+        this.updateAssociationSelects(invitedAssociationIds, context);
+
+        // Attacher les événements de suppression
+        document.querySelectorAll('.btn-danger-invitation').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const invitationId = btn.getAttribute('data-invitation-id');
+                if (confirm('Supprimer cette invitation ?')) {
+                    await this.deleteInvitation(invitationId, context);
+                }
+            });
+        });
+    }
+
+    async addInvitationByAssociationId(eventId, associationId, context = 'edit') {
+        try {
+            const response = await fetch(`/event/${eventId}/invitation/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ associationId: parseInt(associationId) })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Recharger la liste des invitations
+                await this.loadInvitations(eventId, context);
+            } else {
+                alert(data.message || 'Erreur lors de l\'ajout de l\'invitation');
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout de l\'invitation:', error);
+            alert('Erreur lors de l\'ajout de l\'invitation');
+        }
+    }
+
+    async addInvitationByEmail(eventId, email, context = 'edit') {
+        try {
+            const response = await fetch(`/event/${eventId}/invitation/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Recharger les associations (une nouvelle a peut-être été créée)
+                await this.loadAssociations();
+
+                // Recharger la liste des invitations
+                await this.loadInvitations(eventId, context);
+            } else {
+                alert(data.message || 'Erreur lors de l\'ajout de l\'invitation');
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'ajout de l\'invitation:', error);
+            alert('Erreur lors de l\'ajout de l\'invitation');
+        }
+    }
+
+    async deleteInvitation(invitationId, context = 'edit') {
+        try {
+            const response = await fetch(`/event/invitation/${invitationId}/delete`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Recharger la liste des invitations
+                if (this.currentEventId) {
+                    await this.loadInvitations(this.currentEventId, context);
+                }
+            } else {
+                alert('Erreur lors de la suppression de l\'invitation');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la suppression de l\'invitation:', error);
+            alert('Erreur lors de la suppression de l\'invitation');
+        }
     }
 }
 

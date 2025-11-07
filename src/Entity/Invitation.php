@@ -70,8 +70,7 @@ class Invitation implements JsonSerializable
         return [
             'id' => $this->id,
             'etat' => $this->etat,
-            'association' => $this->association,
-            'event' => $this->event
+            'association' => $this->association
         ];
     }
 }
