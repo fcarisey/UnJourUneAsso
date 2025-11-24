@@ -34,6 +34,8 @@ final class AssociationController extends BaseController
         $association = new Association();
 
         $association->setName($data['name']);
+        $association->setEmail($data['email']);
+        $association->setDescription($data['description']);
 
         $em->persist($association);
         $em->flush();
@@ -56,6 +58,7 @@ final class AssociationController extends BaseController
         $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
 
         $association->setName($data['name']);
+        $association->setEmail($data['email']);
         $association->setDescription($data['description']);
 
         $em->persist($association);

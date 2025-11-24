@@ -53,6 +53,9 @@
                             </svg>
                         </div>
                         <h3 class="association-name">{{ association.name }}</h3>
+                        <p class="association-email">
+                            {{ association.email }}
+                        </p>
                         <div class="association-meta">
                             <div class="meta-item">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,6 +129,10 @@
                     <div class="mb-3">
                         <label for="associationName" class="form-label" style="color: var(--saas-text); font-weight: 600;">Nom de l'association</label>
                         <input type="text" class="form-control" id="associationName" placeholder="Ex: Les Amis du Sport" required style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="associationEmail" class="form-label" style="color: var(--saas-text); font-weight: 600;">Adresse mail</label>
+                        <input type="email" class="form-control" id="associationEmail" placeholder="Ex: john.doe@exemple.org" required style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;">
                     </div>
                     <div class="mb-3">
                         <label for="associationDescription" class="form-label" style="color: var(--saas-text); font-weight: 600;">Description</label>
@@ -231,6 +238,10 @@
                     <div class="mb-3">
                         <label for="editAssociationName" class="form-label" style="color: var(--saas-text); font-weight: 600;">Nom de l'association</label>
                         <input type="text" class="form-control" id="editAssociationName" placeholder="Ex: Les Amis du Sport" required style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAssociationEmail" class="form-label" style="color: var(--saas-text); font-weight: 600;">Adresse mail</label>
+                        <input type="email" class="form-control" id="editAssociationEmail" placeholder="Ex: john.doe@exemple.org" required style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;">
                     </div>
                     <div class="mb-3">
                         <label for="editAssociationDescription" class="form-label" style="color: var(--saas-text); font-weight: 600;">Description</label>

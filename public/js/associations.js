@@ -7,12 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     associationCards.forEach(card => {
         const id = card.dataset.id;
         const name = card.querySelector('.association-name').textContent;
+        const email = card.querySelector('.association-email').textContent;
         const members = card.querySelector('.meta-item span').textContent.split(' ')[0];
         const description = card.querySelector('.association-description').textContent.trim();
 
         associationsData[id] = {
             id: id,
             name: name,
+            email: email,
             members: members,
             description: description,
             createdAt: new Date().toLocaleDateString('fr-FR')
@@ -67,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('editAssociationId').value = associationId;
         document.getElementById('editAssociationName').value = association.name;
+        document.getElementById('editAssociationEmail').value = association.email;
         document.getElementById('editAssociationDescription').value = association.description;
 
         // Fermer la modale de visualisation si elle est ouverte
@@ -91,16 +94,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const associationId = document.getElementById('editAssociationId').value;
         const name = document.getElementById('editAssociationName').value;
+        const email = document.getElementById('editAssociationEmail').value;
         const description = document.getElementById('editAssociationDescription').value;
 
         // Mettre à jour les données
         associationsData[associationId].name = name;
+        associationsData[associationId].email = email;
         associationsData[associationId].description = description;
 
         // Mettre à jour le DOM
         const card = document.querySelector(`.association-card[data-id="${associationId}"]`);
         if (card) {
             card.querySelector('.association-name').textContent = name;
+            card.querySelector('.association-email').textContent = email;
             card.querySelector('.association-description').textContent = description;
         }
 
@@ -113,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({
                 associationId: associationId,
                 name: name,
+                email: email,
                 description: description,
             })
         })
@@ -197,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             const name = document.getElementById('associationName').value;
+            const email = document.getElementById('associationEmail').value;
             const description = document.getElementById('associationDescription').value;
 
             // TODO: Appel API pour créer l'association
@@ -207,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify({
                     name: name,
+                    email: email,
                     description: description,
                 })
             })

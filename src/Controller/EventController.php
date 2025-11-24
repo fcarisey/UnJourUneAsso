@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport\TransportInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -100,6 +101,7 @@ final class EventController extends BaseController
         ]));
     }
 
+    // TODO: Switch to InvitationController
     #[Route('/event/{id}/invitations', name: 'event_invitations', methods: ['GET'])]
     public function getInvitations(Event $event): Response{
         return new Response(json_encode([
@@ -118,8 +120,9 @@ final class EventController extends BaseController
         ]));
     }
 
+    // TODO: Switch to InvitationController
     #[Route('/event/{id}/invitation/add', name: 'event_invitation_add', methods: ['POST'])]
-    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, MailerInterface $mailer): Response{
+    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, TransportInterface $transport): Response{
         $data = json_decode($request->getContent(), true);
         $associationId = $data['associationId'] ?? null;
         $email = $data['email'] ?? '';
@@ -134,21 +137,6 @@ final class EventController extends BaseController
                     'message' => 'Association introuvable'
                 ]), 404);
             }
-
-            $email = (new Email())
-                ->from("test@exemple.fr")
-                ->to("you@exemple.com")
-                ->subject("Vous avez été invité à l'évènement " . $event->getName())
-                ->text("Lien d'invitation blablabla ...");
-
-            try {
-                $mailer->send($email);
-            } catch (TransportExceptionInterface $e) {
-                return new Response(json_encode([
-                    'success' => false,
-                    'message' => $e->getMessage()
-                ]));
-            }
         }
         // Cas 2: Création via email
         else if (!empty($email)) {
@@ -162,12 +150,15 @@ final class EventController extends BaseController
                 $association->setDescription('Créé automatiquement via invitation');
                 $em->persist($association);
             }
+
         } else {
             return new Response(json_encode([
                 'success' => false,
                 'message' => 'Association ou email requis'
             ]), 400);
         }
+
+        EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail());
 
         // Vérifier si l'invitation existe déjà
         $existingInvitation = $em->getRepository(Invitation::class)
@@ -196,36 +187,15 @@ final class EventController extends BaseController
         ]));
     }
 
+    // TODO: Switch to InvitationController
     #[Route('/event/invitation/{id}/delete', name: 'event_invitation_delete', methods: ['DELETE'])]
-    public function deleteInvitation(EntityManagerInterface $em, \App\Entity\Invitation $invitation): Response{
+    public function deleteInvitation(EntityManagerInterface $em, Invitation $invitation): Response{
         $em->remove($invitation);
         $em->flush();
 
         return new Response(json_encode([
             'success' => true,
             'message' => 'Invitation supprimée'
-        ]));
-    }
-
-    #[Route('/test_mail', name: 'test-mail', methods: ['GET'])]
-    public function testMail(MailerInterface $mailer): Response{
-        $email = (new Email())
-            ->from("test@exemple.com")
-            ->to("destinataire@exemple.com")
-            ->subject("Mail de test via Mailpit")
-            ->html("Test message");
-
-        try {
-            $mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            return new Response(json_encode([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]));
-        }
-
-        return new Response(json_encode([
-            'success' => true,
         ]));
     }
 }
