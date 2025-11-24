@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Association;
 use App\Entity\Event;
 use App\Entity\Invitation;
+use App\Helper\TemporaryLinkHelper;
 use App\Repository\EventRepository;
+use App\Repository\InvitationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,7 +124,7 @@ final class EventController extends BaseController
 
     // TODO: Switch to InvitationController
     #[Route('/event/{id}/invitation/add', name: 'event_invitation_add', methods: ['POST'])]
-    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, TransportInterface $transport): Response{
+    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, TransportInterface $transport, InvitationRepository $invitationRepository): Response{
         $data = json_decode($request->getContent(), true);
         $associationId = $data['associationId'] ?? null;
         $email = $data['email'] ?? '';
@@ -158,8 +160,6 @@ final class EventController extends BaseController
             ]), 400);
         }
 
-        EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail());
-
         // Vérifier si l'invitation existe déjà
         $existingInvitation = $em->getRepository(Invitation::class)
             ->findOneBy(['event' => $event, 'association' => $association]);
@@ -176,9 +176,18 @@ final class EventController extends BaseController
         $invitation->setEvent($event);
         $invitation->setAssociation($association);
         $invitation->setEtat(null); // En attente
+        $invitation->setLink(TemporaryLinkHelper::CreateLink($email . $association->getName() . $event->getName()));
 
         $em->persist($invitation);
         $em->flush();
+
+
+        $invitation = $invitationRepository->findOneBy([
+            'association' => $association,
+            'event' => $event
+        ]);
+
+        EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail(), $invitation->getLink());
 
         return new Response(json_encode([
             'success' => true,

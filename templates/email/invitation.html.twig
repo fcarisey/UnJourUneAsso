@@ -255,10 +255,9 @@
 
             <!-- Bouton d'action -->
             <div class="cta-section">
-{#                <a href="{{ url('app_invitation_respond', {token: invitation.token}) }}" class="cta-button">#}
-{#                    Répondre à l'invitation#}
-{#                </a>#}
-                Répondre à l'invitation
+                <a href="{{ url('app_temporarylink', {hash: link}) }}" class="cta-button">
+                    Répondre à l'invitation
+                </a>
             </div>
 
             <!-- Informations sur l'organisateur -->

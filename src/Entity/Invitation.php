@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InvitationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -25,12 +26,15 @@ class Invitation implements JsonSerializable
     #[ORM\JoinColumn(nullable: false)]
     private ?Event $event = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $link = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function isEtat(): ?bool
+    public function getEtat(): ?bool
     {
         return $this->etat;
     }
@@ -72,5 +76,17 @@ class Invitation implements JsonSerializable
             'etat' => $this->etat,
             'association' => $this->association
         ];
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): static
+    {
+        $this->link = $link;
+
+        return $this;
     }
 }

@@ -29,7 +29,7 @@ abstract class EmailController
         return true;
     }
 
-    public static function sendEventInvitationMail(TransportInterface $transport, Event $event, Association $association, string $email): bool{
+    public static function sendEventInvitationMail(TransportInterface $transport, Event $event, Association $association, string $email, string $temporaryLink): bool{
         $email = (new TemplatedEmail())
             ->from(static::$from)
             ->to($email)
@@ -37,7 +37,8 @@ abstract class EmailController
             ->htmlTemplate('email/invitation.html.twig')
             ->context([
                 'event' => $event,
-                'association' => $association
+                'association' => $association,
+                'link' => $temporaryLink
             ]);
 
         try {
