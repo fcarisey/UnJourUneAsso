@@ -12,19 +12,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Transport\TransportInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class EventController extends BaseController
 {
     protected string $title = "évènement";
 
-    // HEX colors
+    // HEX colors (match avec le thème)
     private const EVENT_COLORS = [
-        '8B5CF6', // Violet vibrant (match votre thème)
+        '8B5CF6', // Violet vibrant
         'EC4899', // Rose fuchsia
         'F59E0B', // Orange/Ambre
         '10B981', // Vert émeraude

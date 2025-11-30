@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\InvitationRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Symfony\Component\HttpFoundation\Response;
