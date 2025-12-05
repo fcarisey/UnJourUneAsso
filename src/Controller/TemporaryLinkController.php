@@ -4,15 +4,15 @@ namespace App\Controller;
 
 use App\Repository\InvitationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Exception\ORMException;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class TemporarylinkController extends BaseController
+final class TemporaryLinkController extends BaseController
 {
     protected string $title = "Lien d'invitation";
 
-    #[Route('/invitation/{hash}', name: 'app_temporarylink')]
+    #[Route('/invitation/{hash}', name: 'app_temporary_link')]
     public function index(string $hash, InvitationRepository $invitationRepository): Response
     {
         if (empty($hash)) {
@@ -27,7 +27,7 @@ final class TemporarylinkController extends BaseController
             return new Response("Ce lien d'invitation n'existe pas !", Response::HTTP_NOT_FOUND);
         }
 
-        return $this->render('temporarylink/index.html.twig', [
+        return $this->render('temporary-link/index.html.twig', [
             'invitation' => $invitation,
             'association' => $invitation->getAssociation(),
             'event' => $invitation->getEvent(),
@@ -35,7 +35,7 @@ final class TemporarylinkController extends BaseController
         ]);
     }
 
-    #[Route('/invitation/{hash}/{response}', name: 'app_temporarylink_response')]
+    #[Route('/invitation/{hash}/{response}', name: 'app_temporary_link_response')]
     public function invitationResponse(string $hash, string $response, InvitationRepository $invitationRepository, EntityManagerInterface $em): Response{
         if (empty($hash)) {
             return new Response(json_encode([
@@ -76,7 +76,7 @@ final class TemporarylinkController extends BaseController
         try{
             $em->persist($invitation);
             $em->flush();
-        }catch (ORMException $e) {
+        }catch (Exception $e) {
             return new Response(json_encode([
                 'success' => false,
                 'message' => $e->getMessage()

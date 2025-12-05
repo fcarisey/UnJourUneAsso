@@ -22,7 +22,7 @@ abstract class EmailController
 
         try{
             $transport->send($email);
-        }catch (TransportExceptionInterface $e){
+        }catch (TransportExceptionInterface){
             return false;
         }
 
@@ -44,7 +44,7 @@ abstract class EmailController
         try {
             $transport->send($email);
             return true;
-        } catch (TransportExceptionInterface $e) {
+        } catch (TransportExceptionInterface) {
             return false;
         }
     }

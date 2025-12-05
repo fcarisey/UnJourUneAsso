@@ -8,6 +8,7 @@ use App\Entity\Invitation;
 use App\Helper\TemporaryLinkHelper;
 use App\Repository\EventRepository;
 use App\Repository\InvitationRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,8 +54,8 @@ final class EventController extends BaseController
         $event = new Event();
         $event->setName($data['title']);
         $event->setDescription($data['description']);
-        $event->setStartAt(new \DateTimeImmutable($data['startDateTime']));
-        $event->setEndAt(new \DateTimeImmutable($data['endDateTime']));
+        $event->setStartAt(new DateTimeImmutable($data['startDateTime']));
+        $event->setEndAt(new DateTimeImmutable($data['endDateTime']));
         $event->setColor(self::EVENT_COLORS[array_rand(self::EVENT_COLORS)]);
 
         $em->persist($event);
@@ -89,8 +90,8 @@ final class EventController extends BaseController
 
         $event->setName($data['title']);
         $event->setDescription($data['description']);
-        $event->setStartAt(new \DateTimeImmutable($data['startDateTime']));
-        $event->setEndAt(new \DateTimeImmutable($data['endDateTime']));
+        $event->setStartAt(new DateTimeImmutable($data['startDateTime']));
+        $event->setEndAt(new DateTimeImmutable($data['endDateTime']));
 
         $em->flush();
 
@@ -111,7 +112,7 @@ final class EventController extends BaseController
 
     #[Route('/associations/available', name: 'associations_available', methods: ['GET'])]
     public function getAvailableAssociations(EntityManagerInterface $em): Response{
-        $associations = $em->getRepository(\App\Entity\Association::class)->findAll();
+        $associations = $em->getRepository(Association::class)->findAll();
 
         return new Response(json_encode([
             'success' => true,
@@ -126,7 +127,7 @@ final class EventController extends BaseController
         $associationId = $data['associationId'] ?? null;
         $email = $data['email'] ?? '';
 
-        // Cas 1: Association existante sélectionnée
+        // Cas 1 : Association existante sélectionnée
         if ($associationId) {
             $association = $em->getRepository(Association::class)->find($associationId);
 

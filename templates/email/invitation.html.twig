@@ -1,275 +1,275 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation - {{ event.getName() }}</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f0a1f 0%, #1a1333 100%);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: #f3f4f6;
-            padding: 40px 20px;
-            line-height: 1.6;
-        }
-
-        .email-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #1a1333;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
-            border: 1px solid #2d2355;
-        }
-
-        .email-header {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-            padding: 40px 30px;
-            text-align: center;
-        }
-
-        .email-header h1 {
-            color: white;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .email-header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
-        }
-
-        .email-body {
-            padding: 40px 30px;
-        }
-
-        .event-card {
-            background: #251d47;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border: 1px solid #2d2355;
-        }
-
-        .event-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #a78bfa;
-            margin-bottom: 20px;
-        }
-
-        .event-details {
-            margin-bottom: 20px;
-        }
-
-        .event-detail-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .event-detail-icon {
-            background: #7c3aed;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-            font-size: 18px;
-        }
-
-        .event-detail-content {
-            flex: 1;
-        }
-
-        .event-detail-label {
-            color: #9ca3af;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .event-detail-value {
-            color: #f3f4f6;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .event-description {
-            background: #1a1333;
-            border-radius: 8px;
-            padding: 20px;
-            color: #e5e7eb;
-            line-height: 1.8;
-            margin-top: 20px;
-        }
-
-        .cta-section {
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-            color: white;
-            text-decoration: none;
-            padding: 16px 40px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 16px;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .organizer-info {
-            background: #251d47;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            border-left: 4px solid #7c3aed;
-        }
-
-        .organizer-info h3 {
-            color: #a78bfa;
-            font-size: 14px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .organizer-info p {
-            color: #e5e7eb;
-            margin-bottom: 5px;
-        }
-
-        .email-footer {
-            background: #0f0a1f;
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid #2d2355;
-        }
-
-        .email-footer p {
-            color: #9ca3af;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .email-footer a {
-            color: #7c3aed;
-            text-decoration: none;
-        }
-
-        .email-footer a:hover {
-            color: #a78bfa;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .email-body {
-                padding: 30px 20px;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Invitation - {{ event.getName() }}</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
 
-            .event-card {
-                padding: 20px;
+            body {
+                background: linear-gradient(135deg, #0f0a1f 0%, #1a1333 100%);
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                color: #f3f4f6;
+                padding: 40px 20px;
+                line-height: 1.6;
+            }
+
+            .email-container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: #1a1333;
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+                border: 1px solid #2d2355;
+            }
+
+            .email-header {
+                background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+                padding: 40px 30px;
+                text-align: center;
             }
 
             .email-header h1 {
-                font-size: 24px;
+                color: white;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .email-header p {
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 16px;
+            }
+
+            .email-body {
+                padding: 40px 30px;
+            }
+
+            .event-card {
+                background: #251d47;
+                border-radius: 12px;
+                padding: 30px;
+                margin-bottom: 30px;
+                border: 1px solid #2d2355;
             }
 
             .event-title {
-                font-size: 20px;
+                font-size: 24px;
+                font-weight: 700;
+                color: #a78bfa;
+                margin-bottom: 20px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="email-container">
-        <!-- En-tête -->
-        <div class="email-header">
-            <h1>🎉 Vous êtes invité !</h1>
-            <p>{{ association.getName() }} vous convie à un événement</p>
-        </div>
 
-        <!-- Corps -->
-        <div class="email-body">
-            <div class="event-card">
-                <h2 class="event-title">{{ event.getName() }}</h2>
+            .event-details {
+                margin-bottom: 20px;
+            }
 
-                <div class="event-details">
-                    <div class="event-detail-item">
-                        <div class="event-detail-icon">📅</div>
-                        <div class="event-detail-content">
-                            <div class="event-detail-label">Date</div>
-                            <div class="event-detail-value">{{ event.getStartAt|date('d/m/Y') }}</div>
-                        </div>
-                    </div>
+            .event-detail-item {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
 
-                    <div class="event-detail-item">
-                        <div class="event-detail-icon">🕐</div>
-                        <div class="event-detail-content">
-                            <div class="event-detail-label">Horaires</div>
-                            <div class="event-detail-value">
-                                De {{ event.getStartAt|date('H:i') }} à {{ event.getEndAt|date('H:i') }}
+            .event-detail-icon {
+                background: #7c3aed;
+                color: white;
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 15px;
+                flex-shrink: 0;
+                font-size: 18px;
+            }
+
+            .event-detail-content {
+                flex: 1;
+            }
+
+            .event-detail-label {
+                color: #9ca3af;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 4px;
+            }
+
+            .event-detail-value {
+                color: #f3f4f6;
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            .event-description {
+                background: #1a1333;
+                border-radius: 8px;
+                padding: 20px;
+                color: #e5e7eb;
+                line-height: 1.8;
+                margin-top: 20px;
+            }
+
+            .cta-section {
+                text-align: center;
+                margin: 30px 0;
+            }
+
+            .cta-button {
+                display: inline-block;
+                background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+                color: white;
+                text-decoration: none;
+                padding: 16px 40px;
+                border-radius: 10px;
+                font-weight: 600;
+                font-size: 16px;
+                box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+                transition: all 0.3s ease;
+            }
+
+            .cta-button:hover {
+                box-shadow: 0 15px 40px rgba(124, 58, 237, 0.6);
+                transform: translateY(-2px);
+            }
+
+            .organizer-info {
+                background: #251d47;
+                border-radius: 12px;
+                padding: 20px;
+                margin-top: 30px;
+                border-left: 4px solid #7c3aed;
+            }
+
+            .organizer-info h3 {
+                color: #a78bfa;
+                font-size: 14px;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .organizer-info p {
+                color: #e5e7eb;
+                margin-bottom: 5px;
+            }
+
+            .email-footer {
+                background: #0f0a1f;
+                padding: 30px;
+                text-align: center;
+                border-top: 1px solid #2d2355;
+            }
+
+            .email-footer p {
+                color: #9ca3af;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .email-footer a {
+                color: #7c3aed;
+                text-decoration: none;
+            }
+
+            .email-footer a:hover {
+                color: #a78bfa;
+            }
+
+            @media only screen and (max-width: 600px) {
+                .email-body {
+                    padding: 30px 20px;
+                }
+
+                .event-card {
+                    padding: 20px;
+                }
+
+                .email-header h1 {
+                    font-size: 24px;
+                }
+
+                .event-title {
+                    font-size: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="email-container">
+            <!-- En-tête -->
+            <div class="email-header">
+                <h1>🎉 Vous êtes invité !</h1>
+                <p>{{ association.getName() }} vous convie à un événement</p>
+            </div>
+
+            <!-- Corps -->
+            <div class="email-body">
+                <div class="event-card">
+                    <h2 class="event-title">{{ event.getName() }}</h2>
+
+                    <div class="event-details">
+                        <div class="event-detail-item">
+                            <div class="event-detail-icon">📅</div>
+                            <div class="event-detail-content">
+                                <div class="event-detail-label">Date</div>
+                                <div class="event-detail-value">{{ event.getStartAt|date('d/m/Y') }}</div>
                             </div>
                         </div>
+
+                        <div class="event-detail-item">
+                            <div class="event-detail-icon">🕐</div>
+                            <div class="event-detail-content">
+                                <div class="event-detail-label">Horaires</div>
+                                <div class="event-detail-value">
+                                    De {{ event.getStartAt|date('H:i') }} à {{ event.getEndAt|date('H:i') }}
+                                </div>
+                            </div>
+                        </div>
+
+    {#                    {% if event.location %}#}
+    {#                    <div class="event-detail-item">#}
+    {#                        <div class="event-detail-icon">📍</div>#}
+    {#                        <div class="event-detail-content">#}
+    {#                            <div class="event-detail-label">Lieu</div>#}
+    {#                            <div class="event-detail-value">{{ event.location }}</div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    {% endif %}#}
                     </div>
 
-{#                    {% if event.location %}#}
-{#                    <div class="event-detail-item">#}
-{#                        <div class="event-detail-icon">📍</div>#}
-{#                        <div class="event-detail-content">#}
-{#                            <div class="event-detail-label">Lieu</div>#}
-{#                            <div class="event-detail-value">{{ event.location }}</div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    {% endif %}#}
+                    {% if event.getDescription() %}
+                    <div class="event-description">
+                        <strong style="color: #a78bfa; display: block; margin-bottom: 10px;">Description</strong>
+                        {{ event.getDescription()|nl2br }}
+                    </div>
+                    {% endif %}
                 </div>
 
-                {% if event.getDescription() %}
-                <div class="event-description">
-                    <strong style="color: #a78bfa; display: block; margin-bottom: 10px;">Description</strong>
-                    {{ event.getDescription()|nl2br }}
+                <!-- Bouton d'action -->
+                <div class="cta-section">
+                    <a href="{{ url('app_temporary_link', {hash: link}) }}" class="cta-button">
+                        Répondre à l'invitation
+                    </a>
                 </div>
-                {% endif %}
-            </div>
 
-            <!-- Bouton d'action -->
-            <div class="cta-section">
-                <a href="{{ url('app_temporarylink', {hash: link}) }}" class="cta-button">
-                    Répondre à l'invitation
-                </a>
-            </div>
-
-            <!-- Informations sur l'organisateur -->
-            <div class="organizer-info">
-                <h3>Organisé par</h3>
-                <p><strong>{{ association.getName() }}</strong></p>
-                {% if association.getEmail() %}
-                <p>📧 <a href="mailto:{{ association.getEmail() }}" style="color: #a78bfa; text-decoration: none;">{{ association.getEmail() }}</a></p>
-                {% endif %}
+                <!-- Informations sur l'organisateur -->
+                <div class="organizer-info">
+                    <h3>Organisé par</h3>
+                    <p><strong>{{ association.getName() }}</strong></p>
+                    {% if association.getEmail() %}
+                    <p>📧 <a href="mailto:{{ association.getEmail() }}" style="color: #a78bfa; text-decoration: none;">{{ association.getEmail() }}</a></p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
 

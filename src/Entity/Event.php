@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -24,10 +25,10 @@ class Event implements JsonSerializable
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $start_at = null;
+    private ?DateTimeImmutable $start_at = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $end_at = null;
+    private ?DateTimeImmutable $end_at = null;
 
     /**
      * @var Collection<int, Invitation>
@@ -72,24 +73,24 @@ class Event implements JsonSerializable
         return $this;
     }
 
-    public function getStartAt(): ?\DateTimeImmutable
+    public function getStartAt(): ?DateTimeImmutable
     {
         return $this->start_at;
     }
 
-    public function setStartAt(\DateTimeImmutable $start_at): static
+    public function setStartAt(DateTimeImmutable $start_at): static
     {
         $this->start_at = $start_at;
 
         return $this;
     }
 
-    public function getEndAt(): ?\DateTimeImmutable
+    public function getEndAt(): ?DateTimeImmutable
     {
         return $this->end_at;
     }
 
-    public function setEndAt(\DateTimeImmutable $end_at): static
+    public function setEndAt(DateTimeImmutable $end_at): static
     {
         $this->end_at = $end_at;
 
@@ -133,7 +134,7 @@ class Event implements JsonSerializable
             'description' => $this->description,
             'start_at' => $this->start_at,
             'end_at' => $this->end_at,
-            'color' => !empty($this->color) ? "#{$this->color}" : null,
+            'color' => !empty($this->color) ? "#$this->color" : null,
         ];
     }
 

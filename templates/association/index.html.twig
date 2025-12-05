@@ -31,6 +31,7 @@
         <div class="search-filters">
             <div class="row align-items-center">
                 <div class="col-md-8">
+                    <label style="display: none;" for="searchAssociations"></label>
                     <input type="text" class="search-input" id="searchAssociations" placeholder="🔍 Rechercher une association...">
                 </div>
                 <div class="col-md-4 text-end mt-3 mt-md-0">
@@ -57,17 +58,17 @@
                             {{ association.email }}
                         </p>
                         <div class="association-meta">
-                            <div class="meta-item">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                                </svg>
-                                <span>{{ association.invitations|length }} membres</span>
-                            </div>
+{#                            <div class="meta-item">#}
+{#                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">#}
+{#                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>#}
+{#                                </svg>#}
+{#                                <span>{{ association.invitations|length }} membres</span>#}
+{#                            </div>#}
                             <div class="meta-item">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                <span>Événements</span>
+                                <span>{{ association.invitations|length }} Événements</span>
                             </div>
                         </div>
                         <p class="association-description">
@@ -191,17 +192,17 @@
                     </div>
 
                     <div class="col-12 mb-3">
-                        <label style="color: var(--saas-text-muted); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Description</label>
+                        <label style="color: var(--saas-text-muted); font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Description</label>
                         <p id="viewAssociationDescription" style="color: var(--saas-text); margin-top: 0.5rem; line-height: 1.6;"></p>
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label style="color: var(--saas-text-muted); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Date de création</label>
+                        <label style="color: var(--saas-text-muted); font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Date de création</label>
                         <p id="viewAssociationCreatedAt" style="color: var(--saas-text); margin-top: 0.5rem;"></p>
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label style="color: var(--saas-text-muted); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Identifiant</label>
+                        <label style="color: var(--saas-text-muted); font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Identifiant</label>
                         <p id="viewAssociationId" style="color: var(--saas-text); margin-top: 0.5rem; font-family: monospace;"></p>
                     </div>
                 </div>

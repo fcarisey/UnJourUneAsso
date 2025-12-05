@@ -3,7 +3,6 @@ class Calendar {
     constructor() {
         this.currentDate = new Date();
         this.events = []; // Stockage des événements
-        this.selectedDate = null;
         this.currentEventId = null; // ID de l'événement en cours d'édition
         this.associations = []; // Liste des associations disponibles
         this.init();
@@ -13,7 +12,7 @@ class Calendar {
         this.renderCalendar();
         this.attachEventListeners();
         this.attachInvitationListeners();
-        this.loadAssociations(); // Charger les associations au démarrage
+        void this.loadAssociations(); // Charger les associations au démarrage
     }
 
     // Générer le calendrier pour le mois en cours
@@ -189,7 +188,7 @@ class Calendar {
         document.getElementById('editEventDescription').value = event.description || '';
 
         // Charger les invitations
-        this.loadInvitations(eventId);
+        void this.loadInvitations(eventId);
 
         // Ouvrir la modale
         const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
@@ -223,7 +222,6 @@ class Calendar {
         // Bouton nouvel événement
         const newEventBtn = document.querySelector('.saas-btn-primary');
         const eventModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('eventModal'));
-        const editEventModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('editEventModal'));
 
         if (newEventBtn) {
             newEventBtn.addEventListener('click', () => {
@@ -404,10 +402,8 @@ class Calendar {
 
                 // Créer la date au format ISO pour datetime-local
                 const selectedDate = new Date(year, month - 1, dayNum, 9, 0); // 9h par défaut
-                const dateTimeStr = this.formatDateTimeLocal(selectedDate);
-
-                // Pré-remplir la date de début
-                document.getElementById('eventStartDateTime').value = dateTimeStr;
+                // Préremplir la date de début
+                document.getElementById('eventStartDateTime').value = this.formatDateTimeLocal(selectedDate);
 
                 // Pré-remplir la date de fin (1 heure plus tard)
                 const endDate = new Date(selectedDate);
@@ -421,7 +417,6 @@ class Calendar {
 
         // Attacher les événements de clic sur les badges d'événements
         const eventBadges = document.querySelectorAll('.event-badge');
-        const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
 
         eventBadges.forEach(badge => {
             badge.addEventListener('click', (e) => {
