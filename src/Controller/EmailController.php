@@ -11,7 +11,7 @@ use Symfony\Component\Mime\Email;
 
 abstract class EmailController
 {
-    private static string $from = "unjouruneasso@exemple.com";
+    private static string $from = "unjouruneasso@gmail.com";
 
     public static function send(TransportInterface $transport, string $email, string $subject, string $html) : bool{
         $email = (new Email())
