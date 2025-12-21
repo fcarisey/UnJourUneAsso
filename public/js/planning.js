@@ -341,7 +341,7 @@ class Calendar {
             editEventForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const eventId = parseInt(document.getElementById('editEventId').value);
+                const eventId = document.getElementById('editEventId').value;
                 const eventData = {
                     title: document.getElementById('editEventTitle').value,
                     startDateTime: document.getElementById('editEventStartDateTime').value,
@@ -426,7 +426,7 @@ class Calendar {
                 }
 
                 e.stopPropagation(); // Empêcher la propagation vers le jour
-                const eventId = parseInt(badge.getAttribute('data-event-id'));
+                const eventId = badge.getAttribute('data-event-id');
 
                 // Ouvrir la modale d'édition
                 this.openEditModal(eventId);
@@ -438,7 +438,7 @@ class Calendar {
         deleteButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation(); // Empêcher la propagation vers le jour
-                const eventId = parseInt(btn.getAttribute('data-event-id'));
+                const eventId = btn.getAttribute('data-event-id');
 
                 if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
                     // Supprimer localement
@@ -728,7 +728,7 @@ class Calendar {
             const response = await fetch(`/event/${eventId}/invitation/add`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ associationId: parseInt(associationId) })
+                body: JSON.stringify({ associationId: associationId })
             });
 
             const data = await response.json();

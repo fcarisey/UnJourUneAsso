@@ -15,6 +15,15 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
+        exclude:
+            - '../src/_old'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\EventListener\TenantRequestListener:
+        tags:
+            - {
+                name: kernel.event_listener,
+                event: kernel.request,
+                method: onKernelRequest
+            }

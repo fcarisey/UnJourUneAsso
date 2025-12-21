@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
+use App\Aware\TenantAwareInterface;
 use App\Repository\InvitationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: InvitationRepository::class)]
-class Invitation implements JsonSerializable
+class Invitation implements TenantAwareInterface, JsonSerializable
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: "NONE")]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private Uuid $id;
 
     #[ORM\Column(nullable: true)]
     private ?bool $etat = null;
@@ -29,12 +31,22 @@ class Invitation implements JsonSerializable
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $link = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne(inversedBy: 'invitations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?tenants $tenant = null;
+
+    public function __construct()
+    {
+        $this->id = Uuid::v7();
+
+    }
+
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
 
-    public function getEtat(): ?bool
+    public function isEtat(): ?bool
     {
         return $this->etat;
     }
@@ -70,14 +82,6 @@ class Invitation implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize(): array{
-        return [
-            'id' => $this->id,
-            'etat' => $this->etat,
-            'association' => $this->association
-        ];
-    }
-
     public function getLink(): ?string
     {
         return $this->link;
@@ -88,5 +92,25 @@ class Invitation implements JsonSerializable
         $this->link = $link;
 
         return $this;
+    }
+
+    public function getTenant(): ?tenants
+    {
+        return $this->tenant;
+    }
+
+    public function setTenant(?tenants $tenant): static
+    {
+        $this->tenant = $tenant;
+
+        return $this;
+    }
+
+    public function jsonSerialize(): array{
+        return [
+            'id' => $this->id,
+            'etat' => $this->etat,
+            'association' => $this->association
+        ];
     }
 }

@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Invitation;
+use App\Entity\Tenants;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Invitation>
+ * @extends ServiceEntityRepository<Tenants>
  */
-class InvitationRepository extends ServiceEntityRepository
+class TenantsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Invitation::class);
+        parent::__construct($registry, Tenants::class);
     }
 
     //    /**
-    //     * @return Invitation[] Returns an array of Invitation objects
+    //     * @return Tenants[] Returns an array of Tenants objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
+    //        return $this->createQueryBuilder('t')
+    //            ->andWhere('t.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
+    //            ->orderBy('t.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Invitation
+    //    public function findOneBySomeField($value): ?Tenants
     //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
+    //        return $this->createQueryBuilder('t')
+    //            ->andWhere('t.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

@@ -2,21 +2,22 @@
 
 namespace App\Entity;
 
+use App\Aware\TenantAwareInterface;
 use App\Repository\EventRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
-class Event implements JsonSerializable
+class Event implements TenantAwareInterface, JsonSerializable
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: "NONE")]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private Uuid $id;
 
     #[ORM\Column(length: 300)]
     private ?string $name = null;
@@ -25,10 +26,13 @@ class Event implements JsonSerializable
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?DateTimeImmutable $start_at = null;
+    private ?\DateTimeImmutable $start_at = null;
 
     #[ORM\Column]
-    private ?DateTimeImmutable $end_at = null;
+    private ?\DateTimeImmutable $end_at = null;
+
+    #[ORM\Column(length: 6, nullable: true)]
+    private ?string $color = null;
 
     /**
      * @var Collection<int, Invitation>
@@ -36,15 +40,16 @@ class Event implements JsonSerializable
     #[ORM\OneToMany(targetEntity: Invitation::class, mappedBy: 'event')]
     private Collection $invitations;
 
-    #[ORM\Column(length: 6, nullable: true)]
-    private ?string $color = null;
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?tenants $tenant = null;
 
-    public function __construct()
-    {
+    public function __construct(){
+        $this->id = Uuid::v7();
         $this->invitations = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -73,26 +78,38 @@ class Event implements JsonSerializable
         return $this;
     }
 
-    public function getStartAt(): ?DateTimeImmutable
+    public function getStartAt(): ?\DateTimeImmutable
     {
         return $this->start_at;
     }
 
-    public function setStartAt(DateTimeImmutable $start_at): static
+    public function setStartAt(\DateTimeImmutable $start_at): static
     {
         $this->start_at = $start_at;
 
         return $this;
     }
 
-    public function getEndAt(): ?DateTimeImmutable
+    public function getEndAt(): ?\DateTimeImmutable
     {
         return $this->end_at;
     }
 
-    public function setEndAt(DateTimeImmutable $end_at): static
+    public function setEndAt(\DateTimeImmutable $end_at): static
     {
         $this->end_at = $end_at;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }
@@ -127,6 +144,18 @@ class Event implements JsonSerializable
         return $this;
     }
 
+    public function getTenant(): ?tenants
+    {
+        return $this->tenant;
+    }
+
+    public function setTenant(?tenants $tenant): static
+    {
+        $this->tenant = $tenant;
+
+        return $this;
+    }
+
     public function jsonSerialize(): array{
         return [
             'id' => $this->id,
@@ -134,19 +163,7 @@ class Event implements JsonSerializable
             'description' => $this->description,
             'start_at' => $this->start_at,
             'end_at' => $this->end_at,
-            'color' => !empty($this->color) ? "#$this->color" : null,
+            'color' => !empty($this->color) ? "#$this->color" : null
         ];
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(?string $color): static
-    {
-        $this->color = $color;
-
-        return $this;
     }
 }

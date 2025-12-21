@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
+use App\Aware\TenantAwareInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements TenantAwareInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: "NONE")]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private Uuid $id;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -25,7 +27,16 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $salt = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?tenants $tenant = null;
+
+    public function __construct(){
+        $this->id = Uuid::v7();
+
+    }
+
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -74,6 +85,18 @@ class User
     public function setSalt(string $salt): static
     {
         $this->salt = $salt;
+
+        return $this;
+    }
+
+    public function getTenant(): ?tenants
+    {
+        return $this->tenant;
+    }
+
+    public function setTenant(?tenants $tenant): static
+    {
+        $this->tenant = $tenant;
 
         return $this;
     }

@@ -71,6 +71,11 @@ final class EventController extends BaseController
 
     #[Route('/event/delete/{id}', name: 'event_delete', methods: ['DELETE'])]
     public function delete(EntityManagerInterface $em, Event $event): Response{
+
+        foreach($event->getInvitations() as $invitation) {
+            $em->remove($invitation);
+        }
+
         $em->remove($event);
         $em->flush();
 
