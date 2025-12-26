@@ -3,11 +3,10 @@
 namespace App\EventListener;
 
 use App\Context\TenantContext;
-use App\Entity\Tenants;
 use App\Repository\TenantsRepository;
-use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Exception\ORMException;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +14,8 @@ readonly class TenantRequestListener
 {
     public function __construct(
         private TenantContext     $tenantContext,
-        private TenantsRepository $tenantsRepository
+        private TenantsRepository $tenantsRepository,
+        private EntityManagerInterface $entityManager
     ) {}
 
     /**
@@ -40,5 +40,20 @@ readonly class TenantRequestListener
         }
 
         $this->tenantContext->setTenant($tenant);
+
+        $conn = $this->entityManager->getConnection();
+
+        if ($conn->isConnected()) {
+            try {
+                $conn->executeStatement('SELECT set_config(?, ?, ?)', [
+                    'app.current_tenant',
+                    (string) $tenant->getId(),
+                    'false'
+                ]);
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+                throw new NotFoundHttpException($e->getMessage());
+            }
+        }
     }
 }
