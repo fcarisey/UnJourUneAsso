@@ -5,6 +5,7 @@ class Calendar {
         this.events = []; // Stockage des événements
         this.currentEventId = null; // ID de l'événement en cours d'édition
         this.associations = []; // Liste des associations disponibles
+        this.isTransitioningToEdit = false; // Flag pour éviter la réinitialisation lors du passage création → édition
         this.init();
     }
 
@@ -173,14 +174,14 @@ class Calendar {
     openEditModal(eventId) {
         const event = this.events.find(e => e.id === eventId);
         if (!event) {
-            console.error('Événement non trouvé:', eventId);
+            console.error('Événement non trouvé :', eventId);
             return;
         }
 
         // Stocker l'ID de l'événement en cours
         this.currentEventId = eventId;
 
-        // Pré-remplir le formulaire d'édition
+        // Préremplir le formulaire d'édition
         document.getElementById('editEventId').value = event.id;
         document.getElementById('editEventTitle').value = event.title;
         document.getElementById('editEventStartDateTime').value = this.formatDateTimeLocal(new Date(event.startDateTime));
@@ -191,6 +192,38 @@ class Calendar {
         void this.loadInvitations(eventId);
 
         // Ouvrir la modale
+        const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+        editModal.show();
+    }
+
+    // Ouvrir la modale d'édition après création (charge l'événement puis ouvre la modale)
+    async openEventForEdit(eventId) {
+        // Trouver l'événement dans la liste locale
+        const event = this.events.find(e => e.id === eventId);
+        if (!event) {
+            console.error('Événement non trouvé :', eventId);
+            return;
+        }
+
+        // Stocker l'ID de l'événement en cours
+        this.currentEventId = eventId;
+
+        // S'assurer que les associations sont chargées
+        if (this.associations.length === 0) {
+            await this.loadAssociations();
+        }
+
+        // Pré-remplir le formulaire d'édition
+        document.getElementById('editEventId').value = event.id;
+        document.getElementById('editEventTitle').value = event.title;
+        document.getElementById('editEventStartDateTime').value = this.formatDateTimeLocal(new Date(event.startDateTime));
+        document.getElementById('editEventEndDateTime').value = this.formatDateTimeLocal(new Date(event.endDateTime));
+        document.getElementById('editEventDescription').value = event.description || '';
+
+        // Charger les invitations (contexte edit)
+        await this.loadInvitations(eventId, 'edit');
+
+        // Ouvrir la modale d'édition
         const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
         editModal.show();
     }
@@ -228,20 +261,22 @@ class Calendar {
                 this.selectedDate = null;
                 this.currentEventId = null;
                 document.getElementById('eventForm').reset();
-                // Vider la liste des invitations
-                document.getElementById('createInvitationsList').innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Créez l\'événement pour ajouter des invitations</small></div>';
                 eventModal.show();
             });
         }
 
         // Gérer la fermeture des modales
         document.getElementById('eventModal').addEventListener('hidden.bs.modal', () => {
-            this.currentEventId = null;
+            // Ne pas réinitialiser si on est en train de transiter vers la modale d'édition
+            if (!this.isTransitioningToEdit) {
+                this.currentEventId = null;
+            }
             this.renderCalendar(); // Rafraîchir l'affichage
         });
 
         document.getElementById('editEventModal').addEventListener('hidden.bs.modal', () => {
             this.currentEventId = null;
+            this.isTransitioningToEdit = false; // Réinitialiser le flag
             this.renderCalendar(); // Rafraîchir l'affichage
         });
 
@@ -275,13 +310,24 @@ class Calendar {
                         // Stocker l'ID de l'événement pour les invitations
                         this.currentEventId = savedEvent.event_id;
 
-                        // Charger les invitations (vide pour un nouvel événement) - contexte 'create'
-                        await this.loadInvitations(this.currentEventId, 'create');
+                        // Activer le flag pour éviter la réinitialisation de currentEventId
+                        this.isTransitioningToEdit = true;
 
                         // Ajouter localement
                         this.addEvent(eventData);
 
-                        alert('Événement créé avec succès ! Vous pouvez maintenant ajouter des invitations.');
+                        // Fermer la modale de création
+                        eventModal.hide();
+                        eventForm.reset();
+
+                        // Attendre que la modale soit complètement fermée avant d'ouvrir la suivante
+                        setTimeout(async () => {
+                            // Ouvrir la modale d'édition avec les invitations
+                            await this.openEventForEdit(savedEvent.event_id);
+
+                            // Afficher un message de succès
+                            alert('Événement créé avec succès ! Vous pouvez maintenant ajouter des invitations.');
+                        }, 300);
                     } else {
                         console.error('Erreur lors de la création de l\'événement');
                         alert('Erreur lors de la création de l\'événement');
@@ -480,13 +526,17 @@ class Calendar {
 
                 if (!associationId) return;
 
-                if (!this.currentEventId) {
+                // Accéder dynamiquement à this.currentEventId
+                const currentEventId = this.currentEventId;
+                console.log('createAssociationSelect - currentEventId:', currentEventId);
+
+                if (!currentEventId) {
                     alert('Veuillez d\'abord créer l\'événement');
                     createAssociationSelect.value = '';
                     return;
                 }
 
-                await this.addInvitationByAssociationId(this.currentEventId, associationId, 'create');
+                await this.addInvitationByAssociationId(currentEventId, associationId, 'create');
 
                 // Réinitialiser le sélecteur
                 createAssociationSelect.value = '';
@@ -511,12 +561,16 @@ class Calendar {
                     return;
                 }
 
-                if (!this.currentEventId) {
+                // Accéder dynamiquement à this.currentEventId
+                const currentEventId = this.currentEventId;
+                console.log('btnCreateAddInvitation - currentEventId:', currentEventId);
+
+                if (!currentEventId) {
                     alert('Veuillez d\'abord créer l\'événement');
                     return;
                 }
 
-                await this.addInvitationByEmail(this.currentEventId, email, 'create');
+                await this.addInvitationByEmail(currentEventId, email, 'create');
                 createInvitationEmail.value = '';
             });
 
@@ -537,13 +591,17 @@ class Calendar {
 
                 if (!associationId) return;
 
-                if (!this.currentEventId) {
+                // Accéder dynamiquement à this.currentEventId
+                const currentEventId = this.currentEventId;
+                console.log('editAssociationSelect - currentEventId:', currentEventId);
+
+                if (!currentEventId) {
                     alert('Veuillez d\'abord créer l\'événement');
                     editAssociationSelect.value = '';
                     return;
                 }
 
-                await this.addInvitationByAssociationId(this.currentEventId, associationId, 'edit');
+                await this.addInvitationByAssociationId(currentEventId, associationId, 'edit');
 
                 // Réinitialiser le sélecteur
                 editAssociationSelect.value = '';
@@ -568,12 +626,16 @@ class Calendar {
                     return;
                 }
 
-                if (!this.currentEventId) {
+                // Accéder dynamiquement à this.currentEventId
+                const currentEventId = this.currentEventId;
+                console.log('btnEditAddInvitation - currentEventId:', currentEventId);
+
+                if (!currentEventId) {
                     alert('Veuillez d\'abord créer l\'événement');
                     return;
                 }
 
-                await this.addInvitationByEmail(this.currentEventId, email, 'edit');
+                await this.addInvitationByEmail(currentEventId, email, 'edit');
                 editInvitationEmail.value = '';
             });
 
@@ -653,7 +715,10 @@ class Calendar {
     async loadInvitations(eventId, context = 'edit') {
         const invitationsList = document.getElementById(context === 'create' ? 'createInvitationsList' : 'editInvitationsList');
 
-        if (!invitationsList) return;
+        if (!invitationsList) {
+            console.error('Liste des invitations non trouvée pour le contexte:', context);
+            return;
+        }
 
         invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Chargement...</small></div>';
 
@@ -662,13 +727,17 @@ class Calendar {
             const data = await response.json();
 
             if (data.success) {
+                // Rendre les invitations (peut être vide pour un nouvel événement)
                 this.renderInvitations(data.invitations, context);
             } else {
                 invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Erreur de chargement</small></div>';
             }
         } catch (error) {
             console.error('Erreur lors du chargement des invitations:', error);
-            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune invitation</small></div>';
+            // Si erreur, afficher quand même une interface vide fonctionnelle
+            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune invitation pour le moment</small></div>';
+            // Charger quand même les associations pour permettre l'ajout
+            this.updateAssociationSelects([], context);
         }
     }
 
@@ -678,8 +747,8 @@ class Calendar {
         if (!invitationsList) return;
 
         if (!invitations || invitations.length === 0) {
-            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune invitation</small></div>';
-            // Réinitialiser le sélecteur avec toutes les associations
+            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune invitation pour le moment</small></div>';
+            // Réinitialiser le sélecteur avec toutes les associations disponibles
             this.updateAssociationSelects([], context);
             return;
         }

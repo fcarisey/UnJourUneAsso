@@ -130,79 +130,30 @@
             <form id="eventForm">
                 <div class="modal-body" style="padding: 2rem;">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="mb-3">
                                 <label for="eventTitle" class="form-label" style="color: var(--saas-text); font-weight: 600;">Titre de l'événement</label>
                                 <input type="text" class="form-control" style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;" id="eventTitle" placeholder="Ex: Réunion mensuelle" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="eventStartDateTime" class="form-label" style="color: var(--saas-text); font-weight: 600;">Date/Heure de début</label>
-                                <input type="datetime-local" class="form-control" style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;" id="eventStartDateTime" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="eventEndDateTime" class="form-label" style="color: var(--saas-text); font-weight: 600;">Date/Heure de fin</label>
-                                <input type="datetime-local" class="form-control" style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;" id="eventEndDateTime" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="eventStartDateTime" class="form-label" style="color: var(--saas-text); font-weight: 600;">Date/Heure de début</label>
+                                        <input type="datetime-local" class="form-control" style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;" id="eventStartDateTime" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="eventEndDateTime" class="form-label" style="color: var(--saas-text); font-weight: 600;">Date/Heure de fin</label>
+                                        <input type="datetime-local" class="form-control" style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;" id="eventEndDateTime" required>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="eventDescription" class="form-label" style="color: var(--saas-text); font-weight: 600;">Description</label>
                                 <textarea class="form-control" id="eventDescription" style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.75rem 1rem;" rows="3" placeholder="Ajouter une description..."></textarea>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="mb-3">
-                                <label class="form-label" style="color: var(--saas-text); font-weight: 600;">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="d-inline-block me-1">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                    </svg>
-                                    Invitations
-                                </label>
-
-                                <!-- Liste des invitations -->
-                                <div id="createInvitationsList" style="max-height: 200px; overflow-y: auto; background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; padding: 0.75rem; margin-bottom: 0.75rem;">
-                                    <div class="text-center py-3" style="color: var(--saas-text-muted);">
-                                        <small>Chargement...</small>
-                                    </div>
-                                </div>
-
-                                <!-- Sélecteur d'associations existantes -->
-                                <div class="mb-3">
-                                    <label class="form-label" style="color: var(--saas-text); font-weight: 600; font-size: 0.875rem;">
-                                        Sélectionner une association
-                                    </label>
-                                    <label style="display: none;" for="createAssociationSelect"></label>
-                                    <select id="createAssociationSelect"
-                                            class="form-select"
-                                            style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; color: var(--saas-text); padding: 0.625rem 1rem;">
-                                        <option value="">-- Choisir une association --</option>
-                                    </select>
-                                </div>
-
-                                <!-- Formulaire d'ajout via email -->
-                                <div>
-                                    <label class="form-label" style="color: var(--saas-text); font-weight: 600; font-size: 0.875rem;">
-                                        Ou créer via email
-                                    </label>
-                                    <div class="input-group">
-                                        <label style="display: none;" for="createInvitationEmail"></label>
-                                        <input type="email"
-                                               id="createInvitationEmail"
-                                               class="form-control"
-                                               placeholder="email@exemple.com"
-                                               style="background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem 0 0 0.75rem; color: var(--saas-text); padding: 0.625rem 1rem;">
-                                        <button type="button"
-                                                id="btnCreateAddInvitation"
-                                                class="btn"
-                                                style="background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); border: none; color: white; padding: 0.625rem 1rem; border-radius: 0 0.75rem 0.75rem 0; font-weight: 600;">
-                                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                            </svg>
-                                            Ajouter
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
