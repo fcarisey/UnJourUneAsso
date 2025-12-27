@@ -10,7 +10,7 @@ final class PlanningController extends BaseController
 {
     protected string $title = "Planning";
 
-    #[Route('/', name: 'app_planning')]
+    #[Route('/planning', name: 'app_planning')]
     public function index(EventRepository $eventRepository): Response
     {
         $events = $eventRepository->findAll();

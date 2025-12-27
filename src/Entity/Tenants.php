@@ -47,6 +47,7 @@ class Tenants implements JsonSerializable
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'tenant')]
     private Collection $users;
 
+
     public function __construct(){
         $this->id = Uuid::v7();
         $this->events = new ArrayCollection();
@@ -192,12 +193,7 @@ class Tenants implements JsonSerializable
 
     public function removeUser(User $user): static
     {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getTenant() === $this) {
-                $user->setTenant(null);
-            }
-        }
+        $this->users->removeElement($user);
 
         return $this;
     }
