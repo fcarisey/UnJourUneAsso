@@ -109,7 +109,6 @@ final class EventController extends BaseController
         ]), headers: ['Content-Type' => 'application/json']);
     }
 
-    // TODO: Switch to InvitationController
     #[Route('/event/{id}/invitations', name: 'event_invitations', methods: ['GET'])]
     public function getInvitations(Event $event): Response{
         return new Response(json_encode([
@@ -125,104 +124,6 @@ final class EventController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'associations' => $associations
-        ]), headers: ['Content-Type' => 'application/json']);
-    }
-
-    // TODO: Switch to InvitationController
-    #[Route('/event/{id}/invitation/add', name: 'event_invitation_add', methods: ['POST'])]
-    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, TransportInterface $transport, InvitationRepository $invitationRepository, TenantContext $tenantContext): Response{
-        $data = json_decode($request->getContent(), true);
-        $associationId = $data['associationId'] ?? null;
-        $email = $data['email'] ?? '';
-
-        // Cas 1 : Association existante sélectionnée
-        if ($associationId) {
-            $association = $em->getRepository(Association::class)->find($associationId);
-
-            if (!$association) {
-                return new Response(json_encode([
-                    'success' => false,
-                    'message' => 'Association introuvable'
-                ]), headers: ['Content-Type' => 'application/json']);
-            }
-        }
-        // Cas 2: Création via email
-        else if (!empty($email)) {
-            // Chercher ou créer l'association par email
-            $association = $em->getRepository(Association::class)->findOneBy(['email' => $email]);
-
-            if (!$association) {
-                $association = new Association();
-                $association->setName($email);
-                $association->setEmail($email);
-                $association->setDescription('Créé automatiquement via invitation');
-                $em->persist($association);
-            }
-
-        } else {
-            return new Response(json_encode([
-                'success' => false,
-                'message' => 'Association ou email requis'
-            ]),
-                400,
-                headers: ['Content-Type' => 'application/json']);
-        }
-
-        // Vérifier si l'invitation existe déjà
-        $existingInvitation = $em->getRepository(Invitation::class)
-            ->findOneBy(['event' => $event, 'association' => $association]);
-
-        if ($existingInvitation) {
-            return new Response(json_encode([
-                'success' => false,
-                'message' => 'Cette association est déjà invitée'
-            ]), headers: ['Content-Type' => 'application/json']);
-        }
-
-        // Créer l'invitation
-        $invitation = new Invitation();
-        $invitation->setEvent($event);
-        $invitation->setAssociation($association);
-        $invitation->setEtat(null); // En attente
-        $invitation->setLink(TemporaryLinkHelper::CreateLink($email . $association->getName() . $event->getName()));
-
-        try {
-            EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail(), $invitation->getLink(), $tenantContext);
-
-            $em->persist($invitation);
-            $em->flush();
-
-            $invitation = $invitationRepository->findOneBy([
-                'association' => $association,
-                'event' => $event
-            ]);
-
-            return new Response(json_encode([
-                    'success' => true,
-                    'message' => 'Invitation envoyée',
-                    'invitation' => $invitation
-                ]), headers: ['Content-Type' => 'application/json']);
-
-        } catch (TransportExceptionInterface $e) {
-            error_log($e->getMessage());
-
-            return new Response(json_encode([
-                'success' => false,
-                'message' => 'l\'invitation n\'a pas pu être envoyer',
-                'invitation' => $invitation
-            ]), headers: ['Content-Type' => 'application/json']);
-        }
-    }
-
-    // TODO: Switch to InvitationController
-    #[Route('/event/invitation/{id}/delete', name: 'event_invitation_delete', methods: ['DELETE'])]
-    public function deleteInvitation(EntityManagerInterface $em, Invitation $invitation): Response{
-        $em->remove($invitation);
-        $em->flush();
-
-        return new Response(json_encode([
-            'success' => true,
-            'message' => 'Invitation supprimée'
         ]), headers: ['Content-Type' => 'application/json']);
     }
 }

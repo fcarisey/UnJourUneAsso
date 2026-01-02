@@ -559,7 +559,6 @@ App.init(_ => {
 
                     // Accéder dynamiquement à this.currentEventId
                     const currentEventId = this.currentEventId;
-                    console.log('editAssociationSelect - currentEventId:', currentEventId);
 
                     if (!currentEventId) {
                         App.showToast('Veuillez d\'abord créer l\'événement', false);
@@ -753,8 +752,9 @@ App.init(_ => {
         }
 
         async addInvitationByAssociationId(eventId, associationId, context = 'edit') {
-            void App.fetch.post(`/event/${eventId}/invitation/add`, {
-                associationId: associationId
+            void App.fetch.post(`/invitation`, {
+                event_id: eventId,
+                association_id: associationId
             }, async data => {
                     if (!data.success) {
                         console.error(data.message);
@@ -769,7 +769,10 @@ App.init(_ => {
         }
 
         async addInvitationByEmail(eventId, email, context = 'edit') {
-            void App.fetch.post(`/event/${eventId}/invitation/add`, {email}, async data => {
+            void App.fetch.post(`/invitation`, {
+                event_id: eventId,
+                email: email
+            }, async data => {
                 if (!data.success) {
                     console.error(data.message);
                     App.showToast(data.message, false);
@@ -785,12 +788,14 @@ App.init(_ => {
         }
 
         async deleteInvitation(invitationId, context = 'edit') {
-            void App.fetch.delete(`/event/invitation/${invitationId}/delete`, async data => {
+            void App.fetch.delete(`/invitation/${invitationId}`, {}, async data => {
                 if (!data.success) {
                     console.error(data.message);
                     App.showToast(data.message, false);
                     return;
                 }
+
+                App.showToast(data.message);
 
                 // Recharger la liste des invitations
                 if (this.currentEventId) {

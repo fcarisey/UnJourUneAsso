@@ -39,6 +39,10 @@ security:
     access_control:
          - { path: ^/associations, roles: ROLE_USER }
          - { path: ^/planning, roles: ROLE_USER }
+         - { path: ^/event, roles: ROLE_USER }
+         - { path: "^/invitation/[A-za-z0-9]{32}$" }
+         - { path: "^\/invitation\/[A-za-z0-9]{32}\/(accept|decline)$" }
+         - { path: ^/invitation, roles: ROLE_USER }
 
 when@test:
     security:

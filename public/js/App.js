@@ -39,7 +39,6 @@ export default class App {
 document.addEventListener('DOMContentLoaded', _ => {
     try{
         App.boot();
-        window.App = App;
     }
     catch (e){
         console.error(e);
