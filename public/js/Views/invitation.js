@@ -1,4 +1,4 @@
-import App from './App.js';
+import App from '../App.js';
 
 App.init(_ => {
     const hash = document.querySelector("*[data-hash]")?.dataset.hash;

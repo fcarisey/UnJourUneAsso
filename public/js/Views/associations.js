@@ -1,4 +1,4 @@
-import App from "./App.js"
+import App from '../App.js'
 
 App.init(_ => {
     // Données temporaires des associations (à remplacer par des appels API)
@@ -157,7 +157,6 @@ App.init(_ => {
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editAssociationModal'));
                 modal.hide();
 
-                console.log('Association supprimée:', associationId);
                 App.showToast(data.message);
             });
         }

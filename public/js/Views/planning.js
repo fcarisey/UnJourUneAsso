@@ -1,5 +1,4 @@
-
-import App from './App.js';
+import App from '../App.js';
 
 App.init(_ => {
     // Gestion dynamique du calendrier

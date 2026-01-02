@@ -1,3 +1,5 @@
+import NotificationHTMLElement from './Elements/NotificationHTMLElement.js'
+
 export default class App {
 
     static #FETCH_DEFAULT_HEADERS = {
@@ -30,7 +32,7 @@ export default class App {
      * @param {boolean} success
      */
     static showToast(message, success = true){
-        const toast = document.createElement('toast-notification');
+        const toast = new NotificationHTMLElement();
         toast.setAttribute('aria-message', message);
         toast.setAttribute('aria-success', `${success.toString()}`);
 
