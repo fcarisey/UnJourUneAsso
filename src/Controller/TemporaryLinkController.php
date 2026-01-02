@@ -41,7 +41,7 @@ final class TemporaryLinkController extends BaseController
             return new Response(json_encode([
                 'success' => false,
                 'message' => "Ce lien d'invitation n'existe pas !",
-            ]));
+            ]), headers: ['Content-Type' => 'application/json']);
         }
 
         $invitation = $invitationRepository->findOneBy([
@@ -52,14 +52,14 @@ final class TemporaryLinkController extends BaseController
             return new Response(json_encode([
                 'success' => false,
                 'message' => "Ce lien d'invitation n'existe pas ou a éxpiré. !",
-            ]));
+            ]), headers: ['Content-Type' => 'application/json']);
         }
 
         if (empty($response)){
             return new Response(json_encode([
                 'success' => false,
                 'message' => "La réponse n'est pas reconnue !",
-            ]));
+            ]), headers: ['Content-Type' => 'application/json']);
         }
 
         if ($response === "accept"){
@@ -70,7 +70,7 @@ final class TemporaryLinkController extends BaseController
             return new Response(json_encode([
                 'success' => false,
                 'message' => "La réponse n'est pas reconnue !"
-            ]));
+            ]), headers: ['Content-Type' => 'application/json']);
         }
 
         try{
@@ -80,12 +80,12 @@ final class TemporaryLinkController extends BaseController
             return new Response(json_encode([
                 'success' => false,
                 'message' => $e->getMessage()
-            ]));
+            ]), headers: ['Content-Type' => 'application/json']);
         }
 
         return new Response(json_encode([
             'success' => true,
             'message' => "Votre réponse a bien été prise en compte !"
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 }

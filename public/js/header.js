@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
+import App from "./App.js"
+
+App.init(_ => {
     const burgerBtn = document.getElementById('burger-btn');
     const mainNav = document.getElementById('main-nav');
 
@@ -45,4 +47,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+})

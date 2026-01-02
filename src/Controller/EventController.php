@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Context\TenantContext;
 use App\Entity\Association;
 use App\Entity\Event;
 use App\Entity\Invitation;
@@ -13,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Transport\TransportInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -21,7 +23,7 @@ final class EventController extends BaseController
     protected string $title = "évènement";
 
     // HEX colors (match avec le thème)
-    private const EVENT_COLORS = [
+    private const array EVENT_COLORS = [
         '8B5CF6', // Violet vibrant
         'EC4899', // Rose fuchsia
         'F59E0B', // Orange/Ambre
@@ -39,8 +41,9 @@ final class EventController extends BaseController
     #[Route("/events", name: "event_list")]
     public function list(EventRepository $eventRepository): Response{
         return new Response(json_encode([
+            'success' => true,
             'events' => $eventRepository->findAll()
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -66,7 +69,7 @@ final class EventController extends BaseController
             'message' => 'Event created successfully',
             'event_id' => $event->getId(),
             'color' => '#' . $event->getColor()
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     #[Route('/event/delete/{id}', name: 'event_delete', methods: ['DELETE'])]
@@ -82,7 +85,7 @@ final class EventController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'message' => 'Event deleted successfully'
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -103,7 +106,7 @@ final class EventController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'message' => 'Event updated successfully'
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     // TODO: Switch to InvitationController
@@ -112,7 +115,7 @@ final class EventController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'invitations' => $event->getInvitations()->toArray()
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     #[Route('/associations/available', name: 'associations_available', methods: ['GET'])]
@@ -122,12 +125,12 @@ final class EventController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'associations' => $associations
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     // TODO: Switch to InvitationController
     #[Route('/event/{id}/invitation/add', name: 'event_invitation_add', methods: ['POST'])]
-    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, TransportInterface $transport, InvitationRepository $invitationRepository): Response{
+    public function addInvitation(Request $request, Event $event, EntityManagerInterface $em, TransportInterface $transport, InvitationRepository $invitationRepository, TenantContext $tenantContext): Response{
         $data = json_decode($request->getContent(), true);
         $associationId = $data['associationId'] ?? null;
         $email = $data['email'] ?? '';
@@ -140,13 +143,13 @@ final class EventController extends BaseController
                 return new Response(json_encode([
                     'success' => false,
                     'message' => 'Association introuvable'
-                ]), 404);
+                ]), headers: ['Content-Type' => 'application/json']);
             }
         }
         // Cas 2: Création via email
         else if (!empty($email)) {
             // Chercher ou créer l'association par email
-            $association = $em->getRepository(Association::class)->findOneBy(['name' => $email]);
+            $association = $em->getRepository(Association::class)->findOneBy(['email' => $email]);
 
             if (!$association) {
                 $association = new Association();
@@ -160,7 +163,9 @@ final class EventController extends BaseController
             return new Response(json_encode([
                 'success' => false,
                 'message' => 'Association ou email requis'
-            ]), 400);
+            ]),
+                400,
+                headers: ['Content-Type' => 'application/json']);
         }
 
         // Vérifier si l'invitation existe déjà
@@ -171,7 +176,7 @@ final class EventController extends BaseController
             return new Response(json_encode([
                 'success' => false,
                 'message' => 'Cette association est déjà invitée'
-            ]), 400);
+            ]), headers: ['Content-Type' => 'application/json']);
         }
 
         // Créer l'invitation
@@ -181,22 +186,32 @@ final class EventController extends BaseController
         $invitation->setEtat(null); // En attente
         $invitation->setLink(TemporaryLinkHelper::CreateLink($email . $association->getName() . $event->getName()));
 
-        $em->persist($invitation);
-        $em->flush();
+        try {
+            EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail(), $invitation->getLink(), $tenantContext);
 
+            $em->persist($invitation);
+            $em->flush();
 
-        $invitation = $invitationRepository->findOneBy([
-            'association' => $association,
-            'event' => $event
-        ]);
+            $invitation = $invitationRepository->findOneBy([
+                'association' => $association,
+                'event' => $event
+            ]);
 
-        EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail(), $invitation->getLink());
+            return new Response(json_encode([
+                    'success' => true,
+                    'message' => 'Invitation envoyée',
+                    'invitation' => $invitation
+                ]), headers: ['Content-Type' => 'application/json']);
 
-        return new Response(json_encode([
-            'success' => true,
-            'message' => 'Invitation envoyée',
-            'invitation' => $invitation
-        ]));
+        } catch (TransportExceptionInterface $e) {
+            error_log($e->getMessage());
+
+            return new Response(json_encode([
+                'success' => false,
+                'message' => 'l\'invitation n\'a pas pu être envoyer',
+                'invitation' => $invitation
+            ]), headers: ['Content-Type' => 'application/json']);
+        }
     }
 
     // TODO: Switch to InvitationController
@@ -208,6 +223,6 @@ final class EventController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'message' => 'Invitation supprimée'
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 }

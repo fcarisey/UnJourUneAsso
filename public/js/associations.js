@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+import App from "./App.js"
+
+App.init(_ => {
     // Données temporaires des associations (à remplacer par des appels API)
     const associationsData = {};
 
@@ -110,36 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
             card.querySelector('.association-description').textContent = description;
         }
 
-        // TODO: Appel API pour sauvegarder les modifications
-        fetch(`/association/${associationId}/edit`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                associationId: associationId,
-                name: name,
-                email: email,
-                description: description,
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                response.json().then((data) => {console.log(data)})
-            }
-        })
-        .catch(error => {
-            console.error(error);
-        })
+        void App.fetchPATCH(`association/${associationId}/edit`, {
+            associationId: associationId,
+            name: name,
+            email: email,
+            description: description,
+        }, data => {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editAssociationModal'));
+            modal.hide();
 
-        console.log('Association modifiée:', { id: associationId, name, description });
-
-        // Fermer la modale
-        const modal = bootstrap.Modal.getInstance(document.getElementById('editAssociationModal'));
-        modal.hide();
-
-        // Afficher un message de succès (optionnel)
-        showToast('Association modifiée avec succès', 'success');
+            console.log('Association modifiée:', { id: associationId, name, description });
+            App.showToast(data.message);
+        })
     });
 
     // Gestion du bouton de suppression
@@ -167,33 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Supprimer des données
             delete associationsData[associationId];
 
-            // TODO: Appel API pour supprimer l'association
-            fetch(`/association/${associationId}/delete`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    associationId: associationId,
-                })
-            })
-            .then(res => {
-                if (res.ok) {
-                    res.json().then((data) => {console.log(data)})
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            })
+            void App.fetchDELETE(`/association/${associationId}/delete`, {
+                associationId: associationId,
+            }, data => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editAssociationModal'));
+                modal.hide();
 
-            console.log('Association supprimée:', associationId);
-
-            // Fermer la modale
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editAssociationModal'));
-            modal.hide();
-
-            // Afficher un message de succès
-            showToast('Association supprimée avec succès', 'danger');
+                console.log('Association supprimée:', associationId);
+                App.showToast(data.message);
+            });
         }
     });
 
@@ -207,41 +173,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('associationEmail').value;
             const description = document.getElementById('associationDescription').value;
 
-            // TODO: Appel API pour créer l'association
-            fetch('/association/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+            void App.fetchPOST('/association/create', {
                     name: name,
                     email: email,
                     description: description,
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(data => {
-                        console.log(data);
-                    })
+                },
+                data => {
+                    // Fermer la modale
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addAssociationModal'));
+                    modal.hide();
+
+                    // Réinitialiser le formulaire
+                    addForm.reset();
+
+                    console.log('Nouvelle association:', { name, description });
+                    App.showToast(data.message);
                 }
-            })
-            .catch(error => {
-                console.error(error);
-            })
-
-
-            console.log('Nouvelle association:', { name, description });
-
-            // Fermer la modale
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addAssociationModal'));
-            modal.hide();
-
-            // Réinitialiser le formulaire
-            addForm.reset();
-
-            // Afficher un message de succès
-            showToast('Association créée avec succès', 'success');
+            )
         });
     }
 
@@ -260,42 +208,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-    }
-
-    // Fonction utilitaire pour afficher des toasts (notifications)
-    function showToast(message, type = 'success') {
-        // Créer un toast Bootstrap si vous voulez
-        // Pour l'instant, on utilise un simple log
-        console.log(`[${type.toUpperCase()}] ${message}`);
-
-        // Alternative: utiliser une bibliothèque de notifications ou créer un toast personnalisé
-        // Exemple avec un toast simple:
-        const toastHtml = `
-            <div class="toast-notification" style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 0.75rem;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
-            ">
-                ${message}
-            </div>
-        `;
-
-        const toast = document.createElement('div');
-        toast.innerHTML = toastHtml;
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.style.transition = 'all 0.3s ease';
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
     }
 });

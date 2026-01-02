@@ -13,24 +13,24 @@ abstract class EmailController
 {
     private static string $from = "unjouruneasso@gmail.com";
 
-    public static function send(TransportInterface $transport, string $email, string $subject, string $html) : bool{
-        $email = (new Email())
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public static function send(TransportInterface $transport, string $email, string $subject, string $html) : void{
+        $email = new Email()
             ->from(static::$from)
             ->to($email)
             ->subject($subject)
             ->html($html);
 
-        try{
-            $transport->send($email);
-        }catch (TransportExceptionInterface){
-            return false;
-        }
-
-        return true;
+        $transport->send($email);
     }
 
-    public static function sendEventInvitationMail(TransportInterface $transport, Event $event, Association $association, string $email, string $temporaryLink): bool{
-        $email = (new TemplatedEmail())
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public static function sendEventInvitationMail(TransportInterface $transport, Event $event, Association $association, string $email, string $temporaryLink, $tenantContext): void{
+        $email = new TemplatedEmail()
             ->from(static::$from)
             ->to($email)
             ->subject("Invitation {$event->getName()}")
@@ -38,14 +38,10 @@ abstract class EmailController
             ->context([
                 'event' => $event,
                 'association' => $association,
-                'link' => $temporaryLink
+                'link' => $temporaryLink,
+                'tenant' => $tenantContext->getTenant()
             ]);
 
-        try {
-            $transport->send($email);
-            return true;
-        } catch (TransportExceptionInterface) {
-            return false;
-        }
+        $transport->send($email);
     }
 }

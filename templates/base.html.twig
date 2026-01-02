@@ -9,6 +9,7 @@
     {% block css %}
 
     {% endblock %}
+    <script src="{{ asset('js/elements/NotificationHTMLElement.js') }}"></script>
 </head>
 <body>
     {% if app.user %}
@@ -16,6 +17,7 @@
     {% endif %}
 
     <main class="saas-container">
+{#        <toast-notification aria-message="Message de notification" aria-success="true"></toast-notification>#}
         <div class="saas-main">
             {% block body %}
             {% endblock %}

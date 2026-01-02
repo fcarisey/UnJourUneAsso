@@ -46,12 +46,12 @@ final class AssociationController extends BaseController
             'success' => true,
             'message' => 'Association created',
             'association_id' => $association->getId()
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     #[Route('/association/{id}', name: 'app_association')]
     public function show(Association $association): Response{
-        return new Response(json_encode($association));
+        return new Response(json_encode($association), headers: ['Content-Type' => 'application/json']);
     }
 
     #[Route('/association/{id}/edit', name: 'app_association_edit', methods: ['PATCH'])]
@@ -70,7 +70,7 @@ final class AssociationController extends BaseController
             'success' => true,
             'message' => 'Association edited',
             'association_id' => $association->getId()
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 
     #[Route('/association/{id}/delete', name: 'app_association_delete', methods: ['DELETE'])]
@@ -81,6 +81,6 @@ final class AssociationController extends BaseController
         return new Response(json_encode([
             'success' => true,
             'message' => 'Association deleted'
-        ]));
+        ]), headers: ['Content-Type' => 'application/json']);
     }
 }
