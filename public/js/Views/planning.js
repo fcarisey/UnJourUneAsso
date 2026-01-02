@@ -296,7 +296,7 @@ App.init(_ => {
                         description: document.getElementById('eventDescription').value
                     };
 
-                    void App.fetchPOST('/event/create', eventData, data => {
+                    void App.fetch.post('/event/create', eventData, data => {
                         if (!data.success){
                             console.error('Erreur lors de la création de l\'événement');
                             App.showToast('Erreur lors de la création de l\'événement', false);
@@ -339,7 +339,7 @@ App.init(_ => {
                     const eventId = parseInt(document.getElementById('editEventId').value);
 
                     if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
-                        void App.fetchDELETE(`event/delete/${eventId}`, {}, data => {
+                        void App.fetch.delete(`event/delete/${eventId}`, {}, data => {
                             if (!data.success) {
                                 console.error("Erreur lors de la suppression de l\'évènement");
                                 App.showToast('Erreur lors de la suppression de l\'événement', true);
@@ -375,7 +375,7 @@ App.init(_ => {
                         description: document.getElementById('editEventDescription').value
                     };
 
-                    void App.fetchPUT(`event/update/${eventId}`, eventData, data => {
+                    void App.fetch.put(`event/update/${eventId}`, eventData, data => {
                         if (!data.success) {
                             console.error('Erreur lors de la modification de l\'événement');
                             App.showToast('Erreur lors de la modification de l\'événement', false);
@@ -454,7 +454,7 @@ App.init(_ => {
 
                     if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
 
-                        void App.fetchDELETE(`/event/delete/${eventId}`, {}, data => {
+                        void App.fetch.delete(`/event/delete/${eventId}`, {}, data => {
                             if (!data.success) {
                                 console.error(data.message);
                                 App.showToast(data.message, false);
@@ -621,7 +621,7 @@ App.init(_ => {
 
         // Charger toutes les associations disponibles
         async loadAssociations() {
-            void App.fetchGET('/associations/available', data => {
+            void App.fetch.get('/associations/available', data => {
                 if (!data.success) {
                     console.error(data.message);
                     App.showToast(data.message, false);
@@ -687,7 +687,7 @@ App.init(_ => {
 
             invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Chargement...</small></div>';
 
-            void App.fetchGET(`/event/${eventId}/invitations`, data => {
+            void App.fetch.get(`/event/${eventId}/invitations`, data => {
                 if (!data.success) {
                     invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Erreur de chargement</small></div>';
 
@@ -753,7 +753,7 @@ App.init(_ => {
         }
 
         async addInvitationByAssociationId(eventId, associationId, context = 'edit') {
-            void App.fetchPOST(`/event/${eventId}/invitation/add`, {
+            void App.fetch.post(`/event/${eventId}/invitation/add`, {
                 associationId: associationId
             }, async data => {
                     if (!data.success) {
@@ -769,7 +769,7 @@ App.init(_ => {
         }
 
         async addInvitationByEmail(eventId, email, context = 'edit') {
-            void App.fetchPOST(`/event/${eventId}/invitation/add`, {email}, async data => {
+            void App.fetch.post(`/event/${eventId}/invitation/add`, {email}, async data => {
                 if (!data.success) {
                     console.error(data.message);
                     App.showToast(data.message, false);
@@ -785,7 +785,7 @@ App.init(_ => {
         }
 
         async deleteInvitation(invitationId, context = 'edit') {
-            void App.fetchDELETE(`/event/invitation/${invitationId}/delete`, async data => {
+            void App.fetch.delete(`/event/invitation/${invitationId}/delete`, async data => {
                 if (!data.success) {
                     console.error(data.message);
                     App.showToast(data.message, false);
@@ -816,7 +816,7 @@ App.init(_ => {
     //     color: '#8b5cf6'
     // });
 
-    void App.fetchPOST('/events', {}, data => {
+    void App.fetch.post('/events', {}, data => {
         if (!data.success) {
             console.error(data.message);
             App.showToast(data.message, false);

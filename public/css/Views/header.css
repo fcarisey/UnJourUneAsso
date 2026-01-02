@@ -1,3 +1,5 @@
+@import "../root.css";
+
 /* Styles de base pour le header */
 .nav-link {
     padding: 0.625rem 1.25rem;
