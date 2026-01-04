@@ -36,79 +36,41 @@
                 </div>
                 <div class="col-md-4 text-end mt-3 mt-md-0">
                     <div class="stat-card">
-                        <div class="stat-value">{{ associations|length }}</div>
+                        <div class="stat-value">...</div>
                         <div class="stat-label">Associations</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div id="associationsLoader" class="saas-loader" aria-label="Chargement">
+            <div class="saas-loader__ring">
+                <div class="saas-loader__core"></div>
+            </div>
+            <p class="saas-loader__label">Chargement...</p>
+        </div>
+
         <!-- Associations Grid -->
-        {% if associations|length > 0 %}
-            <div class="associations-grid" id="associationsGrid">
-                {% for association in associations %}
-                    <div class="association-card" data-name="{{ association.name|lower }}" data-id="{{ association.id }}">
-                        <div class="association-icon">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                            </svg>
-                        </div>
-                        <h3 class="association-name">{{ association.name }}</h3>
-                        <p class="association-email">
-                            {{ association.email }}
-                        </p>
-                        <div class="association-meta">
-{#                            <div class="meta-item">#}
-{#                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">#}
-{#                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>#}
-{#                                </svg>#}
-{#                                <span>{{ association.invitations|length }} membres</span>#}
-{#                            </div>#}
-                            <div class="meta-item">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span>{{ association.invitations|length }} Événements</span>
-                            </div>
-                        </div>
-                        <p class="association-description">
-                            {{ association.description }}
-                        </p>
-                        <div class="association-actions">
-                            <button class="btn-view">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                                Voir
-                            </button>
-                            <button class="btn-edit">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                {% endfor %}
+        <div class="associations-grid" id="associationsGrid">
+
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state">
+            <div class="empty-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
             </div>
-        {% else %}
-            <!-- Empty State -->
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                </div>
-                <h2 class="empty-title">Aucune association</h2>
-                <p class="empty-description">Commencez par créer votre première association</p>
-                <button class="btn-add-association" data-bs-toggle="modal" data-bs-target="#addAssociationModal">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    Créer une association
-                </button>
-            </div>
-        {% endif %}
+            <h2 class="empty-title">Aucune association</h2>
+            <p class="empty-description">Commencez par créer votre première association</p>
+            <button class="btn-add-association" data-bs-toggle="modal" data-bs-target="#addAssociationModal">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Créer une association
+            </button>
+        </div>
     </div>
 </div>
 
@@ -270,5 +232,32 @@
         </div>
     </div>
 </div>
+
+<template id="association_template">
+    <div class="association-card">
+        <div class="association-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+        </div>
+        <h3 class="association-name"></h3>
+        <p class="association-email"></p>
+        <p class="association-description"></p>
+        <div class="association-actions">
+            <button class="btn-view">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                Voir
+            </button>
+            <button class="btn-edit">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</template>
 {% endblock %}
 

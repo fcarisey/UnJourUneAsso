@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Association;
+use App\Repository\AssociationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,8 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AssociationApiController extends BaseApiController
 {
     #[Route('/associations', name: 'association_list', methods: ['GET'])]
-    public function getAvailableAssociations(EntityManagerInterface $em): Response{
-        $associations = $em->getRepository(Association::class)->findAll();
+    public function getAvailableAssociations(AssociationRepository $associationRepository): Response{
+        $associations = $associationRepository->findAll();
 
         return $this->jsonResponse([
             'success' => true,
