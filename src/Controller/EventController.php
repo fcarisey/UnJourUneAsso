@@ -50,7 +50,7 @@ final class EventController extends BaseController
     /**
      * @throws Exception
      */
-    #[Route('/event/create', name: 'event_create', methods: ['POST'])]
+    #[Route('/event', name: 'event_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $em): Response{
         $data = $request->getContent();
         $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
@@ -73,7 +73,7 @@ final class EventController extends BaseController
         ]);
     }
 
-    #[Route('/event/delete/{id}', name: 'event_delete', methods: ['DELETE'])]
+    #[Route('/event/{id}', name: 'event_delete', methods: ['DELETE'])]
     public function delete(EntityManagerInterface $em, Event $event): Response{
 
         foreach($event->getInvitations() as $invitation) {
@@ -92,7 +92,7 @@ final class EventController extends BaseController
     /**
      * @throws Exception
      */
-    #[Route('/event/update/{id}', name: 'event_update', methods: ['PUT'])]
+    #[Route('/event/{id}', name: 'event_update', methods: ['PUT'])]
     public function update(Request $request, EntityManagerInterface $em, Event $event): Response{
         $data = $request->getContent();
         $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
@@ -116,17 +116,6 @@ final class EventController extends BaseController
             'success' => true,
             'message' => 'Liste des invitations.',
             'invitations' => $event->getInvitations()->toArray()
-        ]);
-    }
-
-    #[Route('/associations/available', name: 'associations_available', methods: ['GET'])]
-    public function getAvailableAssociations(EntityManagerInterface $em): Response{
-        $associations = $em->getRepository(Association::class)->findAll();
-
-        return $this->jsonResponse([
-            'success' => true,
-            'message' => 'Liste des associations disponibles.',
-            'associations' => $associations
         ]);
     }
 }

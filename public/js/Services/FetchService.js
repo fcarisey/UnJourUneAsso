@@ -1,3 +1,5 @@
+import App from "../App.js";
+
 export default class FetchService {
     static #FETCH_DEFAULT_HEADERS = {
         "accept": "application/json",

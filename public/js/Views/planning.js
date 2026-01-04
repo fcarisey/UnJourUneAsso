@@ -296,7 +296,7 @@ App.init(_ => {
                         description: document.getElementById('eventDescription').value
                     };
 
-                    void App.fetch.post('/event/create', eventData, data => {
+                    void App.fetch.post('/event', eventData, data => {
                         if (!data.success){
                             console.error('Erreur lors de la création de l\'événement');
                             App.showToast('Erreur lors de la création de l\'événement', false);
@@ -339,7 +339,7 @@ App.init(_ => {
                     const eventId = parseInt(document.getElementById('editEventId').value);
 
                     if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
-                        void App.fetch.delete(`event/delete/${eventId}`, {}, data => {
+                        void App.fetch.delete(`/event/${eventId}`, {}, data => {
                             if (!data.success) {
                                 console.error("Erreur lors de la suppression de l\'évènement");
                                 App.showToast('Erreur lors de la suppression de l\'événement', true);
@@ -375,7 +375,7 @@ App.init(_ => {
                         description: document.getElementById('editEventDescription').value
                     };
 
-                    void App.fetch.put(`event/update/${eventId}`, eventData, data => {
+                    void App.fetch.put(`/event/${eventId}`, eventData, data => {
                         if (!data.success) {
                             console.error('Erreur lors de la modification de l\'événement');
                             App.showToast('Erreur lors de la modification de l\'événement', false);
@@ -454,7 +454,7 @@ App.init(_ => {
 
                     if (confirm('Voulez-vous vraiment supprimer cet événement ?')) {
 
-                        void App.fetch.delete(`/event/delete/${eventId}`, {}, data => {
+                        void App.fetch.delete(`/event/${eventId}`, {}, data => {
                             if (!data.success) {
                                 console.error(data.message);
                                 App.showToast(data.message, false);
@@ -620,7 +620,7 @@ App.init(_ => {
 
         // Charger toutes les associations disponibles
         async loadAssociations() {
-            void App.fetch.get('/associations/available', data => {
+            void App.fetch.get('/api/associations', data => {
                 if (!data.success) {
                     console.error(data.message);
                     App.showToast(data.message, false);
