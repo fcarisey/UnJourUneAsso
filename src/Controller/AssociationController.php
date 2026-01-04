@@ -42,16 +42,20 @@ final class AssociationController extends BaseController
         $em->persist($association);
         $em->flush();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
-            'message' => 'Association created',
+            'message' => "Association {$association->getName()} créée.",
             'association_id' => $association->getId()
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 
     #[Route('/association/{id}', name: 'app_association')]
     public function show(Association $association): Response{
-        return new Response(json_encode($association), headers: ['Content-Type' => 'application/json']);
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => "Association {$association->getName()}",
+            'association' => $association
+        ]);
     }
 
     #[Route('/association/{id}/edit', name: 'app_association_edit', methods: ['PATCH'])]
@@ -66,11 +70,10 @@ final class AssociationController extends BaseController
         $em->persist($association);
         $em->flush();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
-            'message' => 'Association edited',
-            'association_id' => $association->getId()
-        ]), headers: ['Content-Type' => 'application/json']);
+            'message' => 'Association éditée avec success.',
+        ]);
     }
 
     #[Route('/association/{id}/delete', name: 'app_association_delete', methods: ['DELETE'])]
@@ -78,9 +81,9 @@ final class AssociationController extends BaseController
         $em->remove($association);
         $em->flush();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
             'message' => 'Association deleted'
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 }

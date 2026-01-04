@@ -16,7 +16,10 @@ final class TemporaryLinkController extends BaseController
     public function index(string $hash, InvitationRepository $invitationRepository): Response
     {
         if (empty($hash)) {
-            return new Response("Ce lien d'invitation n'existe pas !", Response::HTTP_NOT_FOUND);
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => 'L\'invitation n\'existe pas',
+            ]);
         }
 
         $invitation = $invitationRepository->findOneBy([
@@ -24,7 +27,10 @@ final class TemporaryLinkController extends BaseController
         ]);
 
         if (!$invitation) {
-            return new Response("Ce lien d'invitation n'existe pas !", Response::HTTP_NOT_FOUND);
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => 'L\'invitation n\'existe pas',
+            ]);
         }
 
         return $this->render('temporary-link/index.html.twig', [
@@ -38,10 +44,10 @@ final class TemporaryLinkController extends BaseController
     #[Route('/invitation/{hash}/{response}', name: 'app_temporary_link_response')]
     public function invitationResponse(string $hash, string $response, InvitationRepository $invitationRepository, EntityManagerInterface $em): Response{
         if (empty($hash)) {
-            return new Response(json_encode([
+            return $this->jsonResponse([
                 'success' => false,
-                'message' => "Ce lien d'invitation n'existe pas !",
-            ]), headers: ['Content-Type' => 'application/json']);
+                'message' => 'L\'invitation n\'existe pas',
+            ]);
         }
 
         $invitation = $invitationRepository->findOneBy([
@@ -49,17 +55,17 @@ final class TemporaryLinkController extends BaseController
         ]);
 
         if (!$invitation) {
-            return new Response(json_encode([
+            return $this->jsonResponse([
                 'success' => false,
-                'message' => "Ce lien d'invitation n'existe pas ou a éxpiré. !",
-            ]), headers: ['Content-Type' => 'application/json']);
+                'message' => 'L\'invitation n\'existe pas',
+            ]);
         }
 
         if (empty($response)){
-            return new Response(json_encode([
+            return $this->jsonResponse([
                 'success' => false,
-                'message' => "La réponse n'est pas reconnue !",
-            ]), headers: ['Content-Type' => 'application/json']);
+                'message' => 'La réponse ne peut pas être vide !',
+            ]);
         }
 
         if ($response === "accept"){
@@ -67,25 +73,26 @@ final class TemporaryLinkController extends BaseController
         }else if ($response === "decline"){
             $invitation->setEtat(false);
         }else {
-            return new Response(json_encode([
+            return $this->jsonResponse([
                 'success' => false,
-                'message' => "La réponse n'est pas reconnue !"
-            ]), headers: ['Content-Type' => 'application/json']);
+                'message' => 'La réponse n\'est pas reconnue !',
+            ]);
         }
 
         try{
             $em->persist($invitation);
             $em->flush();
         }catch (Exception $e) {
-            return new Response(json_encode([
+            // TODO: Exception report
+            return $this->jsonResponse([
                 'success' => false,
-                'message' => $e->getMessage()
-            ]), headers: ['Content-Type' => 'application/json']);
+                'message' => 'Une erreur est survenue lors de l\'enregistrement',
+            ]);
         }
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
             'message' => "Votre réponse a bien été prise en compte !"
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 }

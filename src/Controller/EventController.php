@@ -40,10 +40,11 @@ final class EventController extends BaseController
 
     #[Route("/events", name: "event_list")]
     public function list(EventRepository $eventRepository): Response{
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
-            'events' => $eventRepository->findAll()
-        ]), headers: ['Content-Type' => 'application/json']);
+            'message' => 'Liste des évènements.',
+            'events' => $eventRepository->findAll(),
+        ]);
     }
 
     /**
@@ -64,12 +65,12 @@ final class EventController extends BaseController
         $em->persist($event);
         $em->flush();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
-            'message' => 'Event created successfully',
+            'message' => 'Évènement créé.',
             'event_id' => $event->getId(),
             'color' => '#' . $event->getColor()
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 
     #[Route('/event/delete/{id}', name: 'event_delete', methods: ['DELETE'])]
@@ -82,10 +83,10 @@ final class EventController extends BaseController
         $em->remove($event);
         $em->flush();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([[
             'success' => true,
             'message' => 'Event deleted successfully'
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]]);
     }
 
     /**
@@ -103,27 +104,29 @@ final class EventController extends BaseController
 
         $em->flush();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
             'message' => 'Event updated successfully'
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 
     #[Route('/event/{id}/invitations', name: 'event_invitations', methods: ['GET'])]
     public function getInvitations(Event $event): Response{
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
+            'message' => 'Liste des invitations.',
             'invitations' => $event->getInvitations()->toArray()
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 
     #[Route('/associations/available', name: 'associations_available', methods: ['GET'])]
     public function getAvailableAssociations(EntityManagerInterface $em): Response{
         $associations = $em->getRepository(Association::class)->findAll();
 
-        return new Response(json_encode([
+        return $this->jsonResponse([
             'success' => true,
+            'message' => 'Liste des associations disponibles.',
             'associations' => $associations
-        ]), headers: ['Content-Type' => 'application/json']);
+        ]);
     }
 }
