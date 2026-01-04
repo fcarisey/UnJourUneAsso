@@ -16,7 +16,7 @@ final class AssociationController extends BaseController
 {
     protected string $title = "Association";
 
-    #[Route('/associations', name: 'app_associations')]
+    #[Route('/associations', name: 'association_list_view', methods: ['GET'])]
     public function index(AssociationRepository $associationRepository, EventRepository $eventRepository): Response
     {
         $associations = $associationRepository->findAll();
@@ -28,7 +28,18 @@ final class AssociationController extends BaseController
         ]);
     }
 
-    #[Route('/association/create', name: 'app_association_create', methods: ['POST'])]
+    #[Route('/api/associations', name: 'association_list', methods: ['GET'])]
+    public function getAvailableAssociations(EntityManagerInterface $em): Response{
+        $associations = $em->getRepository(Association::class)->findAll();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Liste des associations disponibles.',
+            'associations' => $associations
+        ]);
+    }
+
+    #[Route('/association', name: 'association_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $em): Response{
         $data = $request->getContent();
         $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
@@ -49,7 +60,7 @@ final class AssociationController extends BaseController
         ]);
     }
 
-    #[Route('/association/{id}', name: 'app_association')]
+    #[Route('/association/{id}', name: 'association_show')]
     public function show(Association $association): Response{
         return $this->jsonResponse([
             'success' => true,
@@ -58,7 +69,7 @@ final class AssociationController extends BaseController
         ]);
     }
 
-    #[Route('/association/{id}/edit', name: 'app_association_edit', methods: ['PATCH'])]
+    #[Route('/association/{id}', name: 'association_edit', methods: ['PATCH'])]
     public function edit(Request $request, Association $association, EntityManagerInterface $em): Response{
         $data = $request->getContent();
         $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
@@ -76,7 +87,7 @@ final class AssociationController extends BaseController
         ]);
     }
 
-    #[Route('/association/{id}/delete', name: 'app_association_delete', methods: ['DELETE'])]
+    #[Route('/association/{id}', name: 'association_delete', methods: ['DELETE'])]
     public function delete(Association $association, EntityManagerInterface $em): Response{
         $em->remove($association);
         $em->flush();
