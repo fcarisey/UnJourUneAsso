@@ -1,24 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
-use App\Context\TenantContext;
-use App\Entity\Association;
 use App\Entity\Event;
-use App\Entity\Invitation;
-use App\Helper\TemporaryLinkHelper;
 use App\Repository\EventRepository;
-use App\Repository\InvitationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\Transport\TransportInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class EventController extends BaseController
+#[Route('/api')]
+final class EventApiController extends BaseApiController
 {
     protected string $title = "évènement";
 
@@ -38,7 +32,7 @@ final class EventController extends BaseController
         '6366F1', // Indigo
     ];
 
-    #[Route("/events", name: "event_list")]
+    #[Route("/events", name: "event_list", methods: ['GET'])]
     public function list(EventRepository $eventRepository): Response{
         return $this->jsonResponse([
             'success' => true,
@@ -83,10 +77,10 @@ final class EventController extends BaseController
         $em->remove($event);
         $em->flush();
 
-        return $this->jsonResponse([[
+        return $this->jsonResponse([
             'success' => true,
             'message' => 'Event deleted successfully'
-        ]]);
+        ]);
     }
 
     /**

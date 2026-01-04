@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Context\TenantContext;
+use App\Controller\EmailController;
 use App\Entity\Association;
 use App\Entity\Event;
 use App\Entity\Invitation;
 use App\Helper\TemporaryLinkHelper;
 use App\Repository\InvitationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Transport\TransportInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class InvitationController extends BaseController
+#[Route('/api')]
+final class InvitationApiController extends BaseApiController
 {
     #[Route('/invitation', name: 'invitation_post', methods: ['POST'])]
     public function addInvitation(Request $request, EntityManagerInterface $em, TransportInterface $transport, InvitationRepository $invitationRepository, TenantContext $tenantContext): Response{
@@ -134,35 +135,6 @@ final class InvitationController extends BaseController
         return $this->jsonResponse([
             'success' => true,
             'message' => 'Invitation supprimée'
-        ]);
-    }
-
-    #[Route('/invitation/{hash}', name: 'invitation_link', methods: ['GET'])]
-    public function index(string $hash, InvitationRepository $invitationRepository): Response
-    {
-        if (empty($hash)) {
-            return $this->jsonResponse([
-                'success' => false,
-                'message' => 'L\'invitation n\'existe pas',
-            ]);
-        }
-
-        $invitation = $invitationRepository->findOneBy([
-            'link' => $hash,
-        ]);
-
-        if (!$invitation) {
-            return $this->jsonResponse([
-                'success' => false,
-                'message' => 'L\'invitation n\'existe pas',
-            ]);
-        }
-
-        return $this->render('temporary-link/index.html.twig', [
-            'invitation' => $invitation,
-            'association' => $invitation->getAssociation(),
-            'event' => $invitation->getEvent(),
-            'hash' => $hash,
         ]);
     }
 

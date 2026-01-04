@@ -112,7 +112,7 @@ App.init(_ => {
             card.querySelector('.association-description').textContent = description;
         }
 
-        void App.fetch.patch(`/association/${associationId}`, {
+        void App.fetch.patch(`/api/association/${associationId}`, {
             associationId: associationId,
             name: name,
             email: email,
@@ -151,7 +151,7 @@ App.init(_ => {
             // Supprimer des données
             delete associationsData[associationId];
 
-            void App.fetch.delete(`/association/${associationId}`, {
+            void App.fetch.delete(`/api/association/${associationId}`, {
                 associationId: associationId,
             }, data => {
                 const modal = bootstrap.Modal.getInstance(document.getElementById('editAssociationModal'));
@@ -172,7 +172,7 @@ App.init(_ => {
             const email = document.getElementById('associationEmail').value;
             const description = document.getElementById('associationDescription').value;
 
-            void App.fetch.post('/association', {
+            void App.fetch.post('/api/association', {
                     name: name,
                     email: email,
                     description: description,

@@ -1,34 +1,17 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Association;
-use App\Entity\User;
-use App\Repository\AssociationRepository;
-use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class AssociationController extends BaseController
+#[Route('/api')]
+final class AssociationApiController extends BaseApiController
 {
-    protected string $title = "Association";
-
-    #[Route('/associations', name: 'association_list_view', methods: ['GET'])]
-    public function index(AssociationRepository $associationRepository, EventRepository $eventRepository): Response
-    {
-        $associations = $associationRepository->findAll();
-        $events = $eventRepository->findAll();
-
-        return $this->render('association/index.html.twig', [
-            'associations' => $associations,
-            'events' => $events,
-        ]);
-    }
-
-    #[Route('/api/associations', name: 'association_list', methods: ['GET'])]
+    #[Route('/associations', name: 'association_list', methods: ['GET'])]
     public function getAvailableAssociations(EntityManagerInterface $em): Response{
         $associations = $em->getRepository(Association::class)->findAll();
 
@@ -60,7 +43,7 @@ final class AssociationController extends BaseController
         ]);
     }
 
-    #[Route('/association/{id}', name: 'association_show')]
+    #[Route('/association/{id}', name: 'association_show', methods: ['GET'])]
     public function show(Association $association): Response{
         return $this->jsonResponse([
             'success' => true,

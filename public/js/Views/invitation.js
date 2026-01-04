@@ -12,7 +12,7 @@ App.init(_ => {
     btn_accept.addEventListener("click", e => {
         e.preventDefault();
 
-        void App.fetch.get(`/invitation/${hash}/accept`, data => {
+        void App.fetch.get(`/api/invitation/${hash}/accept`, data => {
             console.log(data)
         })
     })
@@ -21,7 +21,7 @@ App.init(_ => {
     btn_decline.addEventListener("click", e => {
         e.preventDefault();
 
-        void App.fetch.get(`/invitation/${hash}/decline`, data => {
+        void App.fetch.get(`/api/invitation/${hash}/decline`, data => {
             console.log(data)
         })
     })
