@@ -8,53 +8,52 @@ App.init(_ => {
     // loader.classList.remove('hide');
 
     // First load
-    void App.fetch.get('/api/associations', data => {
-        if (!data.success){
-            App.showToast(data.message, false);
-        }
-
-        if (!data.associations) {
-            App.showToast("Résultat inattendu lors de la récupération des associations.", false);
-        }
-
-        const empty_state = document.querySelector('div.empty-state');
-
-        if (data.associations.length > 0) {
-            empty_state.style.display = 'none';
-        }else{
-            empty_state.style.display = 'block';
-        }
-
-        const state_value = document.querySelector('div.stat-value');
-        state_value.innerText = data.associations.length;
-
-        data.associations.forEach(association => {
-            buildAssociationElement(
-                association.id,
-                association.name,
-                association.description,
-                association.email
-            )
-        });
-        loader.classList.add('hide');
-    });
+    loadAllAssociations();
 
     // Gestion de la recherche
     const searchInput = document.getElementById('searchAssociations');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+            let searchTerm = e.target.value;
+            const searchTerm_replaced = searchTerm.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
 
-            for (const id of Object.keys(associationsData)) {
-                const card = document.querySelector(`.association-card[data-id='${id}']`);
-                const name = card.dataset.name;
-
-                if (name.includes(searchTerm)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
+            if (searchTerm !== searchTerm_replaced){
+                e.target.value = searchTerm_replaced;
+                return;
             }
+
+            searchTerm.toLowerCase();
+
+            if (searchTerm.length < 1) {
+                loadAllAssociations();
+                return;
+            }
+
+            void App.fetch.get(`/api/associations/search/${searchTerm}`, data => {
+                if (!data.success) {
+                    App.showToast(data.message, false);
+                }
+
+                if (!data.data.associations) {
+                    const associations_grid = document.getElementById('associationsGrid');
+                    associations_grid.innerHTML = 'Aucune association';
+                }
+
+                const state_value = document.querySelector('div.stat-value');
+                state_value.innerText = data.data.associations.length;
+
+                clearAssociations();
+
+                data.data.associations.forEach(association => {
+
+                    buildAssociationElement(
+                        association.id,
+                        association.name,
+                        association.description,
+                        association.email
+                    )
+                })
+            })
         });
     }
 
@@ -171,6 +170,40 @@ App.init(_ => {
         }
     });
 
+    function loadAllAssociations() {
+        void App.fetch.get('/api/associations', data => {
+            if (!data.success){
+                App.showToast(data.message, false);
+            }
+
+            if (!data.associations) {
+                App.showToast("Résultat inattendu lors de la récupération des associations.", false);
+            }
+
+            const empty_state = document.querySelector('div.empty-state');
+
+            if (data.associations.length > 0) {
+                empty_state.style.display = 'none';
+            }else{
+                empty_state.style.display = 'block';
+            }
+
+            const state_value = document.querySelector('div.stat-value');
+            state_value.innerText = data.associations.length;
+
+            clearAssociations();
+            data.associations.forEach(association => {
+                buildAssociationElement(
+                    association.id,
+                    association.name,
+                    association.description,
+                    association.email
+                )
+            });
+            loader.classList.add('hide');
+        });
+    }
+
     function buildAssociationElement(id, name, description, email) {
         associationsData[id] = {
             id: id,
@@ -214,6 +247,11 @@ App.init(_ => {
         });
 
         association_grid.insertAdjacentElement('afterbegin', association_element);
+    }
+
+    function clearAssociations() {
+        const association_grid = document.getElementById('associationsGrid');
+        association_grid.innerHTML = '';
     }
 
     function openViewModal(associationId) {

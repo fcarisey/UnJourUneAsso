@@ -81,4 +81,41 @@ final class AssociationApiController extends BaseApiController
             'message' => 'Association deleted'
         ]);
     }
+
+    #[Route('/associations/search/{search}', name: 'association_search', methods: ['GET'])]
+    public function search(String $search, AssociationRepository $associationRepository): Response{
+        if (empty($search)) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => "La valeur de recherche ne peut pas être vide !"
+            ]);
+        }
+
+        $search = explode(" ", $search);
+
+        $qb = $associationRepository->createQueryBuilder('a');
+
+        $orX = $qb->expr()->orX();
+
+        foreach ($search as $i => $searchItem) {
+            $orX->add(
+                $qb->expr()->like('LOWER(a.name)', ":searchItem$i")
+            );
+
+            $qb->setParameter("searchItem$i", '%'.mb_strtolower($searchItem).'%');
+        }
+
+        $qb->andWhere($orX);
+
+        $associations = $qb->getQuery()->getResult();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Liste des associations disponibles.',
+            'data' => [
+                'associations' => $associations,
+                'searched' => $search
+            ]
+        ]);
+    }
 }
