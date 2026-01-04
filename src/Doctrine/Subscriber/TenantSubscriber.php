@@ -19,12 +19,8 @@ readonly class TenantSubscriber
         $uow = $em->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if (!$entity instanceof TenantAwareInterface) {
-                return;
-            }
-
-            if ($entity->getTenant() !== null) {
-                return;
+            if (!$entity instanceof TenantAwareInterface || $entity->getTenant() !== null) {
+                continue;
             }
 
             $entity->setTenant($this->tenantContext->getTenant());

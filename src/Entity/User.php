@@ -29,14 +29,14 @@ class User implements TenantAwareInterface, UserInterface, PasswordAuthenticated
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?tenants $tenant = null;
+    private ?Tenants $tenant = null;
 
     #[ORM\Column(length: 300)]
     private ?string $email = null;

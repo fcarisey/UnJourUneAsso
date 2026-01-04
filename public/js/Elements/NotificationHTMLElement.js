@@ -16,7 +16,7 @@ export default class NotificationHTMLElement extends HTMLElement {
     connectedCallback(){
         const try_success = this.getAttribute('aria-success');
         if (!try_success?.match("true|false")){
-            console.error("aria-success must be a boolean e.g: true or false !")
+            console.error("aria-success must be a boolean e.g: true or false !");
             this.remove();
             return;
         }
@@ -55,7 +55,7 @@ export default class NotificationHTMLElement extends HTMLElement {
         this.style.right = '20px';
         this.style.zIndex = '9999';
         this.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
-        this.style.animation = "slideIn 0.3s ease"
+        this.style.animation = "slideIn 0.3s ease";
         this.style.padding = '1rem 1.5rem';
         this.style.background = this.getAttribute('aria-success') === "true" ? "linear-gradient(135deg, #10b981, #059669)" : "linear-gradient(135deg, #ef4444, #dc2626)";
         this.style.borderRadius = "0.75rem";

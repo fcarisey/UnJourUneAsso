@@ -42,7 +42,7 @@ class Event implements TenantAwareInterface, JsonSerializable
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?tenants $tenant = null;
+    private ?Tenants $tenant = null;
 
     public function __construct(){
         $this->id = Uuid::v7();

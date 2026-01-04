@@ -6,7 +6,6 @@ use App\Context\TenantContext;
 use App\Repository\TenantsRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -52,7 +51,7 @@ readonly class TenantRequestListener
                 ]);
             } catch (Exception $e) {
                 error_log($e->getMessage());
-                throw new NotFoundHttpException($e->getMessage());
+                throw new NotFoundHttpException("Une erreur s'est produite lors de l'accès à votre espace.");
             }
         }
     }

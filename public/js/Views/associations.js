@@ -123,7 +123,7 @@ App.init(_ => {
 
             console.log('Association modifiée:', { id: associationId, name, description });
             App.showToast(data.message);
-        })
+        });
     });
 
     // Gestion du bouton de suppression

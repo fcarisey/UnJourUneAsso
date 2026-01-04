@@ -33,7 +33,7 @@ class Invitation implements TenantAwareInterface, JsonSerializable
 
     #[ORM\ManyToOne(inversedBy: 'invitations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?tenants $tenant = null;
+    private ?Tenants $tenant = null;
 
     public function __construct()
     {

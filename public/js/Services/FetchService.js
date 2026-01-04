@@ -52,7 +52,7 @@ export default class FetchService {
             if (type !== 'json'){
                 console.error("Une erreur server est survenue !")
                 console.error(data)
-                App.showToast(`Une erreur server est survenue !`, false);
+                App.showToast(`Une erreur serveur est survenue, réponse inattendue !`, false);
 
                 throw new Error('A server error occurred !');
             }

@@ -90,7 +90,7 @@ final class InvitationApiController extends BaseApiController
         $invitation->setEvent($event);
         $invitation->setAssociation($association);
         $invitation->setEtat(null); // En attente
-        $invitation->setLink(TemporaryLinkHelper::CreateLink($email . $association->getName() . $event->getName()));
+        $invitation->setLink(TemporaryLinkHelper::createLink());
 
         try {
             EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail(), $invitation->getLink(), $tenantContext);
@@ -114,7 +114,7 @@ final class InvitationApiController extends BaseApiController
 
             return $this->jsonResponse([
                 'success' => false,
-                'message' => 'l\'invitation n\'a pas pu être envoyer',
+                'message' => 'l\'invitation n\'a pas pu être envoyée.',
                 'invitation' => $invitation
             ]);
         }
