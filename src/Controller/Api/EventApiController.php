@@ -41,6 +41,33 @@ final class EventApiController extends BaseApiController
         ]);
     }
 
+    #[Route("/events/range/{start_at}/{end_at}", name: "event_range", methods: ['GET'])]
+    public function listInRange(EventRepository $eventRepository, string $start_at, string $end_at): Response{
+        try {
+            $start_at = new DateTimeImmutable($start_at);
+            $end_at = new DateTimeImmutable($end_at);
+        } catch (\DateMalformedStringException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => "Une erreur s'est produite lors de la récupération des dates d'évènement.",
+            ]);
+        }
+
+        $events = $eventRepository->createQueryBuilder('e')
+            ->where('e.start_at >= :start_at')
+            ->andWhere('e.end_at <= :end_at')
+            ->setParameter('start_at', $start_at->format("Y-m-d H:i:s"))
+            ->setParameter('end_at', $end_at->format("Y-m-d H:i:s"))
+            ->getQuery()
+            ->getResult();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Liste des évènements.',
+            'events' => $events
+        ]);
+    }
+
     /**
      * @throws Exception
      */

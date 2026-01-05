@@ -13,6 +13,7 @@ App.init(_ => {
         }
 
         init() {
+            void this.loadCurrentMonthEvents();
             this.renderCalendar();
             this.attachEventListeners();
             this.attachInvitationListeners();
@@ -138,12 +139,18 @@ App.init(_ => {
         // Mois précédent
         previousMonth() {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+
+            void this.loadCurrentMonthEvents();
+
             this.renderCalendar();
         }
 
         // Mois suivant
         nextMonth() {
             this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+
+            void this.loadCurrentMonthEvents();
+
             this.renderCalendar();
         }
 
@@ -171,6 +178,10 @@ App.init(_ => {
         deleteEvent(eventId) {
             this.events = this.events.filter(e => e.id !== eventId);
             this.renderCalendar();
+        }
+
+        clearEvent(){
+            this.events = [];
         }
 
         // Ouvrir la modale d'édition d'un événement
@@ -803,40 +814,37 @@ App.init(_ => {
                 }
             })
         }
+
+        async loadCurrentMonthEvents(){
+            const year = this.currentDate.getFullYear();
+            const month = this.currentDate.getMonth();
+
+            const start_at = new Date(year, month, 1).toLocaleString().replaceAll('/', '-');
+            const end_at = new Date(year, month+1, 0).toLocaleString().replaceAll('/', '-');
+
+            // Refresh events list to current date range
+            void App.fetch.get(`/api/events/range/${start_at}/${end_at}`, data => {
+                if (!data.success) {
+                    console.error(data.message);
+                    App.showToast(data.message, false);
+                    return;
+                }
+
+                this.clearEvent();
+
+                Object(data.events).forEach(event => {
+                    window.calendar.addEvent({
+                        id: event.id,
+                        title: event['name'],
+                        startDateTime: event['start_at']['date'],
+                        endDateTime: event['end_at']['date'],
+                        description: event['description'],
+                        color: event['color'] ?? '#10b981'
+                    });
+                })
+            })
+        }
     }
 
     window.calendar = new Calendar();
-
-    // Charger les événements depuis le backend
-    // window.calendar.loadEvents();
-
-    // Exemple : Ajouter quelques événements de test
-    // Décommenter pour tester l'affichage des événements
-
-    // window.calendar.addEvent({
-    //     title: 'Réunion équipe',
-    //     startDateTime: '2025-11-05T10:00',
-    //     endDateTime: '2025-11-05T11:00',
-    //     description: 'Réunion mensuelle de l\'équipe',
-    //     color: '#8b5cf6'
-    // });
-
-    void App.fetch.get('/api/events', data => {
-        if (!data.success) {
-            console.error(data.message);
-            App.showToast(data.message, false);
-            return;
-        }
-
-        Object(data.events).forEach(event => {
-            window.calendar.addEvent({
-                id: event.id,
-                title: event['name'],
-                startDateTime: event['start_at']['date'],
-                endDateTime: event['end_at']['date'],
-                description: event['description'],
-                color: event['color'] ?? '#10b981'
-            });
-        })
-    })
 })
