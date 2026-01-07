@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Association;
 use App\Repository\AssociationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,6 +22,35 @@ final class AssociationApiController extends BaseApiController
             'message' => 'Liste des associations disponibles.',
             'associations' => $associations
         ]);
+    }
+
+    #[Route('/associations/paginate/{page}/{limit}', name: 'association_list_paginated', methods: ['GET'])]
+    public function getPaginatedAssociations(string $page, string $limit, AssociationRepository $associationRepository): Response{
+
+        try{
+            $page = (int) $page;
+            $limit = (int) $limit;
+
+            $qb = $associationRepository->createQueryBuilder('a');
+
+            $qb->setFirstResult(($page - 1) * $limit)
+                ->setMaxResults($limit);
+
+            $paginator = new Paginator($qb, false);
+
+            return $this->jsonResponse([
+                'success' => true,
+                'message' => 'Liste des associations disponibles.',
+                'data' => [
+                    'associations' => $paginator->getIterator(),
+                ]
+            ]);
+        } catch (\Exception) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => "Une erreur est survenue lors de la pagination des associations.",
+            ]);
+        }
     }
 
     #[Route('/association', name: 'association_create', methods: ['POST'])]
@@ -82,8 +112,8 @@ final class AssociationApiController extends BaseApiController
         ]);
     }
 
-    #[Route('/associations/search/{search}', name: 'association_search', methods: ['GET'])]
-    public function search(String $search, AssociationRepository $associationRepository): Response{
+    #[Route('/associations/search/{search}/{page}/{limit}', name: 'association_search', methods: ['GET'])]
+    public function search(string $search, string $page, string $limit, AssociationRepository $associationRepository): Response{
         if (empty($search)) {
             return $this->jsonResponse([
                 'success' => false,
@@ -91,31 +121,51 @@ final class AssociationApiController extends BaseApiController
             ]);
         }
 
-        $search = explode(" ", $search);
+        try {
 
-        $qb = $associationRepository->createQueryBuilder('a');
+            $page = (int) $page;
+            $limit = (int) $limit;
 
-        $orX = $qb->expr()->orX();
+            $search = explode(" ", $search);
 
-        foreach ($search as $i => $searchItem) {
-            $orX->add(
-                $qb->expr()->like('LOWER(a.name)', ":searchItem$i")
-            );
+            $qb = $associationRepository->createQueryBuilder('a');
 
-            $qb->setParameter("searchItem$i", '%'.mb_strtolower($searchItem).'%');
+            $qb->setFirstResult(($page - 1) * $limit)
+                ->setMaxResults($limit);
+
+            $orX = $qb->expr()->orX();
+
+            foreach ($search as $i => $searchItem) {
+                $orX->add(
+                    $qb->expr()->like('LOWER(a.name)', ":searchItem$i")
+                );
+
+                $qb->setParameter("searchItem$i", '%'.mb_strtolower($searchItem).'%');
+            }
+
+            $qb->andWhere($orX);
+
+            $paginator = new Paginator($qb, false);
+
+            $count = $paginator->count();
+            $max_pages = ceil($count / $limit);
+
+            return $this->jsonResponse([
+                'success' => true,
+                'message' => 'Liste des associations disponibles.',
+                'data' => [
+                    'associations' => (array) $paginator->getIterator(),
+                    'pagination' => [
+                        'max_pages' => $max_pages,
+                    ],
+                    'searched' => $search
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => "Une erreur est survenue lors de la pagination des associations.",
+            ]);
         }
-
-        $qb->andWhere($orX);
-
-        $associations = $qb->getQuery()->getResult();
-
-        return $this->jsonResponse([
-            'success' => true,
-            'message' => 'Liste des associations disponibles.',
-            'data' => [
-                'associations' => $associations,
-                'searched' => $search
-            ]
-        ]);
     }
 }

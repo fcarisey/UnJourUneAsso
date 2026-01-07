@@ -13,47 +13,34 @@ App.init(_ => {
     // Gestion de la recherche
     const searchInput = document.getElementById('searchAssociations');
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            let searchTerm = e.target.value;
-            const searchTerm_replaced = searchTerm.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
-
-            if (searchTerm !== searchTerm_replaced){
-                e.target.value = searchTerm_replaced;
-                return;
+        let timeout = null
+        searchInput.addEventListener('input', e => {
+            if (timeout !== null) {
+                clearTimeout(timeout);
+                timeout = null;
             }
 
-            searchTerm.toLowerCase();
+            timeout = setTimeout(_ => {
+                let searchTerm = e.target.value;
+                const searchTerm_replaced = searchTerm.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
 
-            if (searchTerm.length < 1) {
-                loadAllAssociations();
-                return;
-            }
-
-            void App.fetch.get(`/api/associations/search/${searchTerm}`, data => {
-                if (!data.success) {
-                    App.showToast(data.message, false);
+                if (searchTerm !== searchTerm_replaced){
+                    e.target.value = searchTerm_replaced;
+                    return;
                 }
 
-                if (!data.data.associations) {
-                    const associations_grid = document.getElementById('associationsGrid');
-                    associations_grid.innerHTML = 'Aucune association';
+                searchTerm.toLowerCase();
+
+                if (searchTerm.length < 1) {
+                    loadAllAssociations();
+                    return;
                 }
 
-                const state_value = document.querySelector('div.stat-value');
-                state_value.innerText = data.data.associations.length;
+                search(searchTerm, 1);
 
-                clearAssociations();
-
-                data.data.associations.forEach(association => {
-
-                    buildAssociationElement(
-                        association.id,
-                        association.name,
-                        association.description,
-                        association.email
-                    )
-                })
-            })
+                clearTimeout(timeout);
+                timeout = null;
+            }, 800);
         });
     }
 
@@ -169,6 +156,130 @@ App.init(_ => {
             });
         }
     });
+
+    function search(searchTerm, page) {
+        void App.fetch.get(`/api/associations/search/${searchTerm}/${page}/2`, data => {
+            if (!data.success) {
+                App.showToast(data.message, false);
+                return;
+            }
+
+            if (!data.data.associations) {
+                const associations_grid = document.getElementById('associationsGrid');
+                associations_grid.innerHTML = 'Aucune association';
+            }
+
+            const state_value = document.querySelector('div.stat-value');
+            state_value.innerText = data.data.associations.length;
+
+            const pagination_element = document.querySelector('ul.pagination');
+
+            const first_page = pagination_element.querySelector('a.page-link.first');
+            first_page.replaceWith(first_page.cloneNode(true));
+
+            const new_first_page = pagination_element.querySelector('a.page-link.first');
+
+            new_first_page.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                search(searchTerm, 1);
+            });
+
+            const last_page = pagination_element.querySelector('a.page-link.last');
+            last_page.replaceWith(last_page.cloneNode(true));
+
+            const new_last_page = pagination_element.querySelector('a.page-link.last');
+
+            new_last_page.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                search(searchTerm, data.data.pagination.max_pages);
+            })
+
+            pagination_element.querySelectorAll('li:not(.max)')?.forEach((el) => el.remove());
+
+            const insert_page_element = (html) => {
+                new_first_page.parentElement.insertAdjacentHTML('afterend', html);
+            }
+
+            if (data.data.pagination.max_pages < 4){
+                let html = "";
+
+                for (let i = 0; i < data.data.pagination.max_pages; i++) {
+                    html += `
+                        <li class="page-item"><a class="page-link" href="#">${i+1}</a></li>
+                    `;
+                }
+
+                insert_page_element(html);
+            }else{
+                const max_pages = data.data.pagination.max_pages
+
+                const min_pages = (page - 1) === 0
+                    ? page
+                    : (page === max_pages)
+                        ? page - 2
+                        : page - 1;
+
+                let html = "";
+
+                for (let i = min_pages; i <= page + 1 && i < max_pages; i++) {
+                    html += `
+                        <li class="page-item"><a class="page-link" href="#">${i}</a></li>
+                    `
+                }
+
+                if (page === max_pages || page === max_pages - 1) {
+                    html += `
+                        <li class="page-item"><a class="page-link" href="#">${max_pages}</a></li>
+                    `
+                }else{
+                    html += `
+                        <li class="page-item"><a class="page-link dots" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">${max_pages}</a></li>
+                    `
+                }
+
+                insert_page_element(`
+                    ${html}
+                `);
+            }
+
+            pagination_element.querySelectorAll('li.page-item>a.page-link:not(.last):not(.first):not(.dots)').forEach((el) => {
+                if (parseInt(el.innerText) === page){
+                    el.parentElement.classList.add('active');
+                }
+
+                el.addEventListener('click', e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    try{
+                        const selected_page = parseInt(el.innerText)
+
+                        search(searchTerm, selected_page);
+                    }catch(e){
+                        console.error(e);
+                        App.showToast("Une erreur s'est produite lors du changement de page.", false);
+                    }
+                }, {once: true})
+            })
+
+            clearAssociations();
+
+            data.data.associations.forEach(association => {
+
+                buildAssociationElement(
+                    association.id,
+                    association.name,
+                    association.description,
+                    association.email
+                )
+            })
+        })
+    }
 
     function loadAllAssociations() {
         void App.fetch.get('/api/associations', data => {

@@ -412,3 +412,97 @@
 .modal .form-control::placeholder {
     color: var(--saas-text-muted);
 }
+
+/* ==============================================
+   PAGINATION
+   ============================================== */
+
+ul.pagination {
+    display: inline-flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    margin-top: 1rem;
+    background: var(--saas-surface);
+    border: 1px solid var(--saas-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+ul.pagination .page-item {
+    list-style: none;
+}
+
+ul.pagination .page-link,
+ul.pagination .page-link.dots {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--saas-border);
+    background: var(--saas-bg);
+    color: var(--saas-text-muted);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+ul.pagination .page-link:hover {
+    color: var(--saas-text);
+    border-color: var(--saas-primary);
+    box-shadow: 0 8px 18px rgba(124, 58, 237, 0.25);
+    cursor: pointer;
+}
+
+ul.pagination .page-link:focus-visible {
+    outline: 2px solid rgba(124, 58, 237, 0.4);
+    outline-offset: 2px;
+}
+
+ul.pagination li.page-item.active .page-link {
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.35);
+}
+
+ul.pagination li.page-item.max .page-link {
+    min-width: 42px;
+}
+
+ul.pagination li.page-item a.dots {
+    pointer-events: none;
+}
+
+ul.pagination .page-link.dots {
+    border-style: dashed;
+    color: var(--saas-text-muted);
+    cursor: default;
+}
+
+ul.pagination li.max:first-child a.page-link {
+    border-radius: var(--bs-pagination-border-radius) 0 0 var(--bs-pagination-border-radius);
+}
+
+ul.pagination li.max:last-child a.page-link {
+    border-radius: 0 var(--bs-pagination-border-radius) var(--bs-pagination-border-radius) 0;
+}
+
+@media (max-width: 768px) {
+    ul.pagination {
+        gap: 0.35rem;
+        padding: 0.35rem 0.5rem;
+    }
+
+    ul.pagination .page-link,
+    ul.pagination .page-link.dots {
+        min-width: 34px;
+        height: 34px;
+        padding: 0 0.5rem;
+        font-size: 0.9rem;
+    }
+}
