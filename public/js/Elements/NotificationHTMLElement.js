@@ -1,8 +1,4 @@
 export default class NotificationHTMLElement extends HTMLElement {
-    static TYPE_ERROR = 1;
-    static TYPE_INVALID = 2;
-    static TYPE_VALID = 3;
-
     static observedAttributes = [
         'aria-message',
         'aria-timeout',
