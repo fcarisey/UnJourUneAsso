@@ -13,6 +13,7 @@ final class InvitationWebController extends BaseWebController
     {
         if (empty($hash)) {
             return new Response('L\'invitation n\'existe pas');
+
         }
 
         $invitation = $invitationRepository->findOneBy([
