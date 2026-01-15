@@ -38,11 +38,17 @@ final class AssociationApiController extends BaseApiController
 
             $paginator = new Paginator($qb, false);
 
+            $count = $paginator->count();
+            $max_pages = ceil($count / $limit);
+
             return $this->jsonResponse([
                 'success' => true,
                 'message' => 'Liste des associations disponibles.',
                 'data' => [
-                    'associations' => $paginator->getIterator(),
+                    'associations' => (array) $paginator->getIterator(),
+                    'pagination' => [
+                        'max_pages' => $max_pages,
+                    ]
                 ]
             ]);
         } catch (\Exception) {
