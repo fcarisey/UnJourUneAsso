@@ -248,6 +248,24 @@ tr:last-child .saas-day {
     font-weight: 500;
 }
 
+/* Modal de suppression */
+#deleteInvitationModal .btn:hover {
+    transform: translateY(-2px);
+}
+
+#deleteInvitationModal .btn:active {
+    transform: translateY(0);
+}
+
+#deleteInvitationModal #confirmDeleteInvitation:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+#deleteInvitationModal .btn-close:hover {
+    opacity: 0.7;
+}
+
 /* Modal personnalisé SaaS */
 .saas-modal .modal-content {
     border: 1px solid var(--saas-border);

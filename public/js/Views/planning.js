@@ -577,6 +577,10 @@ App.init(_ => {
                         return;
                     }
 
+                    const invitationsList = document.getElementById('editInvitationsList');
+
+                    invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Invitation en cours ...</small></div>';
+
                     await this.addInvitationByAssociationId(currentEventId, associationId, 'edit');
 
                     // Réinitialiser le sélecteur
@@ -691,11 +695,11 @@ App.init(_ => {
             const invitationsList = document.getElementById(context === 'create' ? 'createInvitationsList' : 'editInvitationsList');
 
             if (!invitationsList) {
-                console.error('Liste des invitations non trouvée pour le contexte:', context);
+                console.error('Liste des invitations non trouvée pour le contexte :', context);
                 return;
             }
 
-            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Chargement...</small></div>';
+            invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Chargement ...</small></div>';
 
             void App.fetch.get(`/api/event/${eventId}/invitations`, data => {
                 if (!data.success) {
@@ -755,9 +759,27 @@ App.init(_ => {
             document.querySelectorAll('.btn-danger-invitation').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const invitationId = btn.getAttribute('data-invitation-id');
-                    if (confirm('Supprimer cette invitation ?')) {
+
+                    const delete_modal = new bootstrap.Modal(document.getElementById('deleteInvitationModal'));
+
+                    delete_modal.show();
+                    window.a = delete_modal;
+
+                    const confirm_delete_invitation_button = delete_modal._element.querySelector('#confirmDeleteInvitation');
+
+                    delete_modal._element.addEventListener('hidden.bs.modal', _ => {
+                        const cloned_node = confirm_delete_invitation_button.cloneNode(true);
+                        confirm_delete_invitation_button.parentNode.replaceChild(cloned_node, confirm_delete_invitation_button);
+                    }, {
+                        once: true,
+                    })
+
+                    confirm_delete_invitation_button.addEventListener('click', async _ =>{
                         await this.deleteInvitation(invitationId, context);
-                    }
+                        delete_modal.hide();
+                    }, {
+                        once: true,
+                    })
                 });
             });
         }

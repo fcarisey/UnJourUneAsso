@@ -287,4 +287,50 @@
         </div>
     </div>
 </div>
+
+<!-- Modale de confirmation de suppression d'invitation -->
+<div class="modal fade" id="deleteInvitationModal" tabindex="-1" aria-labelledby="deleteInvitationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: var(--saas-surface); border: 1px solid var(--saas-border); border-radius: 1.25rem; color: var(--saas-text); overflow: hidden;">
+            <div class="modal-header" style="border-bottom: 1px solid var(--saas-border); background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));">
+                <h5 class="modal-title" id="deleteInvitationModalLabel" style="font-weight: 700; color: var(--saas-danger); display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    Supprimer l'invitation
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2)); margin-bottom: 1rem;">
+                        <svg width="32" height="32" fill="none" stroke="var(--saas-danger)" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </div>
+                    <h6 style="color: var(--saas-text); font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem;">
+                        Êtes-vous sûr ?
+                    </h6>
+                    <p style="color: var(--saas-text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">
+                        Cette action est irréversible. L'invitation sera définitivement supprimée.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid var(--saas-border); background: var(--saas-bg); padding: 1.5rem; gap: 0.75rem;">
+                <button type="button" id="cancelDeleteInvitation" class="btn" data-bs-dismiss="modal" style="flex: 1; background: var(--saas-surface); border: 2px solid var(--saas-border); color: var(--saas-text); padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: all 0.2s ease;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="d-inline-block me-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                    Annuler
+                </button>
+                <button type="button" id="confirmDeleteInvitation" class="btn" style="flex: 1; background: linear-gradient(135deg, var(--saas-danger), #dc2626); border: none; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="d-inline-block me-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                    Supprimer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', _ => {
         App.boot();
     }
     catch (e){
+        App.showToast("Oupss, une erreur s'est produite, veuillez rafraichir     la page ou contacter l'administrateur !")
         console.error(e);
     }
 })
