@@ -53,7 +53,7 @@ class Calendar {
                 if (cellIndex < firstDayIndex) {
                     // Jours du mois précédent
                     const prevMonthDay = prevLastDayDate - firstDayIndex + cellIndex + 1;
-                    calendarHTML += `<td class="saas-day other-month" data-date="${year}-${month}-${prevMonthDay}">${prevMonthDay}</td>`;
+                    calendarHTML += `<td class="saas-day other-month" data-date="${year}-${month}-${prevMonthDay}" data-day-number="${prevMonthDay}"></td>`;
                 } else if (dayCounter <= lastDayDate) {
                     // Jours du mois en cours
                     const isToday = this.isToday(year, month, dayCounter);
@@ -61,7 +61,7 @@ class Calendar {
                     const todayClass = isToday ? 'today' : '';
                     const eventClass = hasEvent ? 'has-event' : '';
 
-                    calendarHTML += `<td class="saas-day ${todayClass} ${eventClass}" data-date="${year}-${month + 1}-${dayCounter}">${dayCounter}`;
+                    calendarHTML += `<td class="saas-day ${todayClass} ${eventClass}" data-date="${year}-${month + 1}-${dayCounter}" data-day-number="${dayCounter}">`;
 
                     // Afficher les événements du jour
                     if (hasEvent) {
@@ -86,7 +86,7 @@ class Calendar {
                 } else {
                     // Jours du mois suivant
                     const nextMonthDay = cellIndex - firstDayIndex - lastDayDate + 1;
-                    calendarHTML += `<td class="saas-day other-month" data-date="${year}-${month + 2}-${nextMonthDay}">${nextMonthDay}</td>`;
+                    calendarHTML += `<td class="saas-day other-month" data-date="${year}-${month + 2}-${nextMonthDay}" data-day-number="${nextMonthDay}"></td>`;
                 }
             }
 

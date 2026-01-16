@@ -1,8 +1,22 @@
 @import "../root.css";
 
+/* Container responsive avec largeur optimisée */
+.container.py-5 {
+    max-width: min(98%, 1920px);
+    padding-left: clamp(0.5rem, 3vw, 3rem);
+    padding-right: clamp(0.5rem, 3vw, 3rem);
+    padding-top: clamp(0.5rem, 2vw, 3rem) !important;
+    padding-bottom: clamp(0.5rem, 2vw, 3rem) !important;
+}
+
+/* Réduction des marges de la toolbar */
+.saas-toolbar .mb-4 {
+    margin-bottom: clamp(0.5rem, 1.5vw, 1.5rem) !important;
+}
+
 /* Toolbar */
 .saas-month {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 2vw, 1.75rem);
     font-weight: 600;
     color: var(--saas-text);
     margin: 0;
@@ -54,6 +68,7 @@
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-height: 85vh;
 }
 
 /* Calendar */
@@ -64,8 +79,8 @@
 }
 
 .saas-calendar thead th {
-    padding: 1rem 0.5rem;
-    font-size: 0.75rem;
+    padding: clamp(0.4rem, 1vw, 0.8rem) 0.5rem;
+    font-size: clamp(0.65rem, 0.8vw, 0.75rem);
     font-weight: 600;
     color: var(--saas-text-muted);
     text-transform: uppercase;
@@ -76,16 +91,29 @@
 }
 
 .saas-day {
-    padding: 1.25rem 0.5rem;
-    font-size: 0.9375rem;
+    padding: clamp(0.2rem, 1.5vw, 1.5rem) clamp(0.2rem, 0.8vw, 0.8rem);
+    font-size: clamp(0.7rem, 1vw, 1.125rem);
     font-weight: 500;
     color: var(--saas-text);
-    text-align: center;
     cursor: pointer;
     transition: all 0.2s ease;
     border-bottom: 1px solid var(--saas-border);
     border-right: 1px solid var(--saas-border);
     position: relative;
+    height: clamp(45px, 12vh, 120px);
+}
+
+/* Numéro du jour en haut-gauche */
+.saas-day::before {
+    content: attr(data-day-number);
+    position: absolute;
+    top: clamp(2px, 0.5vw, 6px);
+    left: clamp(2px, 0.5vw, 6px);
+    font-size: clamp(0.7rem, 1vw, 1rem);
+    font-weight: 600;
+    color: var(--saas-text-muted);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .saas-day:last-child {
@@ -112,6 +140,11 @@ tr:last-child .saas-day {
     font-weight: 600;
 }
 
+.saas-day.today::before {
+    color: var(--saas-primary);
+    font-weight: 700;
+}
+
 .saas-day.today::after {
     content: '';
     position: absolute;
@@ -132,83 +165,111 @@ tr:last-child .saas-day {
 .day-events {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    margin-top: 4px;
+    gap: clamp(4px, 0.8vw, 8px);
+    position: absolute;
+    top: clamp(18px, 4vw, 25px);
+    left: clamp(2px, 0.5vw, 6px);
+    right: clamp(2px, 0.5vw, 6px);
+    max-height: calc(100% - clamp(22px, 4vw, 30px));
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: clamp(2px, 0.5vw, 4px);
+    padding-bottom: clamp(2px, 0.5vw, 4px);
+    max-width: clamp(150px, 90%, 300px);
+    padding-top: 1px;
+}
+
+/* Scrollbar styling */
+.day-events::-webkit-scrollbar {
+    width: 4px;
+}
+
+.day-events::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.day-events::-webkit-scrollbar-thumb {
+    background: var(--saas-border);
+    border-radius: 2px;
+}
+
+.day-events::-webkit-scrollbar-thumb:hover {
+    background: var(--saas-text-muted);
+}
+
+/* Firefox scrollbar */
+.day-events {
+    scrollbar-color: var(--saas-border) transparent;
+    scrollbar-width: thin;
 }
 
 .event-badge {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.65rem;
-    padding: 2px 6px;
-    border-radius: 3px;
+    font-size: clamp(0.65rem, 0.9vw, 0.875rem);
+    padding: 5px 26px 5px 8px;
+    border-radius: clamp(2px, 0.3vw, 4px);
     color: white;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
     max-width: 100%;
     font-weight: 500;
     position: relative;
     transition: all 0.3s ease;
     cursor: pointer;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
+    flex-shrink: 0;
 }
 
 .event-badge:hover {
-    transform: scaleX(1.05) scaleY(1.1);
+    transform: translateX(4px);
     z-index: 10;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    padding-right: 24px;
 }
 
 .event-badge-title {
+    display: block;
     flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .event-badge-delete {
     display: none;
     position: absolute;
-    right: 4px;
     top: 50%;
+    right: 6px;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.3);
+    width: clamp(16px, 2vw, 20px);
+    height: clamp(16px, 2vw, 20px);
     border: none;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    background: rgba(0, 0, 0, 0.35);
+    color: white;
     padding: 0;
-    cursor: pointer;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .event-badge:hover .event-badge-delete {
-    display: flex;
+    display: inline-flex;
 }
 
 .event-badge-delete:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.55);
+    transform: translateY(-50%) scale(1.05);
 }
 
 .event-badge-delete svg {
-    width: 10px;
-    height: 10px;
-    stroke: white;
+    width: clamp(10px, 1.4vw, 12px);
+    height: clamp(10px, 1.4vw, 12px);
+    stroke: currentColor;
     stroke-width: 2;
-}
-
-.saas-day.has-event::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 6px;
-    height: 6px;
-    background: var(--saas-primary);
-    border-radius: 50%;
 }
 
 /* Légende */
@@ -217,7 +278,7 @@ tr:last-child .saas-day {
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    padding: 1.5rem;
+    padding: clamp(0.75rem, 1.5vw, 1.5rem);
     background: var(--saas-bg);
     border-top: 1px solid var(--saas-border);
 }
