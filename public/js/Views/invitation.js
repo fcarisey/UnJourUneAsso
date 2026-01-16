@@ -20,7 +20,11 @@ App.init(_ => {
 
         if (is_deploy()){
             void App.fetch.post(`/api/invitation/${hash}/accept`, extra,data => {
-                console.log(data)
+                if (!data.success){
+                    App.showToast(data.message)
+                }
+
+                App.showToast(data.message)
             })
         }else{
             const accept_data = document.getElementById('invitation-extra-form')
@@ -61,7 +65,7 @@ App.init(_ => {
         return {
             nb_people: nb_intervenent.value,
             needs: needs.value,
-            other: other.value
+            comment: other.value
         }
     }
 })

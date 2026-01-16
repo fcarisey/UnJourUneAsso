@@ -158,6 +158,13 @@ final class InvitationApiController extends BaseApiController
             ]);
         }
 
+        if ($invitation->isEtat() !== null) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => 'L\'invitation a expiré !',
+            ]);
+        }
+
         if (empty($response)){
             return $this->jsonResponse([
                 'success' => false,
@@ -171,7 +178,7 @@ final class InvitationApiController extends BaseApiController
 
             $invitation->setEtat(true);
             $invitation->setNbPeople((int)$data['nb_people'] ?? 1);
-            $invitation->setNeeds($data['nb_needs'] ?? "");
+            $invitation->setNeeds($data['needs'] ?? "");
             $invitation->setComment($data['comment'] ?? "");
         }else if ($response === "decline"){
             $invitation->setEtat(false);
