@@ -138,8 +138,8 @@ final class InvitationApiController extends BaseApiController
         ]);
     }
 
-    #[Route('/invitation/{hash}/{response}', name: 'invitation_link_response', methods: ['GET'])]
-    public function invitationResponse(string $hash, string $response, InvitationRepository $invitationRepository, EntityManagerInterface $em): Response{
+    #[Route('/invitation/{hash}/{response}', name: 'invitation_link_response', methods: ['POST'])]
+    public function invitationResponse(Request $request, string $hash, string $response, InvitationRepository $invitationRepository, EntityManagerInterface $em): Response{
         if (empty($hash)) {
             return $this->jsonResponse([
                 'success' => false,
@@ -166,7 +166,13 @@ final class InvitationApiController extends BaseApiController
         }
 
         if ($response === "accept"){
+            $data = $request->getContent();
+            $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
+
             $invitation->setEtat(true);
+            $invitation->setNbPeople((int)$data['nb_people'] ?? 1);
+            $invitation->setNeeds($data['nb_needs'] ?? "");
+            $invitation->setComment($data['comment'] ?? "");
         }else if ($response === "decline"){
             $invitation->setEtat(false);
         }else {

@@ -35,6 +35,15 @@ class Invitation implements TenantAwareInterface, JsonSerializable
     #[ORM\JoinColumn(nullable: false)]
     private ?Tenants $tenant = null;
 
+    #[ORM\Column]
+    private ?int $nb_people = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $needs = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
+
     public function __construct()
     {
         $this->id = Uuid::v7();
@@ -110,7 +119,46 @@ class Invitation implements TenantAwareInterface, JsonSerializable
         return [
             'id' => $this->id,
             'etat' => $this->etat,
+            'nb_people' => $this->nb_people,
+            'needs' => $this->needs,
+            'comment' => $this->comment,
             'association' => $this->association
         ];
+    }
+
+    public function getNbPeople(): ?int
+    {
+        return $this->nb_people;
+    }
+
+    public function setNbPeople(int $nb_people): static
+    {
+        $this->nb_people = $nb_people;
+
+        return $this;
+    }
+
+    public function getNeeds(): ?string
+    {
+        return $this->needs;
+    }
+
+    public function setNeeds(?string $needs): static
+    {
+        $this->needs = $needs;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): static
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }

@@ -1,6 +1,10 @@
 import App from '../App.js';
 
 App.init(_ => {
+    const is_deploy =  _ => {
+        const el = document.getElementById('invitation-extra-form')
+        return el.classList.contains('is-visible')
+    }
     const hash = document.querySelector("*[data-hash]")?.dataset.hash;
 
     if (!hash) {
@@ -12,23 +16,23 @@ App.init(_ => {
     btn_accept.addEventListener("click", e => {
         e.preventDefault();
 
-        const [check_extra, extra] = !checkExtraData()
+        const extra = checkExtraData()
 
-        if (!check_extra) {
+        if (is_deploy()){
+            void App.fetch.post(`/api/invitation/${hash}/accept`, extra,data => {
+                console.log(data)
+            })
+        }else{
             const accept_data = document.getElementById('invitation-extra-form')
             accept_data.classList.add('is-visible');
         }
-
-        void App.fetch.post(`/api/invitation/${hash}/accept`, extra,data => {
-            console.log(data)
-        })
     })
 
     const btn_decline = document.getElementsByClassName("btn-decline")[0];
     btn_decline.addEventListener("click", e => {
         e.preventDefault();
 
-        void App.fetch.get(`/api/invitation/${hash}/decline`, data => {
+        void App.fetch.post(`/api/invitation/${hash}/decline`, {},data => {
             console.log(data)
         })
     })
@@ -36,32 +40,28 @@ App.init(_ => {
     function checkExtraData(){
         const accept_data = document.getElementById('invitation-extra-form')
 
+        window.a = accept_data;
+
         const nb_intervenent = accept_data.querySelector('.invitation-form-input')
         if (!nb_intervenent) {
             return false
         }
 
-        try{
-            Number(nb_intervenent.value)
-        }catch(_){
+
+        const needs = accept_data.querySelectorAll('.invitation-form-textarea')[0]
+        if (!needs) {
             return false
         }
 
-
-        const needs = accept_data.querySelector('.invitation-form-textarea:first-child')
-        if (!needs || needs.value === "") {
+        const other = accept_data.querySelectorAll('.invitation-form-textarea')[1]
+        if (!other) {
             return false
         }
 
-        const other = accept_data.querySelector('.invitation-form-textarea:last-child')
-        if (!other || other.value === "") {
-            return false
+        return {
+            nb_people: nb_intervenent.value,
+            needs: needs.value,
+            other: other.value
         }
-
-        return [true, {
-            nb_intervenent: nb_intervenent.value,
-            needs: nb_intervenent.value,
-            other: nb_intervenent.value
-        }]
     }
 })
