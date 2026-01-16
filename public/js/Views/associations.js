@@ -158,7 +158,7 @@ App.init(_ => {
     });
 
     function search(searchTerm, page) {
-        void App.fetch.get(`/api/associations/search/${searchTerm}/${page}/2`, data => {
+        void App.fetch.get(`/api/associations/search/${searchTerm}/${page}/10`, data => {
             if (!data.success) {
                 App.showToast(data.message, false);
                 return;

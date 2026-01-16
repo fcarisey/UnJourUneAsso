@@ -287,28 +287,61 @@
 }
 
 /* ==============================================
-   FOOTER
+   FORMULAIRE COMPLÉMENTAIRE
    ============================================== */
-.invitation-footer {
+.invitation-form {
+    display: none;
     padding: 0 2rem 1.25rem;
 }
 
-.footer-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    color: var(--saas-text-muted);
-    font-size: 0.75rem;
-    background: var(--saas-bg);
-    padding: 0.625rem 0.875rem;
-    border-radius: 0.5rem;
-    border: 1px dashed var(--saas-border);
+.invitation-form.is-visible {
+    display: block;
 }
 
-.footer-text svg {
-    color: var(--saas-warning);
-    flex-shrink: 0;
+.invitation-form-grid {
+    display: grid;
+    gap: 1rem;
+    background: var(--saas-bg);
+    border: 1px solid var(--saas-border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.invitation-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.invitation-form-label {
+    font-size: 0.875rem;
+    color: var(--saas-text);
+    font-weight: 600;
+}
+
+.invitation-form-input,
+.invitation-form-textarea {
+    width: 100%;
+    background: var(--saas-surface);
+    color: var(--saas-text);
+    border: 1px solid var(--saas-border);
+    border-radius: 0.625rem;
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9375rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.invitation-form-input:focus,
+.invitation-form-textarea:focus {
+    border-color: var(--saas-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+.invitation-form-textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
 /* ==============================================
@@ -337,6 +370,14 @@
 
     .event-description {
         padding: 0 1.5rem 2rem;
+    }
+
+    .invitation-form {
+        padding: 0 1.5rem 2rem;
+    }
+
+    .invitation-form-grid {
+        grid-template-columns: 1fr;
     }
 
     .invitation-actions {
@@ -417,4 +458,3 @@
         transform: translateX(0);
     }
 }
-

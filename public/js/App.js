@@ -1,8 +1,10 @@
 import NotificationHTMLElement from './Elements/NotificationHTMLElement.js'
 import FetchService from "./Services/FetchService.js";
+import EventManager from "./Controllers/EventManager.js";
 
 export default class App {
     static fetch = FetchService
+    static eventController = new EventManager()
 
     /**
      *
@@ -21,6 +23,8 @@ export default class App {
         if (App.callback){
             App.callback();
         }
+
+        this.eventController.init();
     }
 
     /**
