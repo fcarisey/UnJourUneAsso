@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Wss/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.exemple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/UnJourUneAsso.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UnJourUneAsso.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/laravel-idea.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/controllers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/controllers/csrf_protection_controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/controllers/hello_controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/stimulus_bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/console" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/phpunit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/asset_mapper.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/cache.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/csrf.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/debug.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine_migrations.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/mailer.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/messenger.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/monolog.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/notifier.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/property_info.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/routing.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/translation.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/ux_turbo.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/validator.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/web_profiler.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/preload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/reference.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes/framework.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes/security.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes/web_profiler.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/importmap.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mcd.mwb.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20251221125716.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20251227140734.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20260116124002.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.dist.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/Views/associations.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/Views/authentication.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/Views/header.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/Views/invitation.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/Views/planning.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/root.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Controllers/EventManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Elements/NotificationHTMLElement.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Models/Event.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Services/FetchService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Views/associations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Views/header.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Views/invitation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/Views/planning.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Aware/TenantAwareInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Context/TenantContext.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/AssociationApiController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/BaseApiController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/EventApiController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Api/InvitationApiController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EmailController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Web/AssociationWebController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Web/AuthenticationWebController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Web/BaseWebController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Web/HomeWebController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Web/InvitationWebController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Web/PlanningWebController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Doctrine/Subscriber/TenantSubscriber.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Association.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Event.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Invitation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Tenants.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enum/TenantsStatusEnum.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventListener/TenantRequestListener.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Helper/TemporaryLinkHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Kernel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/AssociationRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/EventRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/InvitationRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TemporarylinkRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/TenantsRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/summary.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/association/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/authentication/login.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/email/invitation.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layouts/footer.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layouts/header.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/planning/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/temporary-link/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/bootstrap.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/.gitignore" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/laragon/www/UnJourUneAsso" value="38TDu3DlMxTMpxmgRzYbCYPMTmi" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "fcarisey"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/fcarisey/UnJourUneAsso.git",
+    "accountId": "4bd8003a-43ca-4772-b1eb-36442cc0d9e6"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="38TDu3DlMxTMpxmgRzYbCYPMTmi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "#1 on dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "C:/laragon/www/UnJourUneAsso",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.242" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="" />
+      <created>1768814888600</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1768814888600</updated>
+      <workItem from="1768814889525" duration="74000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

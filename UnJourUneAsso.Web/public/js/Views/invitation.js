@@ -25,6 +25,7 @@ App.init(_ => {
                 }
 
                 App.showToast(data.message)
+                App.ws.send(JSON.stringify(extra))
             })
         }else{
             const accept_data = document.getElementById('invitation-extra-form')
