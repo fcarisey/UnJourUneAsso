@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add WebSocket session management and response handling" />
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Refactor workspace configuration to streamline task management and update local tasks counter">
+      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/UserApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Services/WebSocketService.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Services/WebSocketService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Wss/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Wss/src/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Wss/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Wss/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -211,33 +218,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.SessionContext.ts.executor": "Run",
-    "Node.js.server.ts.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "#1 on dev",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "C:/laragon/www/UnJourUneAsso",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.SessionContext.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.server.ts.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#1 on dev&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/UnJourUneAsso&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.242" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PS-253.29346.257" />
+        <option value="bundled-php-predefined-a98d8de5180a-0e0d91225499-com.jetbrains.php.sharedIndexes-PS-253.29346.257" />
       </set>
     </attachedChunks>
   </component>
@@ -253,7 +261,8 @@
       <workItem from="1768828995880" duration="4646000" />
       <workItem from="1768921342451" duration="4244000" />
       <workItem from="1769006468320" duration="3000" />
-      <workItem from="1769006628525" duration="4971000" />
+      <workItem from="1769006628525" duration="5012000" />
+      <workItem from="1769027923437" duration="2366000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -279,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769011689151</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Refactor workspace configuration to streamline task management and update local tasks counter">
+      <option name="closed" value="true" />
+      <created>1769011712441</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1769011712441</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,7 +306,8 @@
     <MESSAGE value="Add initial project structure with configuration files and basic controllers" />
     <MESSAGE value="Add auto-import settings and update task management in workspace configuration" />
     <MESSAGE value="Add WebSocket session management and response handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add WebSocket session management and response handling" />
+    <MESSAGE value="Refactor workspace configuration to streamline task management and update local tasks counter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor workspace configuration to streamline task management and update local tasks counter" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

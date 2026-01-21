@@ -3,7 +3,29 @@ import App from "../App.js";
 
 export default class WebSocketService extends WebSocket {
     constructor() {
-        super('ws://localhost:8080');
+        super('ws://localhost:8080')
+
+        this.#init()
+    }
+
+    #init(){
+        this.onopen = _ => {
+            this.onerror = e => {
+                console.error("WS error: " + e)
+            }
+
+            this.onclose = e => {
+                console.log('Close App:', e.code, e.reason)
+            }
+        }
+
+        void App.fetch.get('/api/user/whois', response => {
+
+            const user_id = response.data.userId
+
+            this.#send(true, 'init', {'id': user_id});
+        })
+
     }
 
     /**
@@ -13,6 +35,10 @@ export default class WebSocketService extends WebSocket {
     onMessage(callback){
         this.onmessage = e => {
             try{
+                if (e.data === "Welcome to the WebSocket server!"){
+                    return
+                }
+
                 const ws_reponse = new WsResponse(JSON.parse(e.data));
 
                 if (callback && typeof callback === "function") {
@@ -50,9 +76,9 @@ export default class WebSocketService extends WebSocket {
      * @param {boolean} success
      * @param {string} type
      * @param {object} data
-     * @param {string} to
+     * @param {?string} to
      */
-    #send(success, type, data, to){
+    #send(success, type, data, to = null){
         super.send(JSON.stringify({
             success: success,
             type: type,

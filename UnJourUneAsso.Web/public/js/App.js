@@ -5,8 +5,8 @@ import WebSocketService from "./Services/WebSocketService.js";
 
 export default class App {
     static fetch = FetchService
-    static eventController = new EventManager()
-    static ws = new WebSocketService()
+    static eventController
+    static ws
 
     /**
      *
@@ -15,6 +15,9 @@ export default class App {
     static init(callback){
         if (typeof callback === 'function') {
             App.callback = callback()
+
+            App.eventController = new EventManager()
+
         }else{
             console.error("Unable to initialize root element. Callback must be a function !")
             throw new Error('Unable to initialize root element. Callback must be a function !')
@@ -22,28 +25,16 @@ export default class App {
     }
 
     static boot(){
+        App.ws = new WebSocketService()
+
         if (App.callback){
             App.callback()
         }
 
         this.eventController.init()
 
-        App.ws.addEventListener('open', _ => {
-            console.log('Connexion établie');
-            App.ws.send("ping")
-
-            App.ws.addEventListener('message', e => {
-                console.log(e.data)
-                App.showToast(e.data)
-            })
-
-            App.ws.addEventListener('error', error => {
-                console.error('Erreur:', error)
-            })
-
-            App.ws.addEventListener('close', e => {
-                console.log('Close App:', e.code, e.reason)
-            })
+        App.ws.onMessage(ws_response => {
+            App.showToast(ws_response.data.message)
         })
     }
 
