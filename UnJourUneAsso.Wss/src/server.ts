@@ -70,13 +70,13 @@ wss.on('connection', ws => {
                 }
 
                 SessionContext.sendToOne(ws_response_data.data, to_user)
-                break;
+                break
             case 'broadcast':
                 SessionContext.sendToAll(ws_response_data.data, current_session)
-                break;
+                break
             case 'init':
                 current_session.userId = ws_response_data.data.id || 'anonymous'
-                break;
+                break
             default:
                 ws.send(
                     new WsResponse(
