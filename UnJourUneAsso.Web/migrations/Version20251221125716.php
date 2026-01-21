@@ -60,10 +60,10 @@ final class Version20251221125716 extends AbstractMigration
         $this->addSql('ALTER TABLE invitation ADD CONSTRAINT FK_F11D61A29033212A FOREIGN KEY (tenant_id) REFERENCES tenants (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
 
         $this->addSql('CREATE POLICY tenant_event_isolation ON event USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
-        $this->addSql('CREATE POLICY tenant_invitation_isolation ON event USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
+        $this->addSql('CREATE POLICY tenant_invitation_isolation ON invitation USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
 
         $this->addSql('CREATE POLICY tenant_event_isolation ON even FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
-        $this->addSql('CREATE POLICY tenant_invitation_isolation ON event FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
+        $this->addSql('CREATE POLICY tenant_invitation_isolation ON invitation FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
     }
 
     public function down(Schema $schema): void

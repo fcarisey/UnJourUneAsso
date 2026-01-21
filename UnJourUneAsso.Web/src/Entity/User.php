@@ -41,6 +41,9 @@ class User implements TenantAwareInterface, UserInterface, PasswordAuthenticated
     #[ORM\Column(length: 300)]
     private ?string $email = null;
 
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private ?WebSocketSession $webSocketSession = null;
+
     public function __construct(){
         $this->id = Uuid::v7();
     }
@@ -146,6 +149,23 @@ class User implements TenantAwareInterface, UserInterface, PasswordAuthenticated
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getWebSocketSession(): ?WebSocketSession
+    {
+        return $this->webSocketSession;
+    }
+
+    public function setWebSocketSession(WebSocketSession $webSocketSession): static
+    {
+        // set the owning side of the relation if necessary
+        if ($webSocketSession->getOwner() !== $this) {
+            $webSocketSession->setOwner($this);
+        }
+
+        $this->webSocketSession = $webSocketSession;
 
         return $this;
     }
