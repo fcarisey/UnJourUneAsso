@@ -642,6 +642,8 @@ class Calendar {
             if (!data.success) {
                 invitationsList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Erreur de chargement</small></div>';
 
+
+
                 console.log(data.message);
                 App.showToast(data.message, false);
                 return;
@@ -675,7 +677,8 @@ class Calendar {
                     : '<span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--saas-danger); color: var(--saas-bg); border-radius: 0.5rem; font-weight: 600;">Refusée</span>';
 
             return `
-                <div class="invitation-item d-flex justify-content-between align-items-center mb-2 p-2" style="background: var(--saas-surface); border-radius: 0.5rem; border: 1px solid var(--saas-border);">
+                <div class="invitation-item d-flex justify-content-between align-items-center mb-2 p-2" style="background: var(--saas-surface); border-radius: 0.5rem; border: 1px solid var(--saas-border);"
+                    data-comment="${inv.comment}" data-nb="${inv.nb_people}" data-needs="${inv.needs}">
                     <div class="flex-grow-1">
                         <div style="font-weight: 600; color: var(--saas-text);">${inv.association.name}</div>
                         ${statusBadge}
@@ -689,18 +692,42 @@ class Calendar {
             `;
         }).join('');
 
+
+
+        for (let child of invitationsList.children) {
+            child.addEventListener('click', _ => {
+                const comment = child.dataset.comment
+                const nb = child.dataset.nb
+                const needs = child.dataset.needs
+
+                const modal = new bootstrap.Modal(document.getElementById('invitationInfosModal'))
+                modal.show()
+
+                modal._element.querySelector('.comment').innerText = comment
+                modal._element.querySelector('.nb').innerText = nb
+                modal._element.querySelector('.needs').innerText = needs
+
+                modal._element.addEventListener('hidden.bs.modal', e => {
+                    const cloned_node = e.currentTarget.cloneNode(true)
+                    e.currentTarget.parentNode.replaceChild(cloned_node, e.currentTarget)
+                }, {
+                    once: true
+                })
+            })
+        }
+
         // Mettre à jour le sélecteur pour exclure les associations déjà invitées
         this.updateAssociationSelects(invitedAssociationIds, context);
 
         // Attacher les événements de suppression
         document.querySelectorAll('.btn-danger-invitation').forEach(btn => {
-            btn.addEventListener('click', async () => {
+            btn.addEventListener('click', async e => {
+                e.stopPropagation()
                 const invitationId = btn.getAttribute('data-invitation-id');
 
                 const delete_modal = new bootstrap.Modal(document.getElementById('deleteInvitationModal'));
 
                 delete_modal.show();
-                window.a = delete_modal;
 
                 const confirm_delete_invitation_button = delete_modal._element.querySelector('#confirmDeleteInvitation');
 

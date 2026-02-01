@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Refactor WebSocket initialization and add UserApiController for user management">
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/email/Cancelinvitation.html.twig" afterDir="false" />
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add invitation information modal and enhance invitation item interaction">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/css/Views/planning.css" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/css/Views/planning.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/planning.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/planning.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/InvitationApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/InvitationApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/EmailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/EmailController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/planning/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/planning/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -271,7 +269,7 @@
       <workItem from="1769751646152" duration="278000" />
       <workItem from="1769951309979" duration="335000" />
       <workItem from="1769952274936" duration="618000" />
-      <workItem from="1769952964589" duration="3540000" />
+      <workItem from="1769952964589" duration="7131000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -321,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769030908769</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add email template for canceled invitations and implement cancellation email functionality">
+      <option name="closed" value="true" />
+      <created>1769956759677</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1769956759677</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,7 +340,9 @@
     <MESSAGE value="Refactor workspace configuration to streamline task management and update local tasks counter" />
     <MESSAGE value="Refactor WebSocket response handling to improve code readability" />
     <MESSAGE value="Refactor WebSocket initialization and add UserApiController for user management" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor WebSocket initialization and add UserApiController for user management" />
+    <MESSAGE value="Add email template for canceled invitations and implement cancellation email functionality" />
+    <MESSAGE value="Add invitation information modal and enhance invitation item interaction" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add invitation information modal and enhance invitation item interaction" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
