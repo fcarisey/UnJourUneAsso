@@ -712,7 +712,8 @@ class Calendar {
                 })
 
                 confirm_delete_invitation_button.addEventListener('click', async _ =>{
-                    await this.deleteInvitation(invitationId, context);
+                    const reason = confirm_delete_invitation_button.parentElement.parentElement.querySelector("textarea[name=reason]")?.value
+                    await this.deleteInvitation(invitationId, context, reason);
                     delete_modal.hide();
                 }, {
                     once: true,
@@ -757,8 +758,10 @@ class Calendar {
         })
     }
 
-    async deleteInvitation(invitationId, context = 'edit') {
-        void App.fetch.delete(`/api/invitation/${invitationId}`, {}, async data => {
+    async deleteInvitation(invitationId, context = 'edit', reason) {
+        void App.fetch.delete(`/api/invitation/${invitationId}`, {
+            'reason': reason
+        }, async data => {
             if (!data.success) {
                 console.error(data.message);
                 App.showToast(data.message, false);

@@ -91,6 +91,7 @@ final class InvitationApiController extends BaseApiController
         $invitation->setAssociation($association);
         $invitation->setEtat(null); // En attente
         $invitation->setLink(TemporaryLinkHelper::createLink());
+        $invitation->setNbPeople(0);
 
         try {
             EmailController::sendEventInvitationMail($transport, $event, $association, $association->getEmail(), $invitation->getLink(), $tenantContext);
@@ -121,11 +122,24 @@ final class InvitationApiController extends BaseApiController
     }
 
     #[Route('/invitation/{id}', name: 'invitation_delete', methods: ['DELETE'])]
-    public function deleteInvitation(EntityManagerInterface $em, ?Invitation $invitation): Response{
+    public function deleteInvitation(EntityManagerInterface $em, ?Invitation $invitation, Request $request, TransportInterface $transport, TenantContext $tenantContext): Response{
         if (!$invitation) {
             return $this->jsonResponse([
                 'success' => false,
                 'message' => 'Invitation non existante'
+            ]);
+        }
+
+        $data = json_decode($request->getContent(), true);
+        $reason = $data['reason'] ?? null;
+
+        try {
+            EmailController::sendEventCancelInvitationMail($transport, $invitation->getEvent(), $invitation->getAssociation(), $invitation->getAssociation()->getEmail(), $tenantContext, $reason);
+        } catch (TransportExceptionInterface $e) {
+            error_log($e->getMessage());
+            return $this->jsonResponse([
+                'success' => false,
+                'message'=> 'Une erreur est survenue lors de l\'annulation de l\'invitation'
             ]);
         }
 

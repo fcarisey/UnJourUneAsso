@@ -29,6 +29,25 @@ abstract class EmailController
     /**
      * @throws TransportExceptionInterface
      */
+    public static function sendEventCancelInvitationMail(TransportInterface $transport, Event $event, Association $association, string $email, $tenantContext, $reason): void{
+        $email = new TemplatedEmail()
+            ->from(static::$from)
+            ->to($email)
+            ->subject("Invitation annulé {$event->getName()}")
+            ->htmlTemplate('email/Cancelinvitation.html.twig')
+            ->context([
+                'event' => $event,
+                'association' => $association,
+                'tenant' => $tenantContext->getTenant(),
+                'reason' => $reason
+            ]);
+
+        $transport->send($email);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
     public static function sendEventInvitationMail(TransportInterface $transport, Event $event, Association $association, string $email, string $temporaryLink, $tenantContext): void{
         $email = new TemplatedEmail()
             ->from(static::$from)
