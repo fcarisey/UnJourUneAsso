@@ -44,6 +44,9 @@ class User implements TenantAwareInterface, UserInterface, PasswordAuthenticated
     #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
     private ?WebSocketSession $webSocketSession = null;
 
+    #[ORM\ManyToOne]
+    private ?Address $defaultAddress = null;
+
     public function __construct(){
         $this->id = Uuid::v7();
     }
@@ -166,6 +169,18 @@ class User implements TenantAwareInterface, UserInterface, PasswordAuthenticated
         }
 
         $this->webSocketSession = $webSocketSession;
+
+        return $this;
+    }
+
+    public function getDefaultAddress(): ?Address
+    {
+        return $this->defaultAddress;
+    }
+
+    public function setDefaultAddress(?Address $defaultAddress): static
+    {
+        $this->defaultAddress = $defaultAddress;
 
         return $this;
     }

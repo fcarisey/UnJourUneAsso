@@ -41,7 +41,8 @@ export default class EventManager extends EventTarget{
             event_data.description,
             event_data.startDateTime,
             event_data.endDateTime,
-            event_data.color
+            event_data.color,
+            event_data.address
         ));
 
         this.dispatchEvent(new window.Event('new-event'))
@@ -57,7 +58,8 @@ export default class EventManager extends EventTarget{
                 event_data.description,
                 event_data.startDateTime,
                 event_data.endDateTime,
-                event_data.color
+                event_data.color,
+                event_data.address
             )
 
             this.dispatchEvent(new window.Event('update-event'))

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Address;
 use App\Entity\Event;
 use App\Repository\EventRepository;
 use DateTimeImmutable;
@@ -83,6 +84,14 @@ final class EventApiController extends BaseApiController
         $event->setEndAt(new DateTimeImmutable($data['endDateTime']));
         $event->setColor(self::EVENT_COLORS[array_rand(self::EVENT_COLORS)]);
 
+        // Gérer l'adresse si fournie
+        if (isset($data['addressId']) && !empty($data['addressId'])) {
+            $address = $em->getRepository(Address::class)->find($data['addressId']);
+            if ($address) {
+                $event->setAddress($address);
+            }
+        }
+
         $em->persist($event);
         $em->flush();
 
@@ -122,6 +131,17 @@ final class EventApiController extends BaseApiController
         $event->setDescription($data['description']);
         $event->setStartAt(new DateTimeImmutable($data['startDateTime']));
         $event->setEndAt(new DateTimeImmutable($data['endDateTime']));
+
+        // Gérer l'adresse
+        if (isset($data['addressId']) && !empty($data['addressId'])) {
+            $address = $em->getRepository(Address::class)->find($data['addressId']);
+            if ($address) {
+                $event->setAddress($address);
+            }
+        } else {
+            // Si aucune adresse n'est sélectionnée, supprimer l'adresse existante
+            $event->setAddress(null);
+        }
 
         $em->flush();
 

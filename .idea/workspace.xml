@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add invitation information modal and enhance invitation item interaction">
+      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/AddressApiController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/css/Views/planning.css" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/css/Views/planning.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251221125716.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251221125716.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Controllers/EventManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Controllers/EventManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Models/Event.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Models/Event.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/planning.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/planning.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/EventApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/EventApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Event.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Tenants.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Tenants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/planning/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/planning/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -216,29 +223,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.SessionContext.ts.executor": "Run",
-    "Node.js.server.ts.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "#1 on dev",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "C:/laragon/www/UnJourUneAsso/UnJourUneAsso.Web/templates/email",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.SessionContext.ts.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.server.ts.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#1 on dev&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/UnJourUneAsso/UnJourUneAsso.Web/templates/email&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\laragon\www\UnJourUneAsso\UnJourUneAsso.Web\templates\email" />
@@ -269,7 +276,10 @@
       <workItem from="1769751646152" duration="278000" />
       <workItem from="1769951309979" duration="335000" />
       <workItem from="1769952274936" duration="618000" />
-      <workItem from="1769952964589" duration="7131000" />
+      <workItem from="1769952964589" duration="7170000" />
+      <workItem from="1770239729761" duration="2693000" />
+      <workItem from="1770314472966" duration="1600000" />
+      <workItem from="1770384008820" duration="4385000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -327,7 +337,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769956759677</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add invitation information modal and enhance invitation item interaction">
+      <option name="closed" value="true" />
+      <created>1769960466557</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1769960466557</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

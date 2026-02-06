@@ -62,8 +62,8 @@ final class Version20251221125716 extends AbstractMigration
         $this->addSql('CREATE POLICY tenant_event_isolation ON event USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
         $this->addSql('CREATE POLICY tenant_invitation_isolation ON invitation USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
 
-        $this->addSql('CREATE POLICY tenant_event_isolation ON even FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
-        $this->addSql('CREATE POLICY tenant_invitation_isolation ON invitation FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
+        $this->addSql('CREATE POLICY tenant_event_insert ON even FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
+        $this->addSql('CREATE POLICY tenant_invitation_insert ON invitation FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
     }
 
     public function down(Schema $schema): void

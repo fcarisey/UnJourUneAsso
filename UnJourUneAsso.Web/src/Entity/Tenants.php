@@ -47,6 +47,12 @@ class Tenants implements JsonSerializable
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'tenant')]
     private Collection $users;
 
+    /**
+     * var Collection<int, Address>
+     */
+    #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'tenant')]
+    private Collection $addresses;
+
 
     public function __construct(){
         $this->id = Uuid::v7();
@@ -194,6 +200,32 @@ class Tenants implements JsonSerializable
     public function removeUser(User $user): static
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Address>
+     */
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
+    }
+
+    public function addAddress(Address $address): static
+    {
+        if (!$this->addresses->contains($address)) {
+            $this->addresses->add($address);
+            $address->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): static
+    {
+        $this->addresses->removeElement($address);
 
         return $this;
     }

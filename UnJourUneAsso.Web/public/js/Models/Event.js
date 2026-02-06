@@ -8,13 +8,15 @@ export default class Event{
      * @param {Date} startDateTime
      * @param {Date} endDateTime
      * @param {string} color
+     * @param {object} address
      */
-    constructor(id, title, description, startDateTime, endDateTime, color) {
+    constructor(id, title, description, startDateTime, endDateTime, color, address) {
         this.id = id
         this.title = title
         this.description = description
         this.startDateTime = startDateTime
         this.endDateTime = endDateTime
         this.color = color
+        this.address = address
     }
 }
