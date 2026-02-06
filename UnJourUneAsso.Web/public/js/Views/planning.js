@@ -6,6 +6,7 @@ class Calendar {
         this.currentDate = new Date();
         this.currentEventId = null; // ID de l'événement en cours d'édition
         this.associations = []; // Liste des associations disponibles
+        this.addresses = []; // Liste des adresses disponibles
         this.isTransitioningToEdit = false; // Flag pour éviter la réinitialisation lors du passage création → édition
         this.init();
     }
@@ -15,7 +16,9 @@ class Calendar {
         this.renderCalendar();
         this.attachEventListeners();
         this.attachInvitationListeners();
+        this.attachAddressManagementListeners(); // Ajouter les listeners pour la gestion des adresses
         void this.loadAssociations(); // Charger les associations au démarrage
+        void this.loadAddresses(); // Charger les adresses au démarrage
     }
 
     // Générer le calendrier pour le mois en cours
@@ -150,12 +153,33 @@ class Calendar {
         document.getElementById('editEventEndDateTime').value = this.formatDateTimeLocal(new Date(event.endDateTime));
         document.getElementById('editEventDescription').value = event.description || '';
 
+        // Préremplir l'adresse si elle existe
+        const editAddressSelect = document.getElementById('editEventAddress');
+        const editAddressSearch = document.getElementById('editAddressSearch');
+        if (editAddressSelect && event.address && event.address.id) {
+            editAddressSelect.value = event.address.id;
+            if (editAddressSearch) {
+                editAddressSearch.value = `${event.address.designation} - ${event.address.address}, ${event.address.zip} ${event.address.city}`;
+            }
+        } else if (editAddressSelect) {
+            editAddressSelect.value = '';
+            if (editAddressSearch) {
+                editAddressSearch.value = '';
+            }
+        }
+
         // Charger les invitations
         void this.loadInvitations(eventId);
 
         // Ouvrir la modale
         const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
         editModal.show();
+
+        // Attacher les listeners de recherche après que la modale soit affichée
+        setTimeout(() => {
+            this.attachAddressSearchListener('editAddressSearch', 'editEventAddress');
+            this.attachAssociationSearchListener('editAssociationSearch', 'editAssociationSelect');
+        }, 100);
     }
 
     // Ouvrir la modale d'édition après création (charge l'événement puis ouvre la modale)
@@ -182,12 +206,33 @@ class Calendar {
         document.getElementById('editEventEndDateTime').value = this.formatDateTimeLocal(new Date(event.endDateTime));
         document.getElementById('editEventDescription').value = event.description || '';
 
+        // Préremplir l'adresse si elle existe
+        const editAddressSelect = document.getElementById('editEventAddress');
+        const editAddressSearch = document.getElementById('editAddressSearch');
+        if (editAddressSelect && event.address && event.address.id) {
+            editAddressSelect.value = event.address.id;
+            if (editAddressSearch) {
+                editAddressSearch.value = `${event.address.designation} - ${event.address.address}, ${event.address.zip} ${event.address.city}`;
+            }
+        } else if (editAddressSelect) {
+            editAddressSelect.value = '';
+            if (editAddressSearch) {
+                editAddressSearch.value = '';
+            }
+        }
+
         // Charger les invitations (contexte edit)
         await this.loadInvitations(eventId, 'edit');
 
         // Ouvrir la modale d'édition
         const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
         editModal.show();
+
+        // Attacher les listeners de recherche après que la modale soit affichée
+        setTimeout(() => {
+            this.attachAddressSearchListener('editAddressSearch', 'editEventAddress');
+            this.attachAssociationSearchListener('editAssociationSearch', 'editAssociationSelect');
+        }, 100);
     }
 
     // Attacher les écouteurs d'événements
@@ -227,17 +272,29 @@ class Calendar {
             this.renderCalendar(); // Rafraîchir l'affichage
         });
 
+        // Listener pour quand la modale de création s'ouvre
+        document.getElementById('eventModal').addEventListener('shown.bs.modal', () => {
+            setTimeout(() => {
+                this.attachAddressSearchListener('eventAddressSearch', 'eventAddress');
+            }, 100);
+        });
+
         // Formulaire d'événement
         const eventForm = document.getElementById('eventForm');
         if (eventForm) {
             eventForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
+                // Récupérer l'ID de l'adresse depuis le select caché (pas le champ de recherche)
+                const addressSelect = document.getElementById('eventAddress');
+                const addressId = addressSelect ? addressSelect.value : null;
+
                 const eventData = {
                     title: document.getElementById('eventTitle').value,
                     startDateTime: document.getElementById('eventStartDateTime').value,
                     endDateTime: document.getElementById('eventEndDateTime').value,
-                    description: document.getElementById('eventDescription').value
+                    description: document.getElementById('eventDescription').value,
+                    addressId: addressId || null
                 };
 
                 void App.fetch.post('/api/event', eventData, data => {
@@ -249,6 +306,11 @@ class Calendar {
 
                     eventData.color = data.color;
                     eventData.id = data.event_id;
+                    // Ajouter l'adresse aux données si elle existe
+                    if (addressId) {
+                        eventData.address = this.addresses.find(a => a.id === addressId);
+                    }
+
                     console.log('Événement créé avec succès :', data);
 
                     // Stocker l'ID de l'événement pour les invitations
@@ -261,8 +323,14 @@ class Calendar {
                     App.eventController.addEvent(eventData);
 
                     // Fermer la modale de création
-                    eventModal.hide();
+                    const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
                     eventForm.reset();
+                    // Réinitialiser aussi le champ de recherche d'adresse
+                    const addressSearch = document.getElementById('eventAddressSearch');
+                    if (addressSearch) {
+                        addressSearch.value = '';
+                    }
+                    eventModal.hide();
 
                     // Attendre que la modale soit complètement fermée avant d'ouvrir la suivante
                     setTimeout(async () => {
@@ -314,11 +382,16 @@ class Calendar {
                 e.preventDefault();
 
                 const eventId = document.getElementById('editEventId').value;
+                // Récupérer l'ID de l'adresse depuis le select caché (pas le champ de recherche)
+                const addressSelect = document.getElementById('editEventAddress');
+                const addressId = addressSelect ? addressSelect.value : null;
+
                 const eventData = {
                     title: document.getElementById('editEventTitle').value,
                     startDateTime: document.getElementById('editEventStartDateTime').value,
                     endDateTime: document.getElementById('editEventEndDateTime').value,
-                    description: document.getElementById('editEventDescription').value
+                    description: document.getElementById('editEventDescription').value,
+                    addressId: addressId || null
                 };
 
                 void App.fetch.put(`/api/event/${eventId}`, eventData, data => {
@@ -330,8 +403,27 @@ class Calendar {
 
                     console.log('Événement modifié avec succès :', data);
 
-                    // Mettre à jour localement
-                    App.eventController.updateEvent(eventId, data);
+                    // Récupérer l'événement existant pour conserver la couleur
+                    const existingEvent = App.eventController.events.find(e => e.id === eventId);
+
+                    // Récupérer l'adresse sélectionnée si elle existe
+                    const selectedAddress = addressId
+                        ? this.addresses.find(a => a.id === addressId)
+                        : null;
+
+                    // Mettre à jour localement avec toutes les données
+                    App.eventController.updateEvent(eventId, {
+                        id: eventId,
+                        title: eventData.title,
+                        description: eventData.description,
+                        startDateTime: eventData.startDateTime,
+                        endDateTime: eventData.endDateTime,
+                        color: existingEvent ? existingEvent.color : '#10b981',
+                        address: selectedAddress
+                    });
+
+                    // Re-rendre le calendrier
+                    this.renderCalendar();
 
                     // Fermer la modale
                     const editModal = bootstrap.Modal.getInstance(document.getElementById('editEventModal'));
@@ -430,8 +522,269 @@ class Calendar {
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 
+    // === Gestion des adresses ===
+
+    attachAddressManagementListeners() {
+        // Bouton pour ouvrir la modale de gestion des adresses
+        const btnManageAddresses = document.getElementById('btnManageAddresses');
+        if (btnManageAddresses) {
+            btnManageAddresses.addEventListener('click', () => {
+                this.openManageAddressesModal();
+            });
+        }
+
+        // Formulaire d'ajout/modification d'adresse
+        const addressForm = document.getElementById('addressForm');
+        if (addressForm) {
+            addressForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await this.saveAddress();
+            });
+        }
+
+        // Bouton annuler
+        const btnCancelAddress = document.getElementById('btnCancelAddress');
+        if (btnCancelAddress) {
+            btnCancelAddress.addEventListener('click', () => {
+                this.resetAddressForm();
+            });
+        }
+    }
+
+    attachAddressSearchListener(searchInputId, selectId) {
+        const searchInput = document.getElementById(searchInputId);
+        const select = document.getElementById(selectId);
+
+        if (!searchInput || !select) {
+            console.warn(`Éléments non trouvés: ${searchInputId}, ${selectId}`);
+            return;
+        }
+
+        // Supprimer le dropdown existant s'il y en a un
+        const existingDropdown = searchInput.parentElement.querySelector('.address-dropdown');
+        if (existingDropdown) {
+            existingDropdown.remove();
+        }
+
+        // Créer un dropdown personnalisé
+        let dropdownHTML = '<div class="address-dropdown" style="position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0; background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; max-height: 200px; overflow-y: auto; z-index: 100; display: none;">';
+
+        // Ajouter l'option "Aucune adresse"
+        dropdownHTML += `<div class="address-option" data-value="" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid var(--saas-border); color: var(--saas-text);">-- Aucune adresse --</div>`;
+
+        // Ajouter toutes les adresses disponibles
+        this.addresses.forEach(address => {
+            const displayText = `${address.designation} - ${address.address}, ${address.zip} ${address.city}`;
+            dropdownHTML += `<div class="address-option" data-value="${address.id}" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid var(--saas-border); color: var(--saas-text); transition: background-color 0.2s;">${displayText}</div>`;
+        });
+
+        dropdownHTML += '</div>';
+
+        // Insérer le dropdown après le champ de recherche
+        searchInput.insertAdjacentHTML('afterend', dropdownHTML);
+        const dropdown = searchInput.nextElementSibling;
+
+        // Listeners pour le focus/blur
+        searchInput.addEventListener('focus', () => {
+            dropdown.style.display = 'block';
+        });
+
+        searchInput.addEventListener('blur', () => {
+            // Masquer le dropdown après un délai pour permettre la sélection
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 200);
+        });
+
+        // Listener pour la recherche/filtrage
+        searchInput.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            const options = dropdown.querySelectorAll('.address-option');
+
+            options.forEach(option => {
+                const text = option.textContent.toLowerCase();
+                if (text.includes(searchText)) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        });
+
+        // Listeners pour cliquer sur une option
+        dropdown.querySelectorAll('.address-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const text = option.textContent;
+
+                select.value = value;
+                searchInput.value = text;
+                dropdown.style.display = 'none';
+            });
+
+            // Hover effect
+            option.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'var(--saas-border)';
+            });
+
+            option.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'transparent';
+            });
+        });
+    }
+
+    async openManageAddressesModal() {
+        // Recharger les adresses
+        await this.loadAddresses();
+
+        // Afficher les adresses
+        this.displayAddressesList();
+
+        // Ouvrir la modale
+        const modal = new bootstrap.Modal(document.getElementById('manageAddressesModal'));
+        modal.show();
+    }
+
+    displayAddressesList() {
+        const addressesList = document.getElementById('addressesList');
+        if (!addressesList) return;
+
+        if (this.addresses.length === 0) {
+            addressesList.innerHTML = '<div class="text-center py-3" style="color: var(--saas-text-muted);"><small>Aucune adresse</small></div>';
+            return;
+        }
+
+        addressesList.innerHTML = this.addresses.map(address => `
+            <div class="d-flex align-items-center justify-content-between p-3 mb-2" style="background: var(--saas-surface); border: 2px solid var(--saas-border); border-radius: 0.75rem;">
+                <div style="flex: 1;">
+                    <strong style="color: var(--saas-text);">${address.designation}</strong>
+                    <div style="color: var(--saas-text-muted); font-size: 0.875rem;">
+                        ${address.address}, ${address.zip} ${address.city}, ${address.country}
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-edit-address" data-address-id="${address.id}" style="background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary)); border: none; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-weight: 600;">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-delete-address" data-address-id="${address.id}" style="background: linear-gradient(135deg, var(--saas-danger), #dc2626); border: none; color: white; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-weight: 600;">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        // Attacher les événements
+        document.querySelectorAll('.btn-edit-address').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const addressId = btn.getAttribute('data-address-id');
+                this.editAddress(addressId);
+            });
+        });
+
+        document.querySelectorAll('.btn-delete-address').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const addressId = btn.getAttribute('data-address-id');
+                await this.deleteAddress(addressId);
+            });
+        });
+    }
+
+    editAddress(addressId) {
+        const address = this.addresses.find(a => a.id === addressId);
+        if (!address) return;
+
+        // Pré-remplir le formulaire
+        document.getElementById('addressId').value = address.id;
+        document.getElementById('addressDesignation').value = address.designation;
+        document.getElementById('addressAddress').value = address.address;
+        document.getElementById('addressZip').value = address.zip;
+        document.getElementById('addressCity').value = address.city;
+        document.getElementById('addressCountry').value = address.country;
+
+        // Changer le titre
+        document.getElementById('addressFormTitle').textContent = 'Modifier l\'adresse';
+
+        // Afficher le bouton annuler
+        document.getElementById('btnCancelAddress').style.display = 'inline-block';
+
+        // Scroller vers le formulaire
+        document.getElementById('addressForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    resetAddressForm() {
+        document.getElementById('addressForm').reset();
+        document.getElementById('addressId').value = '';
+        document.getElementById('addressFormTitle').textContent = 'Nouvelle adresse';
+        document.getElementById('btnCancelAddress').style.display = 'none';
+    }
+
+    async saveAddress() {
+        const addressId = document.getElementById('addressId').value;
+        const addressData = {
+            designation: document.getElementById('addressDesignation').value,
+            address: document.getElementById('addressAddress').value,
+            zip: document.getElementById('addressZip').value,
+            city: document.getElementById('addressCity').value,
+            country: document.getElementById('addressCountry').value,
+        };
+
+        if (addressId) {
+            // Mise à jour
+            await App.fetch.put(`/api/address/${addressId}`, addressData, data => {
+                if (!data.success) {
+                    App.showToast(data.message, false);
+                    return;
+                }
+
+                App.showToast('Adresse mise à jour avec succès', true);
+                this.resetAddressForm();
+                void this.loadAddresses();
+                this.displayAddressesList();
+            });
+        } else {
+            // Création
+            await App.fetch.post('/api/address', addressData, data => {
+                if (!data.success) {
+                    App.showToast(data.message, false);
+                    return;
+                }
+
+                App.showToast('Adresse créée avec succès', true);
+                this.resetAddressForm();
+                void this.loadAddresses();
+                this.displayAddressesList();
+            });
+        }
+    }
+
+    async deleteAddress(addressId) {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cette adresse ?')) {
+            return;
+        }
+
+        await App.fetch.delete(`/api/address/${addressId}`, {}, data => {
+            if (!data.success) {
+                App.showToast(data.message, false);
+                return;
+            }
+
+            App.showToast('Adresse supprimée avec succès', true);
+            void this.loadAddresses();
+            this.displayAddressesList();
+        });
+    }
+
     // Gestion des invitations
     attachInvitationListeners() {
+        // Attacher le listener de recherche d'association pour la modale d'édition
+        setTimeout(() => {
+            this.attachAssociationSearchListener('editAssociationSearch', 'editAssociationSelect');
+        }, 100);
+
         // Modale de création - Sélecteur d'association
         const createAssociationSelect = document.getElementById('createAssociationSelect');
         if (createAssociationSelect) {
@@ -498,9 +851,9 @@ class Calendar {
         }
 
         // Modale d'édition - Sélecteur d'association
-        const editAssociationSelect = document.getElementById('editAssociationSelect');
-        if (editAssociationSelect) {
-            editAssociationSelect.addEventListener('change', async (e) => {
+        const editAssociationSelectDropdown = document.getElementById('editAssociationSelect');
+        if (editAssociationSelectDropdown) {
+            editAssociationSelectDropdown.addEventListener('change', async (e) => {
                 const associationId = e.target.value;
 
                 if (!associationId) return;
@@ -510,7 +863,7 @@ class Calendar {
 
                 if (!currentEventId) {
                     App.showToast('Veuillez d\'abord créer l\'événement', false);
-                    editAssociationSelect.value = '';
+                    editAssociationSelectDropdown.value = '';
                     return;
                 }
 
@@ -520,8 +873,11 @@ class Calendar {
 
                 await this.addInvitationByAssociationId(currentEventId, associationId, 'edit');
 
-                // Réinitialiser le sélecteur
-                editAssociationSelect.value = '';
+                // Réinitialiser le sélecteur et le champ de recherche
+                editAssociationSelectDropdown.value = '';
+                if (editAssociationSearch) {
+                    editAssociationSearch.value = '';
+                }
             });
         }
 
@@ -584,6 +940,20 @@ class Calendar {
         })
     }
 
+    // Charger toutes les adresses disponibles
+    async loadAddresses() {
+        void App.fetch.get('/api/addresses', data => {
+            if (!data.success) {
+                console.error(data.message);
+                App.showToast(data.message, false);
+                return;
+            }
+
+            this.addresses = data.events; // Note: L'API retourne "events" au lieu de "addresses"
+            this.populateAddressSelects();
+        })
+    }
+
     // Peupler les sélecteurs d'associations
     populateAssociationSelects() {
         const createSelect = document.getElementById('createAssociationSelect');
@@ -600,6 +970,30 @@ class Calendar {
                 const option = document.createElement('option');
                 option.value = assoc.id;
                 option.textContent = assoc.name;
+                select.appendChild(option);
+            });
+        };
+
+        populateSelect(createSelect);
+        populateSelect(editSelect);
+    }
+
+    // Peupler les sélecteurs d'adresses
+    populateAddressSelects() {
+        const createSelect = document.getElementById('eventAddress');
+        const editSelect = document.getElementById('editEventAddress');
+
+        const populateSelect = (select) => {
+            if (!select) return;
+
+            // Garder l'option par défaut
+            select.innerHTML = '<option value="">-- Aucune adresse --</option>';
+
+            // Ajouter les adresses
+            this.addresses.forEach(address => {
+                const option = document.createElement('option');
+                option.value = address.id;
+                option.textContent = `${address.designation} - ${address.address}, ${address.zip} ${address.city}`;
                 select.appendChild(option);
             });
         };
@@ -722,7 +1116,8 @@ class Calendar {
         // Attacher les événements de suppression
         document.querySelectorAll('.btn-danger-invitation').forEach(btn => {
             btn.addEventListener('click', async e => {
-                e.stopPropagation()
+                e.stopPropagation(); // Empêcher la propagation vers l'invitation parent
+                e.preventDefault();  // Empêcher le comportement par défaut
                 const invitationId = btn.getAttribute('data-invitation-id');
 
                 const delete_modal = new bootstrap.Modal(document.getElementById('deleteInvitationModal'));
@@ -829,11 +1224,112 @@ class Calendar {
                     startDateTime: event['start_at']['date'],
                     endDateTime: event['end_at']['date'],
                     color: event['color'] ?? '#10b981',
+                    address: event['address'],
                 });
             })
 
             this.renderCalendar()
         })
+    }
+
+    attachAssociationSearchListener(searchInputId, selectId) {
+        const searchInput = document.getElementById(searchInputId);
+        const select = document.getElementById(selectId);
+
+        if (!searchInput || !select) {
+            console.warn(`Éléments non trouvés: ${searchInputId}, ${selectId}`);
+            return;
+        }
+
+        // Supprimer le dropdown existant s'il y en a un
+        const existingDropdown = searchInput.parentElement.querySelector('.association-dropdown');
+        if (existingDropdown) {
+            existingDropdown.remove();
+        }
+
+        // Créer un dropdown personnalisé
+        let dropdownHTML = '<div class="association-dropdown" style="position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0; background: var(--saas-bg); border: 2px solid var(--saas-border); border-radius: 0.75rem; max-height: 200px; overflow-y: auto; z-index: 100; display: none;">';
+
+        // Ajouter l'option "Aucune association"
+        dropdownHTML += `<div class="association-option" data-value="" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid var(--saas-border); color: var(--saas-text);">-- Choisir une association --</div>`;
+
+        // Ajouter toutes les associations disponibles (filtrées pour éviter les invitations en double)
+        const invitedAssociationIds = this.getInvitedAssociationIds();
+        this.associations
+            .filter(assoc => !invitedAssociationIds.includes(assoc.id))
+            .forEach(assoc => {
+                dropdownHTML += `<div class="association-option" data-value="${assoc.id}" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid var(--saas-border); color: var(--saas-text); transition: background-color 0.2s;">${assoc.name}</div>`;
+            });
+
+        dropdownHTML += '</div>';
+
+        // Insérer le dropdown après le champ de recherche
+        searchInput.insertAdjacentHTML('afterend', dropdownHTML);
+        const dropdown = searchInput.nextElementSibling;
+
+        // Listeners pour le focus/blur
+        searchInput.addEventListener('focus', () => {
+            dropdown.style.display = 'block';
+        });
+
+        searchInput.addEventListener('blur', () => {
+            // Masquer le dropdown après un délai pour permettre la sélection
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 200);
+        });
+
+        // Listener pour la recherche/filtrage
+        searchInput.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            const options = dropdown.querySelectorAll('.association-option');
+
+            options.forEach(option => {
+                const text = option.textContent.toLowerCase();
+                if (text.includes(searchText)) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        });
+
+        // Listeners pour cliquer sur une option
+        dropdown.querySelectorAll('.association-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const text = option.textContent;
+
+                select.value = value;
+                searchInput.value = text;
+                dropdown.style.display = 'none';
+
+                // Déclencher l'événement change du select
+                select.dispatchEvent(new Event('change'));
+            });
+
+            // Hover effect
+            option.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'var(--saas-border)';
+            });
+
+            option.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'transparent';
+            });
+        });
+    }
+
+    getInvitedAssociationIds() {
+        const invitationsList = document.getElementById('editInvitationsList');
+        if (!invitationsList) return [];
+
+        const invitedIds = [];
+        const invitations = invitationsList.querySelectorAll('[data-association-id]');
+        invitations.forEach(invitation => {
+            const id = invitation.getAttribute('data-association-id');
+            if (id) invitedIds.push(id);
+        });
+        return invitedIds;
     }
 }
 

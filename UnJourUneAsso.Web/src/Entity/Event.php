@@ -44,6 +44,9 @@ class Event implements TenantAwareInterface, JsonSerializable
     #[ORM\JoinColumn(nullable: false)]
     private ?Tenants $tenant = null;
 
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?Address $address = null;
+
     public function __construct(){
         $this->id = Uuid::v7();
         $this->invitations = new ArrayCollection();
@@ -163,7 +166,20 @@ class Event implements TenantAwareInterface, JsonSerializable
             'description' => $this->description,
             'start_at' => $this->start_at,
             'end_at' => $this->end_at,
-            'color' => !empty($this->color) ? "#$this->color" : null
+            'color' => !empty($this->color) ? "#$this->color" : null,
+            'address' => $this->address,
         ];
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
+
+        return $this;
     }
 }
