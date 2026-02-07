@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add invitation information modal and enhance invitation item interaction">
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/AddressApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251221125716.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251221125716.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Controllers/EventManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Controllers/EventManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Models/Event.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Models/Event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/planning.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/planning.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/EventApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Controller/Api/EventApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Tenants.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/Tenants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/planning/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/planning/index.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add Address API controller and integrate address management in event creation and editing" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,12 +36,13 @@
     &quot;assignee&quot;: &quot;fcarisey&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/fcarisey/UnJourUneAsso.git&quot;,
-    &quot;accountId&quot;: &quot;4bd8003a-43ca-4772-b1eb-36442cc0d9e6&quot;
-  }
-}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/fcarisey/UnJourUneAsso.git",
+    "accountId": "4bd8003a-43ca-4772-b1eb-36442cc0d9e6"
+  },
+  "editorReviewEnabled": false
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -279,7 +268,7 @@
       <workItem from="1769952964589" duration="7170000" />
       <workItem from="1770239729761" duration="2693000" />
       <workItem from="1770314472966" duration="1600000" />
-      <workItem from="1770384008820" duration="4385000" />
+      <workItem from="1770384008820" duration="4718000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -345,7 +334,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769960466557</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add Address API controller and integrate address management in event creation and editing">
+      <option name="closed" value="true" />
+      <created>1770388704824</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1770388704824</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add Address API controller and integrate address management in event creation and editing">
+      <option name="closed" value="true" />
+      <created>1770388733851</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1770388733851</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -360,7 +365,9 @@
     <MESSAGE value="Refactor WebSocket initialization and add UserApiController for user management" />
     <MESSAGE value="Add email template for canceled invitations and implement cancellation email functionality" />
     <MESSAGE value="Add invitation information modal and enhance invitation item interaction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add invitation information modal and enhance invitation item interaction" />
+    <MESSAGE value="Add Address entity, controller, and repository for address management" />
+    <MESSAGE value="Add Address API controller and integrate address management in event creation and editing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Address API controller and integrate address management in event creation and editing" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
