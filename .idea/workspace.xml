@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add Address API controller and integrate address management in event creation and editing" />
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Refactor workspace configuration and update task summaries for address management integration">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +21,13 @@
     <persistenceIdMap>
       <entry key="_C:/laragon/www/UnJourUneAsso" value="38TDu3DlMxTMpxmgRzYbCYPMTmi" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="edit-panel" value="GPT-5 mini" />
+      <entry key="chat-panel" value="Auto" />
+      <entry key="agent-panel" value="Auto" />
+    </selectedModels>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,13 +46,13 @@
     &quot;assignee&quot;: &quot;fcarisey&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/fcarisey/UnJourUneAsso.git",
-    "accountId": "4bd8003a-43ca-4772-b1eb-36442cc0d9e6"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/fcarisey/UnJourUneAsso.git&quot;,
+    &quot;accountId&quot;: &quot;4bd8003a-43ca-4772-b1eb-36442cc0d9e6&quot;
   },
-  "editorReviewEnabled": false
-}]]></component>
+  &quot;editorReviewEnabled&quot;: false
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -269,6 +279,8 @@
       <workItem from="1770239729761" duration="2693000" />
       <workItem from="1770314472966" duration="1600000" />
       <workItem from="1770384008820" duration="4718000" />
+      <workItem from="1770481180192" duration="45000" />
+      <workItem from="1770481775146" duration="119000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -350,7 +362,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770388733851</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Refactor workspace configuration and update task summaries for address management integration">
+      <option name="closed" value="true" />
+      <created>1770481215366</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1770481215366</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -367,7 +387,8 @@
     <MESSAGE value="Add invitation information modal and enhance invitation item interaction" />
     <MESSAGE value="Add Address entity, controller, and repository for address management" />
     <MESSAGE value="Add Address API controller and integrate address management in event creation and editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Address API controller and integrate address management in event creation and editing" />
+    <MESSAGE value="Refactor workspace configuration and update task summaries for address management integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor workspace configuration and update task summaries for address management integration" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
