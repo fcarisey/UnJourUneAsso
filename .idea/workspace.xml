@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Refactor workspace configuration and update task summaries for address management integration">
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Update .gitignore to include .env.exemple and refactor workspace configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251221125716.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251221125716.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251227140734.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20251227140734.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20260204214029.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/migrations/Version20260204214029.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +282,7 @@
       <workItem from="1770314472966" duration="1600000" />
       <workItem from="1770384008820" duration="4718000" />
       <workItem from="1770481180192" duration="45000" />
-      <workItem from="1770481775146" duration="119000" />
+      <workItem from="1770481775146" duration="3771000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -370,7 +372,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770481215366</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Update .gitignore to include .env.exemple and refactor workspace configuration">
+      <option name="closed" value="true" />
+      <created>1770481940095</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1770481940097</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,7 +398,8 @@
     <MESSAGE value="Add Address entity, controller, and repository for address management" />
     <MESSAGE value="Add Address API controller and integrate address management in event creation and editing" />
     <MESSAGE value="Refactor workspace configuration and update task summaries for address management integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor workspace configuration and update task summaries for address management integration" />
+    <MESSAGE value="Update .gitignore to include .env.exemple and refactor workspace configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update .gitignore to include .env.exemple and refactor workspace configuration" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

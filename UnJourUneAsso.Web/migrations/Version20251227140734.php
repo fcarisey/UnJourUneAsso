@@ -27,7 +27,6 @@ final class Version20251227140734 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN "user".tenant_id IS \'(DC2Type:uuid)\'');
         $this->addSql('ALTER TABLE "user" ADD CONSTRAINT FK_8D93D6499033212A FOREIGN KEY (tenant_id) REFERENCES tenants (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
 
-        $this->addSql('CREATE POLICY tenant_user_isolation ON event USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
     }
 
     public function down(Schema $schema): void

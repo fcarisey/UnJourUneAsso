@@ -29,9 +29,6 @@ final class Version20260204214029 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN "user".default_address_id IS \'(DC2Type:uuid)\'');
         $this->addSql('ALTER TABLE "user" ADD CONSTRAINT FK_8D93D649BD94FB16 FOREIGN KEY (default_address_id) REFERENCES address (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_8D93D649BD94FB16 ON "user" (default_address_id)');
-
-        $this->addSql('CREATE POLICY tenant_address_isolation ON address USING (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
-        $this->addSql('CREATE POLICY tenant_address_insert ON address FOR INSERT WITH CHECK (tenant_id = current_setting(\'app.current_tenant\', true)::uuid)');
     }
 
     public function down(Schema $schema): void
