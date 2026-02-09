@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Event;
-use App\Repository\AddressRepository;
 use App\Repository\TenantsRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -12,11 +11,9 @@ use Doctrine\Persistence\ObjectManager;
 class EventFixtures extends Fixture implements DependentFixtureInterface
 {
     private TenantsRepository $tenantsRepository;
-    private AddressRepository $addressRepository;
 
-    public function __construct(TenantsRepository $tenantsRepository, AddressRepository $addressRepository){
+    public function __construct(TenantsRepository $tenantsRepository){
         $this->tenantsRepository = $tenantsRepository;
-        $this->addressRepository = $addressRepository;
     }
 
     /**

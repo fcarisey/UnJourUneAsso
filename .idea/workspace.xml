@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add tenant isolation policies for event, invitation, user, and address management">
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/AddressFixtures.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/AssociationFixture.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/EventFixtures.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/TenantFixtures.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/UserFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/UnJourUneAsso.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UnJourUneAsso.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add data fixtures for tenants, addresses, events, and users">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/EventFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/DataFixtures/EventFixtures.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,7 +282,7 @@
       <workItem from="1770314472966" duration="1600000" />
       <workItem from="1770384008820" duration="4718000" />
       <workItem from="1770481180192" duration="45000" />
-      <workItem from="1770481775146" duration="11371000" />
+      <workItem from="1770481775146" duration="11812000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -398,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770556417586</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Add data fixtures for tenants, addresses, events, and users">
+      <option name="closed" value="true" />
+      <created>1770624102394</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1770624102394</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,7 +416,8 @@
     <MESSAGE value="Refactor workspace configuration and update task summaries for address management integration" />
     <MESSAGE value="Update .gitignore to include .env.exemple and refactor workspace configuration" />
     <MESSAGE value="Add tenant isolation policies for event, invitation, user, and address management" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add tenant isolation policies for event, invitation, user, and address management" />
+    <MESSAGE value="Add data fixtures for tenants, addresses, events, and users" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add data fixtures for tenants, addresses, events, and users" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
