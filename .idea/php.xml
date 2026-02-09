@@ -164,6 +164,8 @@
       <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-bundle" />
       <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-http" />
       <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.5" />
