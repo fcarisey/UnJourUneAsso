@@ -4,22 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Refactor EventFixtures to remove unused AddressRepository dependency">
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Components/NotificationHTMLElement.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Services/FetchService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Services/NotificationService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/TestApp.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Types/AssociationType.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Types/ResponseCallbackType.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Views/Association.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Views/Header.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/tsconfig.json" afterDir="false" />
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add initial TypeScript files and update .gitignore for node_modules">
+      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Views/Invitation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/association/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/association/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/layouts/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/layouts/header.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/invitation.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/invitation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/temporary-link/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/temporary-link/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,29 +227,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.SessionContext.ts.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.server.ts.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#1 on dev&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/UnJourUneAsso/UnJourUneAsso.Web&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.SessionContext.ts.executor": "Run",
+    "Node.js.server.ts.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "#1 on dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "C:/laragon/www/UnJourUneAsso/UnJourUneAsso.Web",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\laragon\www\UnJourUneAsso\UnJourUneAsso.Web" />
@@ -297,7 +287,8 @@
       <workItem from="1770481180192" duration="45000" />
       <workItem from="1770481775146" duration="12379000" />
       <workItem from="1770629153143" duration="3727000" />
-      <workItem from="1770671897023" duration="18149000" />
+      <workItem from="1770671897023" duration="18181000" />
+      <workItem from="1770738868431" duration="916000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
       <option name="closed" value="true" />
@@ -419,7 +410,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770624365048</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Add initial TypeScript files and update .gitignore for node_modules">
+      <option name="closed" value="true" />
+      <created>1770738675934</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770738675934</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +440,8 @@
     <MESSAGE value="Add tenant isolation policies for event, invitation, user, and address management" />
     <MESSAGE value="Add data fixtures for tenants, addresses, events, and users" />
     <MESSAGE value="Refactor EventFixtures to remove unused AddressRepository dependency" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor EventFixtures to remove unused AddressRepository dependency" />
+    <MESSAGE value="Add initial TypeScript files and update .gitignore for node_modules" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial TypeScript files and update .gitignore for node_modules" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
