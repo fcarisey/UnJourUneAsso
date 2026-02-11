@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="Add initial TypeScript files and update .gitignore for node_modules">
+      <change afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/src/Assets/Js/Views/Invitation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/invitation.js" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/public/js/Views/invitation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/temporary-link/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/templates/temporary-link/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnJourUneAsso.Web/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/UnJourUneAsso.Web/tsconfig.tsbuildinfo" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/UnJourUneAsso.Web/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/laragon/www/UnJourUneAsso" value="38TDu3DlMxTMpxmgRzYbCYPMTmi" />
+    </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="edit-panel" value="GPT-5 mini" />
+      <entry key="chat-panel" value="Auto" />
+      <entry key="agent-panel" value="Auto" />
+    </selectedModels>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;fcarisey&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/fcarisey/UnJourUneAsso.git&quot;,
+    &quot;accountId&quot;: &quot;4bd8003a-43ca-4772-b1eb-36442cc0d9e6&quot;
+  },
+  &quot;editorReviewEnabled&quot;: false
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.5.1">
+    <include_path>
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/stimulus-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/twig-bridge" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/twig-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/ux-turbo" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/web-link" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/daverandom/libdns" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/composer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/psr/link" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/byte-stream" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/amp" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/dns" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/cache" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/http" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/hpack" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/parser" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/http-client" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/process" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/pipeline" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/socket" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/serialization" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/amphp/sync" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/league/uri-components" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/revolt/event-loop" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/staabm/side-effects-detector" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/kelunik/certificate" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/asset-mapper" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/debug-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/doctrine-messenger" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/google-mailer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/intl" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/notifier" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/password-hasher" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-php85" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-http" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/UnJourUneAsso.Web/vendor/doctrine/data-fixtures" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="38TDu3DlMxTMpxmgRzYbCYPMTmi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.SessionContext.ts.executor": "Run",
+    "Node.js.server.ts.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "#1 on dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "C:/laragon/www/UnJourUneAsso/UnJourUneAsso.Web",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\laragon\\www\\UnJourUneAsso\\UnJourUneAsso.Wss\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\UnJourUneAsso\UnJourUneAsso.Web" />
+      <recent name="C:\laragon\www\UnJourUneAsso\UnJourUneAsso.Web\templates\email" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.242" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eba2b222-6433-4dd0-81c1-e567ccea39b6" name="Changes" comment="" />
+      <created>1768814888600</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1768814888600</updated>
+      <workItem from="1768814889525" duration="1375000" />
+      <workItem from="1768817693671" duration="3686000" />
+      <workItem from="1768828995880" duration="4646000" />
+      <workItem from="1768921342451" duration="4244000" />
+      <workItem from="1769006468320" duration="3000" />
+      <workItem from="1769006628525" duration="5012000" />
+      <workItem from="1769027923437" duration="2366000" />
+      <workItem from="1769751646152" duration="278000" />
+      <workItem from="1769951309979" duration="335000" />
+      <workItem from="1769952274936" duration="618000" />
+      <workItem from="1769952964589" duration="7170000" />
+      <workItem from="1770239729761" duration="2693000" />
+      <workItem from="1770314472966" duration="1600000" />
+      <workItem from="1770384008820" duration="4718000" />
+      <workItem from="1770481180192" duration="45000" />
+      <workItem from="1770481775146" duration="12379000" />
+      <workItem from="1770629153143" duration="3727000" />
+      <workItem from="1770671897023" duration="18181000" />
+      <workItem from="1770738868431" duration="916000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add initial project structure with configuration files and basic controllers">
+      <option name="closed" value="true" />
+      <created>1768817141704</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1768817141704</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add auto-import settings and update task management in workspace configuration">
+      <option name="closed" value="true" />
+      <created>1768817189801</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1768817189801</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add WebSocket session management and response handling">
+      <option name="closed" value="true" />
+      <created>1769011689151</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1769011689151</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Refactor workspace configuration to streamline task management and update local tasks counter">
+      <option name="closed" value="true" />
+      <created>1769011712441</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1769011712441</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Refactor WebSocket response handling to improve code readability">
+      <option name="closed" value="true" />
+      <created>1769030895099</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1769030895101</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Refactor WebSocket initialization and add UserApiController for user management">
+      <option name="closed" value="true" />
+      <created>1769030908769</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1769030908769</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add email template for canceled invitations and implement cancellation email functionality">
+      <option name="closed" value="true" />
+      <created>1769956759677</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1769956759677</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add invitation information modal and enhance invitation item interaction">
+      <option name="closed" value="true" />
+      <created>1769960466557</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1769960466557</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add Address API controller and integrate address management in event creation and editing">
+      <option name="closed" value="true" />
+      <created>1770388704824</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1770388704824</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add Address API controller and integrate address management in event creation and editing">
+      <option name="closed" value="true" />
+      <created>1770388733851</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1770388733851</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Refactor workspace configuration and update task summaries for address management integration">
+      <option name="closed" value="true" />
+      <created>1770481215366</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1770481215366</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Update .gitignore to include .env.exemple and refactor workspace configuration">
+      <option name="closed" value="true" />
+      <created>1770481940095</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1770481940097</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add tenant isolation policies for event, invitation, user, and address management">
+      <option name="closed" value="true" />
+      <created>1770556417586</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1770556417586</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add data fixtures for tenants, addresses, events, and users">
+      <option name="closed" value="true" />
+      <created>1770624102394</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1770624102394</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Refactor EventFixtures to remove unused AddressRepository dependency">
+      <option name="closed" value="true" />
+      <created>1770624365048</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1770624365048</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add initial TypeScript files and update .gitignore for node_modules">
+      <option name="closed" value="true" />
+      <created>1770738675934</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1770738675934</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add initial project structure with configuration files and basic controllers" />
+    <MESSAGE value="Add auto-import settings and update task management in workspace configuration" />
+    <MESSAGE value="Add WebSocket session management and response handling" />
+    <MESSAGE value="Refactor workspace configuration to streamline task management and update local tasks counter" />
+    <MESSAGE value="Refactor WebSocket response handling to improve code readability" />
+    <MESSAGE value="Refactor WebSocket initialization and add UserApiController for user management" />
+    <MESSAGE value="Add email template for canceled invitations and implement cancellation email functionality" />
+    <MESSAGE value="Add invitation information modal and enhance invitation item interaction" />
+    <MESSAGE value="Add Address entity, controller, and repository for address management" />
+    <MESSAGE value="Add Address API controller and integrate address management in event creation and editing" />
+    <MESSAGE value="Refactor workspace configuration and update task summaries for address management integration" />
+    <MESSAGE value="Update .gitignore to include .env.exemple and refactor workspace configuration" />
+    <MESSAGE value="Add tenant isolation policies for event, invitation, user, and address management" />
+    <MESSAGE value="Add data fixtures for tenants, addresses, events, and users" />
+    <MESSAGE value="Refactor EventFixtures to remove unused AddressRepository dependency" />
+    <MESSAGE value="Add initial TypeScript files and update .gitignore for node_modules" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial TypeScript files and update .gitignore for node_modules" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

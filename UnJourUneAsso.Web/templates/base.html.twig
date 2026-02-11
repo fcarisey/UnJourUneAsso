@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="UnJourUneAsso vous permet de vous mettre en relation avec une liste d'association.">
+    <title>UnJourUnAsso - {{ title }}</title>
+    <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    <link rel="prefetch" href="{{ asset('js/App.js') }}">
+    <script type="module" src="{{ asset('js/dist/TestApp.js') }}"></script>
+
+    <link rel="prefetch" href="{{ asset('css/root.css') }}">
+
+    <link rel="prefetch" href="{{ asset('css/Views/associations.css') }}">
+    <link rel="prefetch" href="{{ asset('css/Views/authentication.css') }}">
+    <link rel="prefetch" href="{{ asset('css/Views/header.css') }}">
+    <link rel="prefetch" href="{{ asset('css/Views/invitation.css') }}">
+    <link rel="prefetch" href="{{ asset('css/Views/planning.css') }}">
+
+    <link rel="prefetch" href="{{ asset('js/Views/header.js') }}">
+    <link rel="prefetch" href="{{ asset('js/Views/planning.js') }}">
+    <link rel="prefetch" href="{{ asset('js/Views/invitation.js') }}">
+    <link rel="prefetch" href="{{ asset('js/Views/associations.js') }}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    {% block css %}
+
+    {% endblock %}
+</head>
+<body>
+    {% if app.user %}
+        {% include 'layouts/header.html.twig' %}
+    {% endif %}
+
+    <main class="saas-container">
+        <div class="saas-main">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
+
+    {% include 'layouts/footer.html.twig' %}
+</body>
+{% block js %}
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>

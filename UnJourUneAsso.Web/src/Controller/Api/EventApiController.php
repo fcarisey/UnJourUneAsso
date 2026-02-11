@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Controller\Api;
+
+use App\Entity\Address;
+use App\Entity\Event;
+use App\Repository\EventRepository;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+#[Route('/api')]
+final class EventApiController extends BaseApiController
+{
+    protected string $title = "évènement";
+
+    // HEX colors (match avec le thème)
+    private const array EVENT_COLORS = [
+        '8B5CF6', // Violet vibrant
+        'EC4899', // Rose fuchsia
+        'F59E0B', // Orange/Ambre
+        '10B981', // Vert émeraude
+        '3B82F6', // Bleu ciel
+        'EF4444', // Rouge vif
+        '14B8A6', // Turquoise/Teal
+        'A855F7', // Violet clair
+        'F97316', // Orange profond
+        '06B6D4', // Cyan
+        '84CC16', // Vert lime
+        '6366F1', // Indigo
+    ];
+
+    #[Route("/events", name: "event_list", methods: ['GET'])]
+    public function list(EventRepository $eventRepository): Response{
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Liste des évènements.',
+            'events' => $eventRepository->findAll(),
+        ]);
+    }
+
+    #[Route("/events/range/{start_at}/{end_at}", name: "event_range", methods: ['GET'])]
+    public function listInRange(EventRepository $eventRepository, string $start_at, string $end_at): Response{
+        try {
+            $start_at = new DateTimeImmutable($start_at);
+            $end_at = new DateTimeImmutable($end_at);
+        } catch (\DateMalformedStringException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => "Une erreur s'est produite lors de la récupération des dates d'évènement.",
+            ]);
+        }
+
+        $events = $eventRepository->createQueryBuilder('e')
+            ->where('e.start_at >= :start_at')
+            ->andWhere('e.end_at <= :end_at')
+            ->setParameter('start_at', $start_at->format("Y-m-d H:i:s"))
+            ->setParameter('end_at', $end_at->format("Y-m-d H:i:s"))
+            ->getQuery()
+            ->getResult();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Liste des évènements.',
+            'events' => $events
+        ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/event', name: 'event_create', methods: ['POST'])]
+    public function create(Request $request, EntityManagerInterface $em): Response{
+        $data = $request->getContent();
+        $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
+
+        $event = new Event();
+        $event->setName($data['title']);
+        $event->setDescription($data['description']);
+        $event->setStartAt(new DateTimeImmutable($data['startDateTime']));
+        $event->setEndAt(new DateTimeImmutable($data['endDateTime']));
+        $event->setColor(self::EVENT_COLORS[array_rand(self::EVENT_COLORS)]);
+
+        // Gérer l'adresse si fournie
+        if (isset($data['addressId']) && !empty($data['addressId'])) {
+            $address = $em->getRepository(Address::class)->find($data['addressId']);
+            if ($address) {
+                $event->setAddress($address);
+            }
+        }
+
+        $em->persist($event);
+        $em->flush();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Évènement créé.',
+            'event_id' => $event->getId(),
+            'color' => '#' . $event->getColor()
+        ]);
+    }
+
+    #[Route('/event/{id}', name: 'event_delete', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $em, Event $event): Response{
+
+        foreach($event->getInvitations() as $invitation) {
+            $em->remove($invitation);
+        }
+
+        $em->remove($event);
+        $em->flush();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Event deleted successfully'
+        ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/event/{id}', name: 'event_update', methods: ['PUT'])]
+    public function update(Request $request, EntityManagerInterface $em, Event $event): Response{
+        $data = $request->getContent();
+        $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
+
+        $event->setName($data['title']);
+        $event->setDescription($data['description']);
+        $event->setStartAt(new DateTimeImmutable($data['startDateTime']));
+        $event->setEndAt(new DateTimeImmutable($data['endDateTime']));
+
+        // Gérer l'adresse
+        if (isset($data['addressId']) && !empty($data['addressId'])) {
+            $address = $em->getRepository(Address::class)->find($data['addressId']);
+            if ($address) {
+                $event->setAddress($address);
+            }
+        } else {
+            // Si aucune adresse n'est sélectionnée, supprimer l'adresse existante
+            $event->setAddress(null);
+        }
+
+        $em->flush();
+
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Event updated successfully'
+        ]);
+    }
+
+    #[Route('/event/{id}/invitations', name: 'event_invitations', methods: ['GET'])]
+    public function getInvitations(Event $event): Response{
+        return $this->jsonResponse([
+            'success' => true,
+            'message' => 'Liste des invitations.',
+            'invitations' => $event->getInvitations()->toArray()
+        ]);
+    }
+}

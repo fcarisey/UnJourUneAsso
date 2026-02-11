@@ -1,0 +1,27 @@
+/* ==============================================
+   VARIABLES DU THÈME VIOLET MODERNE
+   ============================================== */
+
+:root {
+    --saas-primary: #7c3aed;
+    --saas-primary-dark: #6d28d9;
+    --saas-primary-light: #a78bfa;
+    --saas-secondary: #ec4899;
+    --saas-bg: #0f0a1f;
+    --saas-surface: #1a1333;
+    --saas-surface-hover: #251d47;
+    --saas-border: #2d2355;
+    --saas-text: #f3f4f6;
+    --saas-text-muted: #9ca3af;
+    --saas-success: #10b981;
+    --saas-danger: #ef4444;
+    --saas-warning: #f59e0b;
+}
+
+body {
+    background: var(--saas-bg);
+    color: var(--saas-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+}
+

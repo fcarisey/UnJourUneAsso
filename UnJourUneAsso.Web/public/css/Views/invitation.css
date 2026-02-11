@@ -1,0 +1,460 @@
+@import "../root.css";
+
+/* ==============================================
+   INVITATION CONTAINER
+   ============================================== */
+.invitation-container {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.invitation-card {
+    max-width: 700px;
+    width: 100%;
+    background: var(--saas-surface);
+    border: 2px solid var(--saas-border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==============================================
+   HEADER
+   ============================================== */
+.invitation-header {
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.invitation-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.invitation-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.invitation-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+.invitation-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.invitation-subtitle {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+}
+
+/* ==============================================
+   EVENT DETAILS
+   ============================================== */
+.event-details {
+    padding: 2.5rem 2rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.event-info-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background: var(--saas-bg);
+    padding: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid var(--saas-border);
+    transition: all 0.3s ease;
+}
+
+.event-info-item:hover {
+    border-color: var(--saas-primary);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.info-icon svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+.info-content {
+    flex: 1;
+}
+
+.info-label {
+    font-size: 0.875rem;
+    color: var(--saas-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1.125rem;
+    color: var(--saas-text);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* ==============================================
+   DESCRIPTION
+   ============================================== */
+.event-description {
+    padding: 0 2rem 1.25rem;
+}
+
+.description-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--saas-text);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.description-title::before {
+    content: '';
+    width: 3px;
+    height: 18px;
+    background: linear-gradient(135deg, var(--saas-primary), var(--saas-secondary));
+    border-radius: 2px;
+}
+
+.description-text {
+    color: var(--saas-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    background: var(--saas-bg);
+    padding: 0.875rem 1rem;
+    border-radius: 0.625rem;
+    border: 1px solid var(--saas-border);
+}
+
+/* ==============================================
+   ACTIONS
+   ============================================== */
+.invitation-actions {
+    padding: 0 2rem 1.25rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-action::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-action:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-action svg {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-accept {
+    background: linear-gradient(135deg, var(--saas-success), #059669);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-accept:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+.btn-accept:active {
+    transform: translateY(-1px);
+}
+
+.btn-decline {
+    background: var(--saas-bg);
+    color: var(--saas-text);
+    border: 2px solid var(--saas-border);
+    box-shadow: none;
+}
+
+.btn-decline:hover {
+    border-color: var(--saas-danger);
+    color: var(--saas-danger);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
+}
+
+.btn-decline:active {
+    transform: translateY(-1px);
+}
+
+/* ==============================================
+   FORMULAIRE COMPLÉMENTAIRE
+   ============================================== */
+.invitation-form {
+    display: none;
+    padding: 0 2rem 1.25rem;
+}
+
+.invitation-form.is-visible {
+    display: block;
+}
+
+.invitation-form-grid {
+    display: grid;
+    gap: 1rem;
+    background: var(--saas-bg);
+    border: 1px solid var(--saas-border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.invitation-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.invitation-form-label {
+    font-size: 0.875rem;
+    color: var(--saas-text);
+    font-weight: 600;
+}
+
+.invitation-form-input,
+.invitation-form-textarea {
+    width: 100%;
+    background: var(--saas-surface);
+    color: var(--saas-text);
+    border: 1px solid var(--saas-border);
+    border-radius: 0.625rem;
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9375rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.invitation-form-input:focus,
+.invitation-form-textarea:focus {
+    border-color: var(--saas-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+.invitation-form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ==============================================
+   RESPONSIVE
+   ============================================== */
+@media (max-width: 768px) {
+    .invitation-container {
+        padding: 2rem 1rem;
+    }
+
+    .invitation-header {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .invitation-title {
+        font-size: 1.75rem;
+    }
+
+    .invitation-subtitle {
+        font-size: 1rem;
+    }
+
+    .event-details {
+        padding: 2rem 1.5rem;
+    }
+
+    .event-description {
+        padding: 0 1.5rem 2rem;
+    }
+
+    .invitation-form {
+        padding: 0 1.5rem 2rem;
+    }
+
+    .invitation-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .invitation-actions {
+        padding: 0 1.5rem 2rem;
+        flex-direction: column;
+    }
+
+    .btn-action {
+        min-width: 100%;
+    }
+
+    .invitation-footer {
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .invitation-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .invitation-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .event-info-item {
+        padding: 0.875rem;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .info-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .info-value {
+        font-size: 0.9375rem;
+    }
+}
+
+/* ==============================================
+   ANIMATIONS SUPPLÉMENTAIRES
+   ============================================== */
+.event-info-item {
+    animation: fadeInLeft 0.6s ease-out backwards;
+}
+
+.event-info-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.event-info-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.event-info-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.event-info-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/Views/invitation.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {% if invitation.etat is same as(true) or invitation.etat is same as(false) %}
+
+        <div class="invitation-container">
+            <div class="invitation-card">
+                <div class="event-details">
+                    <div class="info-content">
+                        <div class="info-label">L'invitation à expiré</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="invitation-container" data-hash="{{ hash }}">
+            <div class="invitation-card">
+                <!-- Header avec icône -->
+                <div class="invitation-header">
+                    <div class="invitation-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
+                        </svg>
+                    </div>
+                    <h1 class="invitation-title">Invitation à un événement</h1>
+                    <p class="invitation-subtitle">Vous avez été invité à rejoindre</p>
+                </div>
+
+                <!-- Informations de l'événement -->
+                <div class="event-details">
+                    <div class="event-info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Événement</div>
+                            <div class="info-value">{{ event.name }}</div>
+                        </div>
+                    </div>
+
+                    <div class="event-info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Association</div>
+                            <div class="info-value">{{ association.name }}</div>
+                        </div>
+                    </div>
+
+                    <div class="event-info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Date & Heure</div>
+                            <div class="info-value">{{ event.startAt|date('d F Y à H:i') }}</div>
+                        </div>
+                    </div>
+
+                    <div class="event-info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Lieu</div>
+                            <div class="info-value">Adresse de l'événement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="event-description">
+                    <h3 class="description-title">Description</h3>
+                    <p class="description-text">
+                        {{ event.description }}
+                    </p>
+                </div>
+
+                <!-- Formulaire complémentaire (caché par défaut) -->
+                <div class="invitation-form" id="invitation-extra-form">
+                    <h3 class="description-title">Informations complémentaires</h3>
+                    <div class="invitation-form-grid">
+                        <label class="invitation-form-field">
+                            <span class="invitation-form-label">Nombre d'intervenants</span>
+                            <input type="number" value="1" min="1" step="1" class="invitation-form-input" placeholder="Ex : 3">
+                        </label>
+                        <label class="invitation-form-field">
+                            <span class="invitation-form-label">Besoins</span>
+                            <textarea class="invitation-form-textarea" rows="3" placeholder="Ex : Matériel audio, accès scène..."></textarea>
+                        </label>
+                        <label class="invitation-form-field">
+                            <span class="invitation-form-label">Complément</span>
+                            <textarea class="invitation-form-textarea" rows="3" placeholder="Autres précisions"></textarea>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="invitation-actions">
+                    <button class="btn-action btn-accept">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Accepter l'invitation
+                    </button>
+                    <button class="btn-action btn-decline">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Refuser l'invitation
+                    </button>
+                </div>
+
+                <!-- Footer info -->
+                <div class="invitation-footer">
+                    <p class="footer-text">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Ce lien d'invitation est valide une seule fois
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+
+    <script type="module" src="{{ asset('js/dist/Views/Invitation.js') }}"></script>
+
+{% endblock %}
